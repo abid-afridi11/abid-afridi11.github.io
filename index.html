@@ -1,0 +1,1321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Abid Afridi – MSCA Doctoral Fellow @ Aalto University</title>
+  <meta name="description" content="Abid Afridi – Marie Skłodowska-Curie Doctoral Fellow (DC1) at Aalto University, Finland. Researching 6G Non-Terrestrial Networks, network slicing, and resource optimization.">
+  <meta name="author" content="Abid Afridi">
+  <link rel="canonical" href="https://afridia1.github.io/">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" sizes="64x64" href="favicon-64.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+  <link rel="apple-touch-icon" href="favicon-64.png">
+
+  <!-- Open Graph (LinkedIn / Facebook) -->
+  <meta property="og:type" content="profile">
+  <meta property="og:title" content="Abid Afridi – MSCA Doctoral Fellow @ Aalto University">
+  <meta property="og:description" content="Doctoral researcher in 6G Non-Terrestrial Networks: AI-based resource allocation, network slicing, and multi-layer optical satellite communications.">
+  <meta property="og:url" content="https://afridia1.github.io/">
+  <meta property="og:image" content="https://afridia1.github.io/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:site_name" content="Abid Afridi">
+
+  <!-- Twitter / X -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Abid Afridi – MSCA Doctoral Fellow @ Aalto University">
+  <meta name="twitter:description" content="Doctoral researcher in 6G Non-Terrestrial Networks: AI-based resource allocation, network slicing, and multi-layer optical satellite communications.">
+  <meta name="twitter:image" content="https://afridia1.github.io/og-image.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    /* ── Reset ─────────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:           #ffffff;
+      --bg-subtle:    #f8fafc;
+      --text:         #0f172a;
+      --text-muted:   #64748b;
+      --text-light:   #94a3b8;
+      --accent:       #1e4ed8;
+      --accent-hover: #1733a8;
+      --accent-soft:  #eff4ff;
+      --aalto:        #002e6d;   /* Aalto deep blue */
+      --cyan:         #0ea5e9;
+      --border:       #e6eaf0;
+      --shadow-sm:    0 1px 2px rgba(15,23,42,0.04);
+      --shadow-md:    0 8px 28px rgba(15,23,42,0.10);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      font-size: 15px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* ── Top accent bar ─────────────────────────────────────────── */
+    .topbar {
+      height: 4px;
+      background: linear-gradient(90deg, var(--aalto) 0%, var(--accent) 45%, var(--cyan) 100%);
+    }
+
+    /* ── Navigation ─────────────────────────────────────────────── */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(255,255,255,0.85);
+      backdrop-filter: blur(14px) saturate(140%);
+      -webkit-backdrop-filter: blur(14px) saturate(140%);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+    }
+    .brand-mark {
+      width: 26px;
+      height: 26px;
+      border-radius: 7px;
+      background: linear-gradient(135deg, var(--aalto) 0%, var(--cyan) 100%);
+      color: #fff;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .nav-wrap {
+      max-width: 880px;
+      margin: 0 auto;
+      padding: 0 1.75rem;
+      height: 54px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: relative;
+    }
+
+    .nav-brand {
+      font-weight: 600;
+      font-size: 0.93rem;
+      color: var(--text);
+      text-decoration: none;
+      letter-spacing: -0.01em;
+    }
+    .nav-brand:hover { color: var(--accent); text-decoration: none; }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 1.75rem;
+    }
+    nav ul a {
+      font-size: 0.83rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+    nav ul a:hover { color: var(--text); text-decoration: none; }
+
+    /* hamburger */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 4px;
+      cursor: pointer;
+      padding: 5px;
+      border: none;
+      background: none;
+    }
+    .hamburger span {
+      display: block;
+      width: 20px;
+      height: 2px;
+      background: var(--text);
+      border-radius: 2px;
+    }
+
+    /* ── Page container ──────────────────────────────────────────── */
+    .page {
+      max-width: 880px;
+      margin: 0 auto;
+      padding: 0 1.75rem;
+    }
+
+    /* ── Section shared ──────────────────────────────────────────── */
+    .section {
+      padding: 3.25rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .section:last-child { border-bottom: none; }
+
+    .section-label {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1.6rem;
+    }
+    .section-label::before {
+      content: "";
+      width: 22px;
+      height: 3px;
+      border-radius: 2px;
+      background: linear-gradient(90deg, var(--accent), var(--cyan));
+    }
+
+    /* ── Hero banner (6G / satellite cover) ──────────────────────── */
+    .hero-banner {
+      position: relative;
+      height: 200px;
+      border-radius: 0 0 18px 18px;
+      margin: 0 -1.75rem;
+      background: linear-gradient(120deg, #00102b 0%, #002e6d 50%, #073b7a 100%);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+    }
+    .hero-banner svg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+    .hero-tag {
+      position: absolute;
+      right: 1.75rem;
+      bottom: 0.9rem;
+      z-index: 3;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.92);
+      text-shadow: 0 1px 6px rgba(0,0,0,0.45);
+    }
+    .hero-tag span { color: var(--cyan); }
+    @keyframes twinkle { 0%,100% { opacity: 0.25; } 50% { opacity: 1; } }
+    @keyframes dash { to { stroke-dashoffset: -40; } }
+    .isl { stroke-dasharray: 5 5; animation: dash 2.4s linear infinite; }
+    .twinkle { animation: twinkle 3.5s ease-in-out infinite; }
+    @media (prefers-reduced-motion: reduce) {
+      .isl, .twinkle { animation: none; }
+    }
+
+    /* ── Hero / About ────────────────────────────────────────────── */
+    #about {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 2.75rem;
+      align-items: flex-start;
+      padding: 0 0 3.5rem;
+      margin-top: -74px;
+      position: relative;
+      z-index: 2;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .avatar {
+      width: 148px;
+      height: 148px;
+      border-radius: 50%;
+      overflow: hidden;
+      flex-shrink: 0;
+      background: linear-gradient(135deg, var(--aalto) 0%, var(--cyan) 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.6rem;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: -0.03em;
+      box-shadow: 0 0 0 5px #fff, var(--shadow-md);
+      user-select: none;
+    }
+    .avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 22%;
+      border-radius: 50%;
+    }
+    .bio { padding-top: 80px; }
+
+    /* institutional badges */
+    .affils {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+      margin-bottom: 1.25rem;
+    }
+    .affil-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.32rem 0.7rem 0.32rem 0.4rem;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: #fff;
+      font-size: 0.76rem;
+      font-weight: 600;
+      color: var(--text);
+      box-shadow: var(--shadow-sm);
+      white-space: nowrap;
+    }
+    .affil-badge .dot {
+      width: 16px; height: 16px;
+      border-radius: 5px;
+      font-size: 0.6rem;
+      font-weight: 800;
+      color: #fff;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .affil-badge .sub { color: var(--text-muted); font-weight: 500; }
+
+    .bio h1 {
+      font-size: 1.9rem;
+      font-weight: 700;
+      letter-spacing: -0.035em;
+      color: var(--text);
+      line-height: 1.15;
+      margin-bottom: 0.3rem;
+    }
+    .bio .title-line {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      margin-bottom: 0.12rem;
+    }
+    .bio .affil-line {
+      font-size: 0.855rem;
+      color: var(--accent);
+      font-weight: 500;
+      margin-bottom: 1.2rem;
+    }
+    .bio .intro {
+      font-size: 0.89rem;
+      color: #374151;
+      line-height: 1.78;
+      max-width: 560px;
+      margin-bottom: 1.4rem;
+      text-align: justify;
+      hyphens: auto;
+    }
+
+    /* pills / social links */
+    .pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+    }
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.28rem 0.72rem;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: border-color 0.15s, color 0.15s, background 0.15s;
+      white-space: nowrap;
+    }
+    .pill svg { width: 12px; height: 12px; flex-shrink: 0; }
+    .pill:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: #eff6ff;
+      text-decoration: none;
+    }
+
+    /* ── Research interests ──────────────────────────────────────── */
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.55rem;
+    }
+    .tag {
+      background: var(--bg-subtle);
+      border: 1px solid var(--border);
+      border-radius: 7px;
+      padding: 0.4rem 0.8rem;
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: var(--text);
+      transition: border-color 0.15s, background 0.15s, color 0.15s, transform 0.15s;
+      cursor: default;
+    }
+    .tag:hover {
+      border-color: var(--accent);
+      background: var(--accent-soft);
+      color: var(--accent);
+      transform: translateY(-1px);
+    }
+
+    /* ── News ────────────────────────────────────────────────────── */
+    .news-list { display: flex; flex-direction: column; gap: 0.8rem; }
+    .news-item {
+      display: flex;
+      gap: 1.25rem;
+      align-items: baseline;
+      font-size: 0.87rem;
+    }
+    .news-date {
+      font-size: 0.77rem;
+      color: var(--text-light);
+      font-weight: 500;
+      white-space: nowrap;
+      flex-shrink: 0;
+      width: 72px;
+    }
+    .news-text { color: #374151; line-height: 1.55; }
+    .news-text a { color: var(--accent); }
+
+    /* ── Publications ────────────────────────────────────────────── */
+    .pub-group { margin-bottom: 2.25rem; }
+    .pub-group:last-child { margin-bottom: 0; }
+
+    .pub-group-title {
+      font-size: 0.76rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 0.9rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .pub-list { display: flex; flex-direction: column; gap: 0.95rem; }
+
+    .pub-row {
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+    }
+
+    .venue-col {
+      flex-shrink: 0;
+      width: 78px;
+      text-align: center;
+      padding-top: 1px;
+    }
+
+    .badge {
+      display: inline-block;
+      font-size: 0.64rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      padding: 0.17rem 0.42rem;
+      border-radius: 4px;
+    }
+    .badge-j { background: #d1fae5; color: #065f46; }
+    .badge-c { background: #fef3c7; color: #92400e; }
+    .badge-p { background: #fce7f3; color: #9d174d; }
+    .badge-t { background: #ede9fe; color: #5b21b6; }
+
+    .pub-body {}
+    .pub-title {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--text);
+      line-height: 1.45;
+      margin-bottom: 0.18rem;
+    }
+    .pub-title a { color: var(--text); transition: color 0.15s; }
+    .pub-title a:hover { color: var(--accent); text-decoration: none; }
+
+    .pub-authors {
+      font-size: 0.79rem;
+      color: var(--text-muted);
+      line-height: 1.4;
+      margin-bottom: 0.13rem;
+    }
+    .pub-authors .me {
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .pub-venue {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      font-style: italic;
+    }
+
+    /* ── Timeline (Education / Experience) ──────────────────────── */
+    .timeline { display: flex; flex-direction: column; gap: 1.5rem; }
+
+    .tl-item { display: flex; gap: 1.25rem; align-items: flex-start; }
+
+    .tl-date {
+      flex-shrink: 0;
+      width: 100px;
+      font-size: 0.77rem;
+      color: var(--text-muted);
+      font-weight: 500;
+      padding-top: 0.12rem;
+      line-height: 1.5;
+    }
+
+    .tl-org {
+      font-size: 0.89rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 0.1rem;
+    }
+    .tl-role {
+      font-size: 0.83rem;
+      color: var(--text-muted);
+      margin-bottom: 0.3rem;
+    }
+    .tl-desc {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+    .tl-desc ul {
+      padding-left: 1.1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.18rem;
+    }
+
+    /* ── Awards ──────────────────────────────────────────────────── */
+    .award-list { display: flex; flex-direction: column; gap: 1rem; }
+
+    .award-row { display: flex; gap: 1rem; align-items: flex-start; }
+
+    .award-icon {
+      font-size: 1.05rem;
+      flex-shrink: 0;
+      margin-top: 0.05rem;
+    }
+
+    .award-title {
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 0.1rem;
+    }
+    .award-desc {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      line-height: 1.55;
+      text-align: justify;
+      hyphens: auto;
+    }
+
+    /* ── Contact ─────────────────────────────────────────────────── */
+    .contact-intro {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      line-height: 1.75;
+      max-width: 560px;
+      margin-bottom: 1.4rem;
+      text-align: justify;
+      hyphens: auto;
+    }
+
+    /* ── Footer ──────────────────────────────────────────────────── */
+    footer {
+      padding: 2rem 1.75rem;
+      text-align: center;
+      font-size: 0.77rem;
+      color: var(--text-light);
+      border-top: 1px solid var(--border);
+    }
+
+    /* ── Responsive ──────────────────────────────────────────────── */
+    @media (max-width: 620px) {
+      .hero-banner { height: 150px; }
+      .hero-tag { display: none; }
+      #about {
+        grid-template-columns: 1fr;
+        justify-items: center;
+        text-align: center;
+        gap: 0.75rem;
+        margin-top: -64px;
+      }
+      .bio { padding-top: 0; }
+      .bio .intro { max-width: 100%; text-align: left; }
+      .contact-intro, .award-desc { text-align: left; }
+      .pills, .affils { justify-content: center; }
+
+      nav ul { display: none; }
+      .hamburger { display: flex; }
+
+      nav ul.open {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 54px;
+        left: 0; right: 0;
+        background: #fff;
+        border-bottom: 1px solid var(--border);
+        padding: 1rem 1.75rem;
+        gap: 0.9rem;
+        z-index: 100;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+      }
+
+      .pub-row { flex-direction: column; gap: 0.35rem; }
+      .venue-col { width: auto; text-align: left; }
+
+      .tl-item { flex-direction: column; gap: 0.2rem; }
+      .tl-date { width: auto; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════ NAVIGATION ════════════════════════════════ -->
+<div class="topbar"></div>
+<header>
+  <div class="nav-wrap">
+    <a class="nav-brand" href="#about"><span class="brand-mark">AA</span>Abid Afridi</a>
+    <button class="hamburger" onclick="document.querySelector('nav ul').classList.toggle('open')" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+    <nav>
+      <ul>
+        <li><a href="#about">About</a></li>
+        <li><a href="#research">Research</a></li>
+        <li><a href="#news">News</a></li>
+        <li><a href="#publications">Publications</a></li>
+        <li><a href="#education">Education</a></li>
+        <li><a href="#awards">Awards</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<div class="page">
+
+  <!-- ═══════════════════════════ HERO BANNER (6G / NTN cover) ════════════════ -->
+  <div class="hero-banner">
+    <svg viewBox="0 0 1200 320" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <defs>
+        <linearGradient id="sky" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#00102b"/>
+          <stop offset="0.55" stop-color="#002e6d"/>
+          <stop offset="1" stop-color="#0a4a93"/>
+        </linearGradient>
+        <radialGradient id="earth" cx="50%" cy="22%" r="80%">
+          <stop offset="0" stop-color="#1b6fc4"/>
+          <stop offset="0.45" stop-color="#0b478f"/>
+          <stop offset="1" stop-color="#04244d"/>
+        </radialGradient>
+        <radialGradient id="atmos" cx="50%" cy="20%" r="60%">
+          <stop offset="0.68" stop-color="#38bdf8" stop-opacity="0"/>
+          <stop offset="0.9" stop-color="#7dd3fc" stop-opacity="0.75"/>
+          <stop offset="1" stop-color="#7dd3fc" stop-opacity="0"/>
+        </radialGradient>
+        <linearGradient id="beam" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#7dd3fc" stop-opacity="0.55"/>
+          <stop offset="1" stop-color="#7dd3fc" stop-opacity="0"/>
+        </linearGradient>
+        <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+          <stop offset="0" stop-color="#7dd3fc" stop-opacity="0.5"/>
+          <stop offset="1" stop-color="#7dd3fc" stop-opacity="0"/>
+        </radialGradient>
+      </defs>
+
+      <!-- background -->
+      <rect width="1200" height="320" fill="url(#sky)"/>
+
+      <!-- stars -->
+      <g fill="#ffffff">
+        <circle class="twinkle" cx="120" cy="50" r="1.4"/>
+        <circle cx="220" cy="90" r="1"/>
+        <circle class="twinkle" cx="340" cy="40" r="1.6" style="animation-delay:1s"/>
+        <circle cx="470" cy="70" r="1"/>
+        <circle class="twinkle" cx="600" cy="30" r="1.3" style="animation-delay:.5s"/>
+        <circle cx="720" cy="95" r="1.1"/>
+        <circle class="twinkle" cx="880" cy="45" r="1.5" style="animation-delay:1.6s"/>
+        <circle cx="980" cy="80" r="1"/>
+        <circle class="twinkle" cx="1080" cy="40" r="1.4" style="animation-delay:.9s"/>
+        <circle cx="1150" cy="95" r="1.1"/>
+        <circle cx="60" cy="120" r="1"/>
+        <circle class="twinkle" cx="780" cy="55" r="1.2" style="animation-delay:2.1s"/>
+      </g>
+
+      <!-- orbital shells (multi-layer NTN) -->
+      <g fill="none" stroke="#9ecbff">
+        <ellipse cx="600" cy="980" rx="980"  ry="840" stroke-opacity="0.30" stroke-width="1.4" stroke-dasharray="3 7"/>
+        <ellipse cx="600" cy="980" rx="1080" ry="920" stroke-opacity="0.22" stroke-width="1.4" stroke-dasharray="3 7"/>
+        <ellipse cx="600" cy="980" rx="1180" ry="1000" stroke-opacity="0.15" stroke-width="1.4" stroke-dasharray="3 7"/>
+      </g>
+
+      <!-- atmosphere glow + earth limb -->
+      <circle cx="600" cy="980" r="785" fill="url(#atmos)"/>
+      <circle cx="600" cy="980" r="760" fill="url(#earth)"/>
+      <path d="M 30 263 Q 600 188 1170 263" fill="none" stroke="#7dd3fc" stroke-opacity="0.5" stroke-width="2"/>
+
+      <!-- downlink beam from S2 to ground terminal -->
+      <polygon points="850,168 792,250 912,250" fill="url(#beam)"/>
+
+      <!-- optical inter-satellite links (FSO) -->
+      <g fill="none" stroke="#67e8f9" stroke-width="2" stroke-opacity="0.85">
+        <path id="islA" class="isl" d="M300,181 L850,168"/>
+        <path id="islB" class="isl" d="M850,168 L560,61" style="animation-delay:.6s"/>
+      </g>
+      <!-- data pulses travelling along the optical links -->
+      <g fill="#a5f3fc">
+        <circle r="3"><animateMotion dur="2.6s" repeatCount="indefinite"><mpath href="#islA"/></animateMotion></circle>
+        <circle r="3"><animateMotion dur="2.6s" begin="1.3s" repeatCount="indefinite"><mpath href="#islA"/></animateMotion></circle>
+        <circle r="2.6"><animateMotion dur="2.2s" repeatCount="indefinite"><mpath href="#islB"/></animateMotion></circle>
+      </g>
+
+      <!-- ground terminal -->
+      <g transform="translate(852,244)">
+        <circle r="16" fill="url(#glow)"/>
+        <path d="M -9 4 L 0 -8 L 9 4 Z" fill="none" stroke="#cfe6ff" stroke-width="2"/>
+        <line x1="0" y1="4" x2="0" y2="9" stroke="#cfeeff" stroke-width="2"/>
+      </g>
+
+      <!-- satellites -->
+      <g>
+        <!-- S1 -->
+        <g transform="translate(300,181)">
+          <circle r="22" fill="url(#glow)"/>
+          <rect x="-30" y="-5" width="16" height="10" rx="1" fill="#2f7fe0"/>
+          <rect x="14"  y="-5" width="16" height="10" rx="1" fill="#2f7fe0"/>
+          <line x1="-14" y1="0" x2="-9" y2="0" stroke="#9fb6cf" stroke-width="2"/>
+          <line x1="9"   y1="0" x2="14" y2="0" stroke="#9fb6cf" stroke-width="2"/>
+          <rect x="-10" y="-8" width="20" height="16" rx="3" fill="#e8eef5" stroke="#b7c4d4"/>
+          <line x1="0" y1="-8" x2="0" y2="-14" stroke="#cfddee" stroke-width="2"/>
+          <circle cx="0" cy="-14" r="2" fill="#67e8f9"/>
+        </g>
+        <!-- S2 -->
+        <g transform="translate(850,168)">
+          <circle r="22" fill="url(#glow)"/>
+          <rect x="-30" y="-5" width="16" height="10" rx="1" fill="#2f7fe0"/>
+          <rect x="14"  y="-5" width="16" height="10" rx="1" fill="#2f7fe0"/>
+          <line x1="-14" y1="0" x2="-9" y2="0" stroke="#9fb6cf" stroke-width="2"/>
+          <line x1="9"   y1="0" x2="14" y2="0" stroke="#9fb6cf" stroke-width="2"/>
+          <rect x="-10" y="-8" width="20" height="16" rx="3" fill="#e8eef5" stroke="#b7c4d4"/>
+          <line x1="0" y1="-8" x2="0" y2="-14" stroke="#cfddee" stroke-width="2"/>
+          <circle cx="0" cy="-14" r="2" fill="#67e8f9"/>
+        </g>
+        <!-- S3 -->
+        <g transform="translate(560,61)">
+          <circle r="20" fill="url(#glow)"/>
+          <rect x="-27" y="-4" width="14" height="9" rx="1" fill="#2f7fe0"/>
+          <rect x="13"  y="-4" width="14" height="9" rx="1" fill="#2f7fe0"/>
+          <line x1="-13" y1="0.5" x2="-8" y2="0.5" stroke="#9fb6cf" stroke-width="2"/>
+          <line x1="8"   y1="0.5" x2="13" y2="0.5" stroke="#9fb6cf" stroke-width="2"/>
+          <rect x="-9" y="-7" width="18" height="14" rx="3" fill="#e8eef5" stroke="#b7c4d4"/>
+          <line x1="0" y1="-7" x2="0" y2="-13" stroke="#cfddee" stroke-width="2"/>
+          <circle cx="0" cy="-13" r="2" fill="#67e8f9"/>
+        </g>
+      </g>
+    </svg>
+    <div class="hero-tag">6G &middot; Non-Terrestrial Networks &middot; <span>Optical Satellite Communications</span></div>
+  </div>
+
+  <!-- ═══════════════════════════ ABOUT / HERO ══════════════════════════════ -->
+  <div id="about">
+    <div class="avatar"><img src="profile.jpg" alt="Abid Afridi"></div>
+
+    <div class="bio">
+      <h1>Abid Afridi</h1>
+      <p class="title-line">Marie Skłodowska-Curie (MSCA) Doctoral Fellow &middot; DC1, FOCAL DN</p>
+      <p class="affil-line">Dept. of Information and Communications Engineering &middot; Aalto University, Finland</p>
+
+      <div class="affils">
+        <span class="affil-badge"><span class="dot" style="background:linear-gradient(135deg,#002e6d,#0b4ea2)">A</span>Aalto University</span>
+        <span class="affil-badge"><span class="dot" style="background:linear-gradient(135deg,#1e4ed8,#0ea5e9)">EU</span>MSCA <span class="sub">&middot; Horizon Europe</span></span>
+        <span class="affil-badge"><span class="dot" style="background:linear-gradient(135deg,#0e7490,#0ea5e9)">F</span>FOCAL <span class="sub">Doctoral Network</span></span>
+      </div>
+      <p class="intro">
+        I am a doctoral researcher at <strong>Aalto University</strong>, working as DC1 within the
+        <a href="https://focal-dn.eu/" target="_blank">FOCAL Marie Skłodowska-Curie Doctoral Network</a>
+        under the supervision of <strong>Dr. Alexis Dowhuszko</strong>.
+        My research focuses on <strong>6G Non-Terrestrial Networks (NTNs)</strong>, spanning
+        load balancing via free-space optical inter-satellite links, network slicing,
+        interference analysis in LEO constellations, and resource optimization for
+        next-generation satellite communication systems.
+        Previously, I was a Graduate Research Assistant at the
+        <strong>Multimedia Communication and Systems Lab (MCSL)</strong>,
+        University of Ulsan, South Korea, where I developed metaheuristic optimization
+        frameworks for wireless-powered IoT networks, IRS-assisted systems, and
+        physical layer security.
+      </p>
+      <div class="pills">
+        <a class="pill" href="mailto:abid.afridi@aalto.fi">
+          <!-- Email icon -->
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round"
+              d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+          </svg>
+          Email
+        </a>
+        <a class="pill" href="https://scholar.google.com/citations?user=SswFXHwAAAAJ&hl=en" target="_blank">
+          <!-- Scholar icon -->
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 24a7 7 0 1 1 0-14 7 7 0 0 1 0 14zm0-24L0 9.5l4.838 3.94A8 8 0 0 1 12 9a8 8 0 0 1 7.162 4.44L24 9.5 12 0z"/>
+          </svg>
+          Google Scholar
+        </a>
+        <a class="pill" href="https://orcid.org/0009-0003-0329-4630" target="_blank">
+          <!-- ORCID icon -->
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 0C5.372 0 0 5.372 0 12s5.372 12 12 12 12-5.372 12-12S18.628 0 12 0zM7.369
+              4.378c.525 0 .947.431.947.947s-.422.947-.947.947a.95.95 0 0
+              1-.947-.947c0-.525.422-.947.947-.947zm-.722 3.038h1.444v10.041H6.647V7.416zm3.562
+              0h3.9c3.712 0 5.344 2.653 5.344 5.025 0 2.578-2.016 5.016-5.325
+              5.016h-3.919V7.416zm1.444 1.303v7.444h2.297c3.272 0
+              3.872-2.944 3.872-3.722 0-2.016-1.284-3.722-3.872-3.722h-2.297z"/>
+          </svg>
+          ORCID
+        </a>
+        <a class="pill" href="https://linkedin.com/in/abid-afridi" target="_blank">
+          <!-- LinkedIn icon -->
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853
+              0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9
+              1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337
+              7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063
+              2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774
+              0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227
+              24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+          </svg>
+          LinkedIn
+        </a>
+        <a class="pill" href="https://www.webofscience.com/wos/author/record/NWH-7426-2025" target="_blank">
+          <!-- Document icon -->
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round"
+              d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0
+              01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+          </svg>
+          Web of Science
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════ RESEARCH INTERESTS ════════════════════════ -->
+  <section class="section" id="research">
+    <p class="section-label">Research Interests</p>
+    <div class="tags">
+      <span class="tag">6G Non-Terrestrial Networks (NTN)</span>
+      <span class="tag">Satellite Communications (LEO / MEO / GEO)</span>
+      <span class="tag">Network Slicing</span>
+      <span class="tag">Free-Space Optical (FSO) Inter-Satellite Links</span>
+      <span class="tag">Load Balancing &amp; Resource Allocation</span>
+      <span class="tag">Metaheuristic Optimization (PSO, GA)</span>
+      <span class="tag">Wireless-Powered IoT Networks (WPCN)</span>
+      <span class="tag">IRS-Assisted Communications</span>
+      <span class="tag">Physical Layer Security</span>
+      <span class="tag">NOMA / TDMA</span>
+      <span class="tag">ISAC (Integrated Sensing &amp; Communication)</span>
+      <span class="tag">MATLAB &amp; Python Simulation</span>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════ NEWS ══════════════════════════════════ -->
+  <section class="section" id="news">
+    <p class="section-label">News</p>
+    <div class="news-list">
+      <div class="news-item">
+        <span class="news-date">May 2026</span>
+        <span class="news-text">
+          Paper accepted at <strong>IEEE ICC 2026</strong> (Glasgow, Scotland) &mdash;
+          <em>"Load Balancing in Non-Terrestrial Networks Using Free Space Optical
+          Inter-satellite Links."</em>
+        </span>
+      </div>
+      <div class="news-item">
+        <span class="news-date">Apr 2026</span>
+        <span class="news-text">
+          Journal paper published in <strong>IEEE Open Journal of the Communications Society</strong>
+          on UAV-assisted VANETs for AI-enabled controller selection in 6G SDVN.
+        </span>
+      </div>
+      <div class="news-item">
+        <span class="news-date">Mar 2026</span>
+        <span class="news-text">
+          Preprint on TechRxiv: <em>"Spatial and Temporal Correlation of the Interference in a
+          Narrow-Beam LEO Network With ALOHA MAC"</em> (with I. Angervuori &amp; R. Wichman).
+        </span>
+      </div>
+      <div class="news-item">
+        <span class="news-date">Jan 2025</span>
+        <span class="news-text">
+          Journal paper published in <strong>IEEE Access</strong> &mdash; enhancing physical layer
+          security in WPCNs with IRS and controlled jamming for 6G IoT applications.
+        </span>
+      </div>
+      <div class="news-item">
+        <span class="news-date">Oct 2024</span>
+        <span class="news-text">
+          Joined <strong>Aalto University</strong> as MSCA Doctoral Fellow (DC1) in the
+          <a href="https://focal-dn.eu/" target="_blank">FOCAL Doctoral Network</a>.
+        </span>
+      </div>
+      <div class="news-item">
+        <span class="news-date">Jun 2024</span>
+        <span class="news-text">
+          Paper published in <strong>Applied Sciences (MDPI)</strong> &mdash; Quantum PSO-based
+          optimization of secured IRS-assisted wireless-powered IoT networks.
+        </span>
+      </div>
+      <div class="news-item">
+        <span class="news-date">May 2024</span>
+        <span class="news-text">
+          Journal paper accepted in <strong>IEEE Access</strong> &mdash; throughput maximization
+          of wireless-powered IoT with hybrid NOMA-TDMA via genetic algorithm.
+        </span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════ PUBLICATIONS ══════════════════════════════ -->
+  <section class="section" id="publications">
+    <p class="section-label">Publications</p>
+
+    <!-- Journal Articles -->
+    <div class="pub-group">
+      <p class="pub-group-title">Journal Articles</p>
+      <div class="pub-list">
+
+        <div class="pub-row">
+          <div class="venue-col"><span class="badge badge-j">IEEE OJ-COMS</span></div>
+          <div class="pub-body">
+            <p class="pub-title">
+              <a href="https://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=11457669" target="_blank">
+                6G SDVN: UAV-Assisted VANETs for AI-Enabled Controller Selection and
+                Heterogeneous Multi-Band Connectivity
+              </a>
+            </p>
+            <p class="pub-authors">
+              M. Rafid, <span class="me">A. Afridi</span>, S. Sualiheen, A. Iqbal, I. Ali, A. Akhunzada
+            </p>
+            <p class="pub-venue">
+              IEEE Open Journal of the Communications Society, vol.&nbsp;7, pp.&nbsp;3439&ndash;3450, 2026
+            </p>
+          </div>
+        </div>
+
+        <div class="pub-row">
+          <div class="venue-col"><span class="badge badge-j">IEEE Access</span></div>
+          <div class="pub-body">
+            <p class="pub-title">
+              <a href="https://ieeexplore.ieee.org/abstract/document/10820371" target="_blank">
+                Enhancing Physical Layer Security in WPCNs With IRS and Controlled
+                Jamming for 6G IoT Applications
+              </a>
+            </p>
+            <p class="pub-authors">
+              I. Hameed, <span class="me">A. Afridi</span>, M.-S. Baek, H.-K. Song
+            </p>
+            <p class="pub-venue">IEEE Access, vol.&nbsp;13, pp.&nbsp;4670&ndash;4682, 2025</p>
+          </div>
+        </div>
+
+        <div class="pub-row">
+          <div class="venue-col"><span class="badge badge-j">Appl. Sci.</span></div>
+          <div class="pub-body">
+            <p class="pub-title">
+              <a href="https://www.mdpi.com/2076-3417/14/24/11677" target="_blank">
+                Quantum PSO-Based Optimization of Secured IRS-Assisted Wireless-Powered IoT Networks
+              </a>
+            </p>
+            <p class="pub-authors"><span class="me">A. Afridi</span>, I. Hameed, I. Koo</p>
+            <p class="pub-venue">Applied Sciences (MDPI), vol.&nbsp;14, no.&nbsp;24, p.&nbsp;11677, 2024</p>
+          </div>
+        </div>
+
+        <div class="pub-row">
+          <div class="venue-col"><span class="badge badge-j">IEEE Access</span></div>
+          <div class="pub-body">
+            <p class="pub-title">
+              <a href="https://ieeexplore.ieee.org/abstract/document/10518025" target="_blank">
+                Throughput Maximization of Wireless Powered IoT Network With Hybrid NOMA-TDMA
+                Scheme: A Genetic Algorithm Approach
+              </a>
+            </p>
+            <p class="pub-authors">
+              <span class="me">A. Afridi</span>, I. Hameed, C. E. Garc&iacute;a, I. Koo
+            </p>
+            <p class="pub-venue">IEEE Access, vol.&nbsp;12, pp.&nbsp;65241&ndash;65253, 2024</p>
+          </div>
+        </div>
+
+        <div class="pub-row">
+          <div class="venue-col"><span class="badge badge-j">BEEI</span></div>
+          <div class="pub-body">
+            <p class="pub-title">
+              <a href="https://beei.org/index.php/EEI/article/view/3014" target="_blank">
+                An Efficient and Improved Model for Power Theft Detection in Pakistan
+              </a>
+            </p>
+            <p class="pub-authors">
+              <span class="me">A. Afridi</span>, A. Wahab, S. Khan, W. Ullah, S. Khan,
+              S. Ul Islam, K. Hussain
+            </p>
+            <p class="pub-venue">
+              Bulletin of Electrical Engineering and Informatics, vol.&nbsp;10,
+              no.&nbsp;4, pp.&nbsp;1828&ndash;1837, 2021
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Conference Papers -->
+    <div class="pub-group">
+      <p class="pub-group-title">Conference Papers</p>
+      <div class="pub-list">
+
+        <div class="pub-row">
+          <div class="venue-col"><span class="badge badge-c">ICC 2026</span></div>
+          <div class="pub-body">
+            <p class="pub-title">
+              <a href="https://arxiv.org/abs/2603.12546" target="_blank">
+                Load Balancing in Non-Terrestrial Networks Using Free Space Optical
+                Inter-satellite Links
+              </a>
+            </p>
+            <p class="pub-authors">
+              <span class="me">A. Afridi</span>, A. A. Dowhuszko, J. Krivochiza,
+              R. Wichman, J. H&auml;m&auml;l&auml;inen
+            </p>
+            <p class="pub-venue">
+              IEEE International Conference on Communications (ICC),
+              Glasgow, Scotland, 2026
+            </p>
+          </div>
+        </div>
+
+        <div class="pub-row">
+          <div class="venue-col"><span class="badge badge-c">KICS 2024</span></div>
+          <div class="pub-body">
+            <p class="pub-title">
+              <a href="https://www.dbpia.co.kr/Journal/articleDetail?nodeId=NODE11906326" target="_blank">
+                Integrated Sensing and Communication (ISAC) in Secured Wireless Powered IoT Networks
+              </a>
+            </p>
+            <p class="pub-authors"><span class="me">A. Afridi</span>, I. Hameed, I. Koo</p>
+            <p class="pub-venue">
+              Symposium of the Korean Institute of Communications and Information
+              Sciences (KICS), Jeju, Korea, 2024
+            </p>
+          </div>
+        </div>
+
+        <div class="pub-row">
+          <div class="venue-col"><span class="badge badge-c">ICMT 2023</span></div>
+          <div class="pub-body">
+            <p class="pub-title">
+              <a href="https://ieeexplore.ieee.org/abstract/document/10373620" target="_blank">
+                Enhancing Sum Throughput in Wireless Powered IoT Networks Using
+                TDMA-Based Resource Allocation
+              </a>
+            </p>
+            <p class="pub-authors"><span class="me">A. Afridi</span>, I. Hameed, I. Koo</p>
+            <p class="pub-venue">
+              26th International Conference on Mechatronics Technology (ICMT),
+              Busan, South Korea, pp.&nbsp;1&ndash;5, 2023
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Preprints -->
+    <div class="pub-group">
+      <p class="pub-group-title">Preprints</p>
+      <div class="pub-list">
+
+        <div class="pub-row">
+          <div class="venue-col"><span class="badge badge-p">TechRxiv</span></div>
+          <div class="pub-body">
+            <p class="pub-title">
+              <a href="https://www.techrxiv.org/doi/full/10.36227/techrxiv.176185087.71970956" target="_blank">
+                Spatial and Temporal Correlation of the Interference in a Narrow-Beam
+                LEO Network With ALOHA Medium Access Control
+              </a>
+            </p>
+            <p class="pub-authors">
+              I. Angervuori, <span class="me">A. Afridi</span>, R. Wichman
+            </p>
+            <p class="pub-venue">Authorea Preprints / TechRxiv, 2026</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Thesis -->
+    <div class="pub-group">
+      <p class="pub-group-title">Thesis</p>
+      <div class="pub-list">
+
+        <div class="pub-row">
+          <div class="venue-col"><span class="badge badge-t">M.Sc.</span></div>
+          <div class="pub-body">
+            <p class="pub-title">
+              <a href="https://oak.ulsan.ac.kr/handle/2021.oak/20147" target="_blank">
+                Optimization of Resources Allocation and Security in Wireless Powered IoT Networks
+              </a>
+            </p>
+            <p class="pub-authors"><span class="me">A. Afridi</span></p>
+            <p class="pub-venue">University of Ulsan, Ulsan, South Korea, 2025</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ════════════════════════════ EDUCATION ════════════════════════════════ -->
+  <section class="section" id="education">
+    <p class="section-label">Education</p>
+    <div class="timeline">
+
+      <div class="tl-item">
+        <div class="tl-date">2024 &ndash; present</div>
+        <div>
+          <p class="tl-org">Aalto University &middot; Espoo, Finland</p>
+          <p class="tl-role">D.Sc. (Tech.) in Electrical Engineering &mdash; Doctoral Candidate</p>
+          <p class="tl-desc">
+            MSCA DC1, FOCAL Doctoral Network. Supervisor: Dr. Alexis Dowhuszko.<br>
+            Focus: AI-based resource allocation and network slicing in multi-layer optical NTNs.
+          </p>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-date">2022 &ndash; 2025</div>
+        <div>
+          <p class="tl-org">University of Ulsan &middot; Ulsan, South Korea</p>
+          <p class="tl-role">M.Sc. in Electrical Engineering</p>
+          <p class="tl-desc">
+            BK21+ Scholarship. Research on wireless-powered IoT, IRS-assisted systems,
+            NOMA/TDMA, and metaheuristic optimization (PSO, GA).
+          </p>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-date">2016 &ndash; 2020</div>
+        <div>
+          <p class="tl-org">University of Science &amp; Technology Bannu &middot; Bannu, Pakistan</p>
+          <p class="tl-role">B.E. in Electrical Engineering (Telecommunication)</p>
+          <p class="tl-desc">
+            Final-year project: intelligent IoT-based power theft detection system.
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ════════════════════════════ EXPERIENCE ═══════════════════════════════ -->
+  <section class="section" id="experience">
+    <p class="section-label">Experience</p>
+    <div class="timeline">
+
+      <div class="tl-item">
+        <div class="tl-date">2024 &ndash; present</div>
+        <div>
+          <p class="tl-org">Aalto University &middot; Dept. of Information and Communications Engineering</p>
+          <p class="tl-role">MSCA Doctoral Fellow (DC1), FOCAL Doctoral Network</p>
+          <p class="tl-desc">
+            Research on NTN load balancing via FSO inter-satellite links, network slicing,
+            and interference analysis in narrow-beam LEO satellite constellations.
+          </p>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-date">2022 &ndash; 2025</div>
+        <div>
+          <p class="tl-org">Multimedia Communication and Systems Lab (MCSL), University of Ulsan</p>
+          <p class="tl-role">Graduate Research Assistant</p>
+          <p class="tl-desc">
+            <ul>
+              <li>Developed hybrid NOMA-TDMA frameworks for throughput maximization in WPCNs</li>
+              <li>Implemented Quantum PSO and Genetic Algorithm for joint resource allocation</li>
+              <li>Designed IRS-assisted secured wireless-powered IoT network architectures</li>
+              <li>Enhanced physical layer security via controlled jamming in ISAC systems</li>
+            </ul>
+          </p>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-date">Jan &ndash; Dec 2021</div>
+        <div>
+          <p class="tl-org">BioSafe Diagnostics</p>
+          <p class="tl-role">Sales &amp; Service Engineer</p>
+          <p class="tl-desc">
+            Technical service and preventive maintenance for medical diagnostic equipment;
+            managed sales operations and performed field modifications.
+          </p>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-date">2018 &ndash; 2020</div>
+        <div>
+          <p class="tl-org">Pakistan Telecom Ltd. &middot; PTV &middot; TESCO</p>
+          <p class="tl-role">Trainee Engineer (Rotations)</p>
+          <p class="tl-desc">
+            Hands-on rotations in optical fiber &amp; digital switching (PTCL),
+            video distribution systems (PTV), and electrical protection testing (TESCO).
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ══════════════════════════ AWARDS & HONORS ════════════════════════════ -->
+  <section class="section" id="awards">
+    <p class="section-label">Awards &amp; Honors</p>
+    <div class="award-list">
+
+      <div class="award-row">
+        <span class="award-icon">🏅</span>
+        <div>
+          <p class="award-title">
+            Marie Skłodowska-Curie Fellowship (MSCA-DN) &mdash; European Commission, 2025
+          </p>
+          <p class="award-desc">
+            Competitive EU doctoral fellowship for early-stage researchers, awarded for
+            excellence in research and training. Part of the FOCAL Doctoral Network on
+            future open communication architectures for 6G.
+          </p>
+        </div>
+      </div>
+
+      <div class="award-row">
+        <span class="award-icon">🎓</span>
+        <div>
+          <p class="award-title">
+            BK21+ (Brain Korea 21+) Scholarship &mdash; National Research Foundation of Korea,
+            2022&ndash;2025
+          </p>
+          <p class="award-desc">
+            Prestigious government-funded fellowship supporting outstanding graduate
+            students in Korean universities, awarded for M.Sc. research at the
+            University of Ulsan.
+          </p>
+        </div>
+      </div>
+
+      <div class="award-row">
+        <span class="award-icon">📘</span>
+        <div>
+          <p class="award-title">
+            HEC Indigenous Scholarship (Balochistan &amp; FATA) &mdash; Higher Education
+            Commission of Pakistan, 2016&ndash;2020
+          </p>
+          <p class="award-desc">
+            Merit-based undergraduate scholarship awarded under the HEC project
+            <em>"Provision of Higher Education Opportunities for Students of Balochistan
+            &amp; FATA,"</em> a flagship national programme supporting talented students from
+            underprivileged regions throughout the B.E. (Telecommunication) degree.
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ═════════════════════════════ CONTACT ════════════════════════════════ -->
+  <section class="section" id="contact">
+    <p class="section-label">Contact</p>
+    <p class="contact-intro">
+      I am always happy to discuss research collaborations, questions about 6G NTN or
+      wireless communications, or potential opportunities. Feel free to reach out by email.
+    </p>
+    <div class="pills">
+      <a class="pill" href="mailto:abid.afridi@aalto.fi">
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round"
+            d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+        </svg>
+        abid.afridi@aalto.fi
+      </a>
+      <a class="pill" href="https://scholar.google.com/citations?user=SswFXHwAAAAJ&hl=en" target="_blank">
+        <svg viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 24a7 7 0 1 1 0-14 7 7 0 0 1 0 14zm0-24L0 9.5l4.838 3.94A8 8 0 0 1 12 9a8 8 0 0 1 7.162 4.44L24 9.5 12 0z"/>
+        </svg>
+        Google Scholar
+      </a>
+      <a class="pill" href="https://orcid.org/0009-0003-0329-4630" target="_blank">
+        <svg viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 0C5.372 0 0 5.372 0 12s5.372 12 12 12 12-5.372 12-12S18.628 0 12 0zM7.369
+            4.378c.525 0 .947.431.947.947s-.422.947-.947.947a.95.95 0 0
+            1-.947-.947c0-.525.422-.947.947-.947zm-.722 3.038h1.444v10.041H6.647V7.416zm3.562
+            0h3.9c3.712 0 5.344 2.653 5.344 5.025 0 2.578-2.016 5.016-5.325
+            5.016h-3.919V7.416zm1.444 1.303v7.444h2.297c3.272 0
+            3.872-2.944 3.872-3.722 0-2.016-1.284-3.722-3.872-3.722h-2.297z"/>
+        </svg>
+        ORCID
+      </a>
+      <a class="pill" href="https://linkedin.com/in/abid-afridi" target="_blank">
+        <svg viewBox="0 0 24 24" fill="currentColor">
+          <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853
+            0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9
+            1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337
+            7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063
+            2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774
+            0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227
+            24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+        </svg>
+        LinkedIn
+      </a>
+      <a class="pill" href="https://www.webofscience.com/wos/author/record/NWH-7426-2025" target="_blank">
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round"
+            d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0
+            01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+        </svg>
+        Web of Science
+      </a>
+    </div>
+  </section>
+
+</div><!-- /.page -->
+
+<footer>
+  &copy; 2025 Abid Afridi &middot; Aalto University, Finland
+</footer>
+
+</body>
+</html>
