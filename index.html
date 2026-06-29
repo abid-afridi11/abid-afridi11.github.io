@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Abid Afridi – MSCA Doctoral Fellow @ Aalto University</title>
-  <meta name="description" content="Abid Afridi – Marie Skłodowska-Curie Doctoral Fellow (DC1) at Aalto University, Finland. Researching 6G Non-Terrestrial Networks, network slicing, and resource optimization.">
+  <meta name="description" content="Abid Afridi – Marie Skłodowska-Curie Doctoral Fellow at Aalto University, Finland. Researching 6G Non-Terrestrial Networks, network slicing, and resource optimization.">
   <meta name="author" content="Abid Afridi">
   <link rel="canonical" href="https://abid-afridi11.github.io/">
 
@@ -628,24 +628,55 @@
           <stop offset="0.55" stop-color="#002e6d"/>
           <stop offset="1" stop-color="#0a4a93"/>
         </linearGradient>
-        <radialGradient id="earth" cx="50%" cy="22%" r="80%">
-          <stop offset="0" stop-color="#1b6fc4"/>
-          <stop offset="0.45" stop-color="#0b478f"/>
-          <stop offset="1" stop-color="#04244d"/>
+        <radialGradient id="earth" cx="50%" cy="14%" r="90%">
+          <stop offset="0" stop-color="#2280d6"/>
+          <stop offset="0.5" stop-color="#0b4d96"/>
+          <stop offset="1" stop-color="#04224a"/>
         </radialGradient>
-        <radialGradient id="atmos" cx="50%" cy="20%" r="60%">
-          <stop offset="0.68" stop-color="#38bdf8" stop-opacity="0"/>
-          <stop offset="0.9" stop-color="#7dd3fc" stop-opacity="0.75"/>
+        <radialGradient id="atmos" cx="50%" cy="12%" r="62%">
+          <stop offset="0.64" stop-color="#38bdf8" stop-opacity="0"/>
+          <stop offset="0.87" stop-color="#7dd3fc" stop-opacity="0.85"/>
           <stop offset="1" stop-color="#7dd3fc" stop-opacity="0"/>
         </radialGradient>
-        <linearGradient id="beam" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stop-color="#7dd3fc" stop-opacity="0.55"/>
-          <stop offset="1" stop-color="#7dd3fc" stop-opacity="0"/>
+        <linearGradient id="beamDown" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#7dd3fc" stop-opacity="0.5"/>
+          <stop offset="1" stop-color="#7dd3fc" stop-opacity="0.02"/>
+        </linearGradient>
+        <linearGradient id="beamUp" x1="0" y1="1" x2="0" y2="0">
+          <stop offset="0" stop-color="#fcd34d" stop-opacity="0.5"/>
+          <stop offset="1" stop-color="#fcd34d" stop-opacity="0.02"/>
         </linearGradient>
         <radialGradient id="glow" cx="50%" cy="50%" r="50%">
           <stop offset="0" stop-color="#7dd3fc" stop-opacity="0.5"/>
           <stop offset="1" stop-color="#7dd3fc" stop-opacity="0"/>
         </radialGradient>
+        <radialGradient id="foot" cx="50%" cy="50%" r="50%">
+          <stop offset="0" stop-color="#7dd3fc" stop-opacity="0.55"/>
+          <stop offset="1" stop-color="#7dd3fc" stop-opacity="0"/>
+        </radialGradient>
+
+        <!-- reusable realistic LEO satellite -->
+        <g id="rsat">
+          <circle r="26" fill="url(#glow)"/>
+          <!-- solar wings -->
+          <rect x="-46" y="-9" width="29" height="18" rx="1.5" fill="#15386c" stroke="#4f9fe6" stroke-width="0.8"/>
+          <rect x="17"  y="-9" width="29" height="18" rx="1.5" fill="#15386c" stroke="#4f9fe6" stroke-width="0.8"/>
+          <g stroke="#3f80c6" stroke-width="0.7">
+            <line x1="-39" y1="-9" x2="-39" y2="9"/><line x1="-31.5" y1="-9" x2="-31.5" y2="9"/><line x1="-24" y1="-9" x2="-24" y2="9"/>
+            <line x1="-46" y1="0" x2="-17" y2="0"/>
+            <line x1="24" y1="-9" x2="24" y2="9"/><line x1="31.5" y1="-9" x2="31.5" y2="9"/><line x1="39" y1="-9" x2="39" y2="9"/>
+            <line x1="17" y1="0" x2="46" y2="0"/>
+          </g>
+          <!-- booms -->
+          <line x1="-17" y1="0" x2="-10" y2="0" stroke="#9fb6cf" stroke-width="1.5"/>
+          <line x1="17"  y1="0" x2="10"  y2="0" stroke="#9fb6cf" stroke-width="1.5"/>
+          <!-- body -->
+          <rect x="-10" y="-9" width="20" height="18" rx="2.5" fill="#e8eef5" stroke="#aab8c8"/>
+          <rect x="-10" y="-2" width="20" height="4" fill="#cbb46a"/>
+          <!-- downlink comms dish -->
+          <line x1="0" y1="9" x2="0" y2="13" stroke="#9fb6cf" stroke-width="1"/>
+          <ellipse cx="0" cy="13" rx="6" ry="3" fill="#dfe8f2" stroke="#9fb6cf" stroke-width="0.8"/>
+        </g>
       </defs>
 
       <!-- background -->
@@ -653,90 +684,82 @@
 
       <!-- stars -->
       <g fill="#ffffff">
-        <circle class="twinkle" cx="120" cy="50" r="1.4"/>
-        <circle cx="220" cy="90" r="1"/>
-        <circle class="twinkle" cx="340" cy="40" r="1.6" style="animation-delay:1s"/>
-        <circle cx="470" cy="70" r="1"/>
-        <circle class="twinkle" cx="600" cy="30" r="1.3" style="animation-delay:.5s"/>
-        <circle cx="720" cy="95" r="1.1"/>
-        <circle class="twinkle" cx="880" cy="45" r="1.5" style="animation-delay:1.6s"/>
-        <circle cx="980" cy="80" r="1"/>
-        <circle class="twinkle" cx="1080" cy="40" r="1.4" style="animation-delay:.9s"/>
-        <circle cx="1150" cy="95" r="1.1"/>
-        <circle cx="60" cy="120" r="1"/>
-        <circle class="twinkle" cx="780" cy="55" r="1.2" style="animation-delay:2.1s"/>
+        <circle class="twinkle" cx="120" cy="48" r="1.4"/>
+        <circle cx="220" cy="86" r="1"/>
+        <circle class="twinkle" cx="340" cy="36" r="1.6" style="animation-delay:1s"/>
+        <circle cx="470" cy="64" r="1"/>
+        <circle class="twinkle" cx="600" cy="26" r="1.3" style="animation-delay:.5s"/>
+        <circle cx="720" cy="60" r="1.1"/>
+        <circle class="twinkle" cx="900" cy="40" r="1.5" style="animation-delay:1.6s"/>
+        <circle cx="1010" cy="70" r="1"/>
+        <circle class="twinkle" cx="1100" cy="36" r="1.4" style="animation-delay:.9s"/>
+        <circle cx="1160" cy="86" r="1.1"/>
+        <circle cx="60" cy="110" r="1"/>
+        <circle class="twinkle" cx="790" cy="30" r="1.2" style="animation-delay:2.1s"/>
       </g>
 
       <!-- orbital shells (multi-layer NTN) -->
       <g fill="none" stroke="#9ecbff">
-        <ellipse cx="600" cy="980" rx="980"  ry="840" stroke-opacity="0.30" stroke-width="1.4" stroke-dasharray="3 7"/>
-        <ellipse cx="600" cy="980" rx="1080" ry="920" stroke-opacity="0.22" stroke-width="1.4" stroke-dasharray="3 7"/>
-        <ellipse cx="600" cy="980" rx="1180" ry="1000" stroke-opacity="0.15" stroke-width="1.4" stroke-dasharray="3 7"/>
+        <ellipse cx="600" cy="900" rx="1000" ry="780" stroke-opacity="0.24" stroke-width="1.4" stroke-dasharray="3 8"/>
+        <ellipse cx="600" cy="900" rx="1130" ry="880" stroke-opacity="0.15" stroke-width="1.4" stroke-dasharray="3 8"/>
       </g>
 
       <!-- atmosphere glow + earth limb -->
-      <circle cx="600" cy="980" r="785" fill="url(#atmos)"/>
-      <circle cx="600" cy="980" r="760" fill="url(#earth)"/>
-      <path d="M 30 263 Q 600 188 1170 263" fill="none" stroke="#7dd3fc" stroke-opacity="0.5" stroke-width="2"/>
+      <circle cx="600" cy="780" r="600" fill="url(#atmos)"/>
+      <circle cx="600" cy="780" r="575" fill="url(#earth)"/>
+      <!-- subtle land / cloud detail along the limb -->
+      <path d="M 110 250 Q 300 214 520 233" fill="none" stroke="#5cc79a" stroke-opacity="0.22" stroke-width="7" stroke-linecap="round"/>
+      <path d="M 690 233 Q 900 212 1090 250" fill="none" stroke="#74b8e6" stroke-opacity="0.20" stroke-width="7" stroke-linecap="round"/>
+      <path d="M 30 250 Q 600 196 1170 250" fill="none" stroke="#9fe0ff" stroke-opacity="0.55" stroke-width="2"/>
 
-      <!-- downlink beam from S2 to ground terminal -->
-      <polygon points="850,168 792,250 912,250" fill="url(#beam)"/>
+      <!-- ground coverage footprint -->
+      <ellipse cx="884" cy="278" rx="80" ry="13" fill="url(#foot)"/>
+
+      <!-- feeder uplink beam: gateway -> S2 -->
+      <polygon points="424,214 440,219 654,104 632,98" fill="url(#beamUp)"/>
+      <!-- user downlink beam: S3 -> user terminal -->
+      <polygon points="944,156 958,158 952,280 812,274" fill="url(#beamDown)"/>
 
       <!-- optical inter-satellite links (FSO) -->
       <g fill="none" stroke="#67e8f9" stroke-width="2" stroke-opacity="0.85">
-        <path id="islA" class="isl" d="M300,181 L850,168"/>
-        <path id="islB" class="isl" d="M850,168 L560,61" style="animation-delay:.6s"/>
+        <path id="islA" class="isl" d="M300,150 L640,96"/>
+        <path id="islB" class="isl" d="M640,96 L950,150" style="animation-delay:.6s"/>
       </g>
       <!-- data pulses travelling along the optical links -->
       <g fill="#a5f3fc">
-        <circle r="3"><animateMotion dur="2.6s" repeatCount="indefinite"><mpath href="#islA"/></animateMotion></circle>
-        <circle r="3"><animateMotion dur="2.6s" begin="1.3s" repeatCount="indefinite"><mpath href="#islA"/></animateMotion></circle>
-        <circle r="2.6"><animateMotion dur="2.2s" repeatCount="indefinite"><mpath href="#islB"/></animateMotion></circle>
+        <circle r="3"><animateMotion dur="2.8s" repeatCount="indefinite"><mpath href="#islA"/></animateMotion></circle>
+        <circle r="2.6"><animateMotion dur="2.8s" begin="1.4s" repeatCount="indefinite"><mpath href="#islB"/></animateMotion></circle>
       </g>
 
-      <!-- ground terminal -->
-      <g transform="translate(852,244)">
-        <circle r="16" fill="url(#glow)"/>
-        <path d="M -9 4 L 0 -8 L 9 4 Z" fill="none" stroke="#cfe6ff" stroke-width="2"/>
-        <line x1="0" y1="4" x2="0" y2="9" stroke="#cfeeff" stroke-width="2"/>
+      <!-- gateway ground station (feeder-link dish) -->
+      <g transform="translate(430,222)">
+        <circle r="15" fill="url(#glow)"/>
+        <rect x="-8" y="6" width="16" height="5" rx="1" fill="#9fb6cf"/>
+        <line x1="0" y1="6" x2="0" y2="0" stroke="#cfddee" stroke-width="2"/>
+        <g transform="rotate(-38)">
+          <path d="M -11 0 A 11 11 0 0 1 11 0 Z" fill="#e8eef5" stroke="#aab8c8" stroke-width="0.8"/>
+          <line x1="0" y1="0" x2="0" y2="-9" stroke="#9fb6cf" stroke-width="1.2"/>
+          <circle cx="0" cy="-9" r="1.6" fill="#fcd34d"/>
+        </g>
+      </g>
+
+      <!-- user terminal (home + VSAT) -->
+      <g transform="translate(882,268)">
+        <circle r="13" fill="url(#glow)"/>
+        <rect x="-13" y="-2" width="14" height="10" fill="#cdd9e6"/>
+        <path d="M -14 -2 L -6 -9 L 2 -2 Z" fill="#9fb6cf"/>
+        <line x1="8" y1="8" x2="8" y2="-3" stroke="#cfddee" stroke-width="1.5"/>
+        <g transform="translate(8,-3) rotate(38)">
+          <path d="M -7 0 A 7 7 0 0 1 7 0 Z" fill="#e8eef5" stroke="#aab8c8" stroke-width="0.7"/>
+          <line x1="0" y1="0" x2="0" y2="-6" stroke="#9fb6cf" stroke-width="1"/>
+          <circle cx="0" cy="-6" r="1.3" fill="#67e8f9"/>
+        </g>
       </g>
 
       <!-- satellites -->
-      <g>
-        <!-- S1 -->
-        <g transform="translate(300,181)">
-          <circle r="22" fill="url(#glow)"/>
-          <rect x="-30" y="-5" width="16" height="10" rx="1" fill="#2f7fe0"/>
-          <rect x="14"  y="-5" width="16" height="10" rx="1" fill="#2f7fe0"/>
-          <line x1="-14" y1="0" x2="-9" y2="0" stroke="#9fb6cf" stroke-width="2"/>
-          <line x1="9"   y1="0" x2="14" y2="0" stroke="#9fb6cf" stroke-width="2"/>
-          <rect x="-10" y="-8" width="20" height="16" rx="3" fill="#e8eef5" stroke="#b7c4d4"/>
-          <line x1="0" y1="-8" x2="0" y2="-14" stroke="#cfddee" stroke-width="2"/>
-          <circle cx="0" cy="-14" r="2" fill="#67e8f9"/>
-        </g>
-        <!-- S2 -->
-        <g transform="translate(850,168)">
-          <circle r="22" fill="url(#glow)"/>
-          <rect x="-30" y="-5" width="16" height="10" rx="1" fill="#2f7fe0"/>
-          <rect x="14"  y="-5" width="16" height="10" rx="1" fill="#2f7fe0"/>
-          <line x1="-14" y1="0" x2="-9" y2="0" stroke="#9fb6cf" stroke-width="2"/>
-          <line x1="9"   y1="0" x2="14" y2="0" stroke="#9fb6cf" stroke-width="2"/>
-          <rect x="-10" y="-8" width="20" height="16" rx="3" fill="#e8eef5" stroke="#b7c4d4"/>
-          <line x1="0" y1="-8" x2="0" y2="-14" stroke="#cfddee" stroke-width="2"/>
-          <circle cx="0" cy="-14" r="2" fill="#67e8f9"/>
-        </g>
-        <!-- S3 -->
-        <g transform="translate(560,61)">
-          <circle r="20" fill="url(#glow)"/>
-          <rect x="-27" y="-4" width="14" height="9" rx="1" fill="#2f7fe0"/>
-          <rect x="13"  y="-4" width="14" height="9" rx="1" fill="#2f7fe0"/>
-          <line x1="-13" y1="0.5" x2="-8" y2="0.5" stroke="#9fb6cf" stroke-width="2"/>
-          <line x1="8"   y1="0.5" x2="13" y2="0.5" stroke="#9fb6cf" stroke-width="2"/>
-          <rect x="-9" y="-7" width="18" height="14" rx="3" fill="#e8eef5" stroke="#b7c4d4"/>
-          <line x1="0" y1="-7" x2="0" y2="-13" stroke="#cfddee" stroke-width="2"/>
-          <circle cx="0" cy="-13" r="2" fill="#67e8f9"/>
-        </g>
-      </g>
+      <use href="#rsat" transform="translate(300,150)"/>
+      <use href="#rsat" transform="translate(640,96)"/>
+      <use href="#rsat" transform="translate(950,150)"/>
     </svg>
     <div class="hero-tag">6G &middot; Non-Terrestrial Networks &middot; <span>Optical Satellite Communications</span></div>
   </div>
@@ -747,8 +770,8 @@
 
     <div class="bio">
       <h1>Abid Afridi</h1>
-      <p class="title-line">Marie Skłodowska-Curie (MSCA) Doctoral Fellow &middot; DC1, FOCAL DN</p>
-      <p class="affil-line">Dept. of Information and Communications Engineering &middot; Aalto University, Finland</p>
+      <p class="title-line">Marie Skłodowska-Curie (MSCA) Doctoral Fellow &middot; FOCAL Doctoral Network</p>
+      <p class="affil-line">Wireless Signal Processing Group &middot; Dept. of Information and Communications Engineering, Aalto University</p>
 
       <div class="affils">
         <span class="affil-badge"><span class="dot" style="background:linear-gradient(135deg,#002e6d,#0b4ea2)">A</span>Aalto University</span>
@@ -756,9 +779,10 @@
         <span class="affil-badge"><span class="dot" style="background:linear-gradient(135deg,#0e7490,#0ea5e9)">F</span>FOCAL <span class="sub">Doctoral Network</span></span>
       </div>
       <p class="intro">
-        I am a doctoral researcher at <strong>Aalto University</strong>, working as DC1 within the
-        <a href="https://focal-dn.eu/" target="_blank">FOCAL Marie Skłodowska-Curie Doctoral Network</a>
-        under the supervision of <strong>Dr. Alexis Dowhuszko</strong>.
+        I am a doctoral researcher at <strong>Aalto University</strong>, in the
+        <strong>Wireless Signal Processing</strong> research group at the Department of Information
+        and Communications Engineering, as part of the
+        <a href="https://focal-dn.eu/" target="_blank">FOCAL Marie Skłodowska-Curie Doctoral Network</a>.
         My research focuses on <strong>6G Non-Terrestrial Networks (NTNs)</strong>, spanning
         AI-based resource allocation, network slicing, load balancing via free-space optical
         inter-satellite links, and interference analysis in multi-layer optical LEO constellations.
@@ -863,7 +887,7 @@
         <span class="news-text">
           Attended the <strong>2nd FOCAL Training School &amp; Midterm Check Meeting</strong> at
           <strong>TNO (Delft)</strong> and <strong>Airbus (Leiden)</strong>, the Netherlands.
-          Presented my doctoral research as DC1 at the network mid-term review.
+          Presented my doctoral research at the network mid-term review.
         </span>
       </div>
       <div class="news-item">
@@ -891,7 +915,7 @@
       <div class="news-item">
         <span class="news-date">Oct 2024</span>
         <span class="news-text">
-          Joined <strong>Aalto University</strong> as MSCA Doctoral Fellow (DC1) in the
+          Joined <strong>Aalto University</strong> as MSCA Doctoral Fellow in the
           <a href="https://focal-dn.eu/" target="_blank">FOCAL Doctoral Network</a>.
         </span>
       </div>
@@ -1125,7 +1149,7 @@
           <p class="tl-org">Aalto University &middot; Espoo, Finland</p>
           <p class="tl-role">D.Sc. (Tech.) in Electrical Engineering &mdash; Doctoral Candidate</p>
           <p class="tl-desc">
-            MSCA DC1, FOCAL Doctoral Network. Supervisor: Dr. Alexis Dowhuszko.<br>
+            MSCA Fellow, FOCAL Doctoral Network &middot; Wireless Signal Processing research group.<br>
             Focus: AI-based resource allocation and network slicing in multi-layer optical NTNs.
           </p>
         </div>
@@ -1165,8 +1189,8 @@
       <div class="tl-item">
         <div class="tl-date">2024 &ndash; present</div>
         <div>
-          <p class="tl-org">Aalto University &middot; Dept. of Information and Communications Engineering</p>
-          <p class="tl-role">MSCA Doctoral Fellow (DC1), FOCAL Doctoral Network</p>
+          <p class="tl-org">Aalto University &middot; Wireless Signal Processing Group</p>
+          <p class="tl-role">MSCA Doctoral Fellow, FOCAL Doctoral Network</p>
           <p class="tl-desc">
             Research on NTN load balancing via FSO inter-satellite links, network slicing,
             and interference analysis in narrow-beam LEO satellite constellations.
@@ -1228,7 +1252,7 @@
           <p class="tl-org">2nd FOCAL Training School &amp; Midterm Check Meeting</p>
           <p class="tl-role">TNO, Delft &amp; Airbus, Leiden &middot; The Netherlands</p>
           <p class="tl-desc">
-            Presented my doctoral research as DC1 at the network mid-term review. Technical
+            Presented my doctoral research at the network mid-term review. Technical
             sessions covered optical pointing, acquisition &amp; tracking, coherent long-range
             optical communication, spatial-mode-multiplexed FSO, QKD space links, and AI/ML for
             satellite communication networks, with hands-on visits to the optical-communications
