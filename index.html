@@ -126,7 +126,7 @@
     nav ul {
       list-style: none;
       display: flex;
-      gap: 1.75rem;
+      gap: 1.2rem;
     }
     nav ul a {
       font-size: 0.83rem;
@@ -217,7 +217,7 @@
       color: rgba(255,255,255,0.92);
       text-shadow: 0 1px 6px rgba(0,0,0,0.45);
     }
-    .hero-tag span { color: var(--cyan); }
+    .hero-tag span { color: #fff; }
     @keyframes twinkle { 0%,100% { opacity: 0.25; } 50% { opacity: 1; } }
     @keyframes dash { to { stroke-dashoffset: -40; } }
     .isl { stroke-dasharray: 5 5; animation: dash 2.4s linear infinite; }
@@ -542,6 +542,30 @@
       hyphens: auto;
     }
 
+    /* ── Credentials (certifications / languages) ───────────────── */
+    .cred-list { display: flex; flex-direction: column; gap: 0.55rem; }
+    .cred-item {
+      font-size: 0.85rem;
+      color: var(--text);
+      line-height: 1.5;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .cred-item:last-child { border-bottom: none; padding-bottom: 0; }
+    .cred-org { color: var(--text-muted); font-size: 0.8rem; }
+
+    .ach-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.55;
+    }
+    .ach-list li { padding-left: 1.15rem; position: relative; }
+    .ach-list li::before { content: "▸"; position: absolute; left: 0; color: var(--accent); }
+
     /* ── Footer ──────────────────────────────────────────────────── */
     footer {
       padding: 2rem 1.75rem;
@@ -611,6 +635,7 @@
         <li><a href="#education">Education</a></li>
         <li><a href="#training">Training</a></li>
         <li><a href="#awards">Awards</a></li>
+        <li><a href="#skills">Skills</a></li>
         <li><a href="#contact">Contact</a></li>
       </ul>
     </nav>
@@ -712,13 +737,8 @@
       <path d="M 690 233 Q 900 212 1090 250" fill="none" stroke="#74b8e6" stroke-opacity="0.20" stroke-width="7" stroke-linecap="round"/>
       <path d="M 30 250 Q 600 196 1170 250" fill="none" stroke="#9fe0ff" stroke-opacity="0.55" stroke-width="2"/>
 
-      <!-- ground coverage footprint -->
-      <ellipse cx="884" cy="278" rx="80" ry="13" fill="url(#foot)"/>
-
       <!-- feeder uplink beam: gateway -> S2 -->
       <polygon points="424,214 440,219 654,104 632,98" fill="url(#beamUp)"/>
-      <!-- user downlink beam: S3 -> user terminal -->
-      <polygon points="944,156 958,158 952,280 812,274" fill="url(#beamDown)"/>
 
       <!-- optical inter-satellite links (FSO) -->
       <g fill="none" stroke="#67e8f9" stroke-width="2" stroke-opacity="0.85">
@@ -740,19 +760,6 @@
           <path d="M -11 0 A 11 11 0 0 1 11 0 Z" fill="#e8eef5" stroke="#aab8c8" stroke-width="0.8"/>
           <line x1="0" y1="0" x2="0" y2="-9" stroke="#9fb6cf" stroke-width="1.2"/>
           <circle cx="0" cy="-9" r="1.6" fill="#fcd34d"/>
-        </g>
-      </g>
-
-      <!-- user terminal (home + VSAT) -->
-      <g transform="translate(882,268)">
-        <circle r="13" fill="url(#glow)"/>
-        <rect x="-13" y="-2" width="14" height="10" fill="#cdd9e6"/>
-        <path d="M -14 -2 L -6 -9 L 2 -2 Z" fill="#9fb6cf"/>
-        <line x1="8" y1="8" x2="8" y2="-3" stroke="#cfddee" stroke-width="1.5"/>
-        <g transform="translate(8,-3) rotate(38)">
-          <path d="M -7 0 A 7 7 0 0 1 7 0 Z" fill="#e8eef5" stroke="#aab8c8" stroke-width="0.7"/>
-          <line x1="0" y1="0" x2="0" y2="-6" stroke="#9fb6cf" stroke-width="1"/>
-          <circle cx="0" cy="-6" r="1.3" fill="#67e8f9"/>
         </g>
       </g>
 
@@ -867,6 +874,14 @@
   <section class="section" id="news">
     <p class="section-label">News</p>
     <div class="news-list">
+      <div class="news-item">
+        <span class="news-date">Jun 2026</span>
+        <span class="news-text">
+          Received a <strong>Certificate of Appreciation</strong> from the
+          <strong>Embassy of Pakistan</strong> (Seoul, Republic of Korea) for distinguished
+          service to the Pakistani students and scholars community in South Korea.
+        </span>
+      </div>
       <div class="news-item">
         <span class="news-date">May 2026</span>
         <span class="news-text">
@@ -1147,9 +1162,8 @@
         <div class="tl-date">2024 &ndash; present</div>
         <div>
           <p class="tl-org">Aalto University &middot; Espoo, Finland</p>
-          <p class="tl-role">D.Sc. (Tech.) in Electrical Engineering &mdash; Doctoral Candidate</p>
+          <p class="tl-role">D.Sc. (Tech.) in Electrical Engineering &mdash; MSCA Doctoral Fellow</p>
           <p class="tl-desc">
-            MSCA Fellow, FOCAL Doctoral Network &middot; Wireless Signal Processing research group.<br>
             Focus: AI-based resource allocation and network slicing in multi-layer optical NTNs.
           </p>
         </div>
@@ -1159,10 +1173,10 @@
         <div class="tl-date">2022 &ndash; 2025</div>
         <div>
           <p class="tl-org">University of Ulsan &middot; Ulsan, South Korea</p>
-          <p class="tl-role">M.Sc. in Electrical Engineering</p>
+          <p class="tl-role">M.Sc. in Electrical Engineering &mdash; BK21+ Scholarship</p>
           <p class="tl-desc">
-            BK21+ Scholarship. Research on wireless-powered IoT, IRS-assisted systems,
-            NOMA/TDMA, and metaheuristic optimization (PSO, GA).
+            Focus: wireless-powered IoT, IRS-assisted systems, NOMA/TDMA, and
+            metaheuristic optimization (PSO, GA).
           </p>
         </div>
       </div>
@@ -1171,9 +1185,9 @@
         <div class="tl-date">2016 &ndash; 2020</div>
         <div>
           <p class="tl-org">University of Science &amp; Technology Bannu &middot; Bannu, Pakistan</p>
-          <p class="tl-role">B.E. in Electrical Engineering (Telecommunication)</p>
+          <p class="tl-role">B.E. in Electrical Engineering (Telecom) &mdash; HEC Fully Funded Scholarship</p>
           <p class="tl-desc">
-            Final-year project: intelligent IoT-based power theft detection system.
+            Final Year Project: intelligent IoT-based power theft detection system.
           </p>
         </div>
       </div>
@@ -1204,12 +1218,9 @@
           <p class="tl-org">Multimedia Communication and Systems Lab (MCSL), University of Ulsan</p>
           <p class="tl-role">Graduate Research Assistant</p>
           <p class="tl-desc">
-            <ul>
-              <li>Developed hybrid NOMA-TDMA frameworks for throughput maximization in WPCNs</li>
-              <li>Implemented Quantum PSO and Genetic Algorithm for joint resource allocation</li>
-              <li>Designed IRS-assisted secured wireless-powered IoT network architectures</li>
-              <li>Enhanced physical layer security via controlled jamming in ISAC systems</li>
-            </ul>
+            Developed metaheuristic optimization frameworks (Quantum PSO, genetic algorithms) for
+            throughput maximization and joint resource allocation in IRS-assisted, secured
+            wireless-powered IoT networks, with a focus on physical layer security.
           </p>
         </div>
       </div>
@@ -1280,7 +1291,7 @@
 
   <!-- ══════════════════════════ AWARDS & HONORS ════════════════════════════ -->
   <section class="section" id="awards">
-    <p class="section-label">Awards &amp; Honors</p>
+    <p class="section-label">Awards &amp; Achievements</p>
     <div class="award-list">
 
       <div class="award-row">
@@ -1328,6 +1339,57 @@
         </div>
       </div>
 
+    </div>
+
+    <div class="pub-group" style="margin-top:1.75rem;">
+      <p class="pub-group-title">Additional Achievements</p>
+      <ul class="ach-list">
+        <li><strong>Certificate of Appreciation</strong> &mdash; Embassy of Pakistan, Seoul, for distinguished service to the Pakistani students &amp; scholars community in the Republic of Korea (June 2026)</li>
+        <li>Prime Minister merit-based laptop award (during B.E.)</li>
+        <li>Final-year project funded by the <strong>National Grassroots ICT Research Initiative (NGIRI)</strong></li>
+        <li>Best Event Management &amp; Organizing &mdash; UST Bannu</li>
+        <li>Best Attendance certificate (HSSC)</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ════════════════════ SKILLS, TOOLS & CERTIFICATIONS ════════════════════ -->
+  <section class="section" id="skills">
+    <p class="section-label">Skills, Tools &amp; Certifications</p>
+
+    <div class="pub-group">
+      <p class="pub-group-title">Technical Skills</p>
+      <div class="tags">
+        <span class="tag">MATLAB</span>
+        <span class="tag">Python</span>
+        <span class="tag">LaTeX</span>
+        <span class="tag">CVX</span>
+        <span class="tag">Simulink</span>
+        <span class="tag">Proteus</span>
+      </div>
+    </div>
+
+    <div class="pub-group">
+      <p class="pub-group-title">Certifications</p>
+      <div class="cred-list">
+        <div class="cred-item"><strong>5G and Beyond Technologies</strong> &middot; <span class="cred-org">Universitat Polit&egrave;cnica de Val&egrave;ncia, Spain</span></div>
+        <div class="cred-item"><strong>Wireless Communication for Everybody</strong> &middot; <span class="cred-org">Yonsei University, South Korea</span></div>
+        <div class="cred-item"><strong>Wireless Networking &mdash; one-month training</strong> &middot; <span class="cred-org">NETHOME, Peshawar</span></div>
+        <div class="cred-item"><strong>Introduction to Data Science</strong> &middot; <span class="cred-org">Cisco Networking Academy</span></div>
+        <div class="cred-item"><strong>Deep Learning for Beginners</strong> &middot; <span class="cred-org">SkillUp</span></div>
+        <div class="cred-item"><strong>Research Ethics Education</strong> &middot; <span class="cred-org">University of Ulsan, South Korea</span></div>
+        <div class="cred-item"><strong>Six Webinars</strong> &middot; <span class="cred-org">Pakistan Engineering Council (PEC)</span></div>
+      </div>
+    </div>
+
+    <div class="pub-group">
+      <p class="pub-group-title">Languages</p>
+      <div class="cred-list">
+        <div class="cred-item"><strong>English</strong> &middot; <span class="cred-org">IELTS Overall 7.0 (July 2024)</span></div>
+        <div class="cred-item"><strong>Korean</strong> &middot; <span class="cred-org">Basic</span></div>
+        <div class="cred-item"><strong>Urdu</strong> &middot; <span class="cred-org">National language</span></div>
+        <div class="cred-item"><strong>Pashto</strong> &middot; <span class="cred-org">Mother tongue</span></div>
+      </div>
     </div>
   </section>
 
