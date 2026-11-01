@@ -285,7 +285,10 @@
     .hud-chip[aria-pressed="false"] { opacity: 0.45; }
     .hud-chip[aria-pressed="false"] i { border-top-color: rgba(230,241,255,0.4) !important; }
     .hud-stats { margin-top: 0.55rem; font-size: 0.68rem; color: rgba(214,232,255,0.8); font-variant-numeric: tabular-nums; text-shadow: 0 1px 6px rgba(0,0,0,0.45); }
-    .hero-hint { position: absolute; right: 1.75rem; top: 1rem; z-index: 3; font-size: 0.66rem; color: rgba(214,232,255,0.65); pointer-events: none; }
+    .hero-ctrl { position: absolute; right: 1.75rem; top: 0.85rem; z-index: 3; display: flex; align-items: center; gap: 0.6rem; }
+    .hero-hint { font-size: 0.66rem; color: rgba(214,232,255,0.65); pointer-events: none; }
+    .hero-play svg { width: 10px; height: 10px; fill: currentColor; }
+    .hero-play[aria-pressed="false"] { opacity: 1; border-color: rgba(125,211,252,0.7); }
     .hero-tip {
       position: absolute;
       z-index: 4;
@@ -920,7 +923,7 @@
     .js .reveal.in { opacity: 1; transform: none; }
 
     @media (prefers-reduced-motion: reduce) {
-      .isl, .twinkle, .live-dot, #travel-map .arc, #travel-map .halo { animation: none; }
+      .isl, .twinkle, #travel-map .arc, #travel-map .halo { animation: none; }
       .js .reveal { opacity: 1; transform: none; transition: none; }
       .bar-fill { transition: none; }
       .js .reveal:not(.in) .bar-fill { width: calc(var(--v) * 100% / 210); }
@@ -952,6 +955,7 @@
     @media (max-width: 620px) {
       .hero-banner { height: 200px; }
       .hero-tag, .hero-hint, .hud-chips, .hud-stats { display: none; }
+      .hero-ctrl { right: 1rem; top: 0.7rem; }
       .hero-hud { left: 1rem; top: 0.8rem; max-width: 46%; }
       #about {
         grid-template-columns: 1fr;
@@ -1181,7 +1185,10 @@
       </div>
       <p class="hud-stats" id="heroStats"></p>
     </div>
-    <span class="hero-hint">Drag to rotate &middot; hover or tap for details</span>
+    <div class="hero-ctrl">
+      <span class="hero-hint">Drag to rotate &middot; hover or tap for details</span>
+      <button type="button" class="hud-chip hero-play" id="heroPlay" aria-pressed="true">Pause</button>
+    </div>
     <div class="hero-tip" id="heroTip" hidden></div>
     <div class="hero-tag">6G &middot; <span>Multi-layer Optical Non-Terrestrial Networks</span></div>
   </div>
@@ -2082,7 +2089,6 @@
     var ctx = cv.getContext('2d');
     var tipEl = document.getElementById('heroTip');
     var statsEl = document.getElementById('heroStats');
-    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     var RAD = Math.PI / 180, TAU = 2 * Math.PI;
 
     // Lengths in Earth radii. Altitudes are exaggerated so that the two layers stay legible.
@@ -2126,7 +2132,7 @@
     });
 
     var W = 0, H = 0, S = 1, cx = 0, cy = 0, dpr = 1, stars = [];
-    var t = reduce ? 14 : 0;                           // simulation time in seconds
+    var t = 0;                                         // simulation time in seconds
     // Centred between Delft (4 E) and Seoul (127 E) so all three stations face the viewer.
     var view = { lon0: 64 * RAD, lat0: 30 * RAD, dLon: 0, dLat: 0, lon: 0, lat: 0 };
     var cl = 1, sl = 0, cp = 1, sp = 0;
@@ -2137,7 +2143,7 @@
     var running = false, visible = true, last = 0, rafId = 0;
 
     function setView() {
-      var osc = reduce ? 0 : 8 * RAD * Math.sin(TAU * t / 80);
+      var osc = 8 * RAD * Math.sin(TAU * t / 80);
       view.lon = view.lon0 + view.dLon + osc;
       view.lat = Math.max(-10 * RAD, Math.min(60 * RAD, view.lat0 + view.dLat));
       cl = Math.cos(view.lon); sl = Math.sin(view.lon); cp = Math.cos(view.lat); sp = Math.sin(view.lat);
@@ -2198,7 +2204,7 @@
           var pick = null, pe = MIN_EL;
           sats.forEach(function (s) { var v = elevation(g, s); if (v > pe) { pe = v; pick = s; } });
           if (pick && cur && pick !== cur) { g.handovers++; handovers++; }
-          if (pick && pick !== cur && !reduce) rings.push({ g: g, t0: now });
+          if (pick && pick !== cur && running) rings.push({ g: g, t0: now });
           if (pick !== cur) g.since = t;
           g.serving = pick; el = pe;
         }
@@ -2420,8 +2426,22 @@
       draw(now);
       rafId = requestAnimationFrame(frame);
     }
+    // The owner wants the cover in motion for every visitor, so it ignores the system's reduced-motion
+    // request (for example Windows "Animation effects" off); the Pause button lets a visitor stop it.
+    var paused = false, playBtn = document.getElementById('heroPlay');
+    function paintPlay() {
+      playBtn.setAttribute('aria-pressed', String(!paused));
+      playBtn.setAttribute('aria-label', paused ? 'Play the animation' : 'Pause the animation');
+      playBtn.innerHTML = paused
+        ? '<svg viewBox="0 0 10 10" aria-hidden="true"><path d="M2 1l7 4-7 4z"/></svg>Play'
+        : '<svg viewBox="0 0 10 10" aria-hidden="true"><path d="M2 1h2v8H2zM6 1h2v8H6z"/></svg>Pause';
+    }
+    if (playBtn) {
+      playBtn.addEventListener('click', function () { paused = !paused; paintPlay(); setRunning(); });
+      paintPlay();
+    }
     function setRunning() {                            // animate only while the banner is on screen
-      var want = !reduce && visible && !document.hidden;
+      var want = !paused && visible && !document.hidden;
       if (want && !running) { running = true; last = 0; rafId = requestAnimationFrame(frame); }
       else if (!want && running) { running = false; if (rafId) cancelAnimationFrame(rafId); rafId = 0; }
     }
@@ -2475,7 +2495,7 @@
     box.addEventListener('pointerleave', function (e) {
       if (e.pointerType === 'mouse' && !drag) { pointer = null; redraw(); }
     });
-    box.querySelectorAll('.hud-chip').forEach(function (b) {
+    box.querySelectorAll('.hud-chip[data-layer]').forEach(function (b) {
       b.addEventListener('click', function () {
         var kind = b.dataset.layer;
         show[kind] = !show[kind];
@@ -2484,7 +2504,8 @@
       });
     });
     if ('IntersectionObserver' in window) {
-      new IntersectionObserver(function (entries) { visible = entries[0].isIntersecting; setRunning(); }).observe(box);
+      // One callback can carry several entries for the banner; the last one is the current state.
+      new IntersectionObserver(function (entries) { visible = entries[entries.length - 1].isIntersecting; setRunning(); }).observe(box);
     }
     document.addEventListener('visibilitychange', setRunning);
     if ('ResizeObserver' in window) new ResizeObserver(resize).observe(box);
