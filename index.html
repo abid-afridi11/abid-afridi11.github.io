@@ -1170,11 +1170,11 @@
   <!-- ═══════════════════════════ HERO BANNER (6G / NTN cover) ════════════════ -->
   <!-- Canvas simulation drawn by the "Hero" block in the script at the end of the page -->
   <div class="hero-banner" id="hero">
-    <canvas id="heroCanvas" role="img" aria-label="Simulated multi-layer optical satellite network: three LEO orbital planes and one upper orbital layer around the Earth, linked by intra-plane, inter-plane and inter-orbit free-space optical links, with three ground stations that hand over between satellites over time. Drag to rotate."></canvas>
+    <canvas id="heroCanvas" role="img" aria-label="Simulated multi-layer optical satellite network: three LEO orbital planes and one upper orbital layer around the Earth, linked by same-plane, inter-plane and inter-orbit free-space optical links, with three ground stations that hand over between satellites over time. Drag to rotate."></canvas>
     <div class="hero-hud">
       <p class="hud-title"><span class="live-dot"></span>Simulated multi-layer optical NTN</p>
       <div class="hud-chips" role="group" aria-label="Show or hide link types">
-        <button type="button" class="hud-chip" data-layer="intra" aria-pressed="true"><i style="border-top-color:#67e8f9"></i>Intra-plane ISL</button>
+        <button type="button" class="hud-chip" data-layer="intra" aria-pressed="true"><i style="border-top-color:#67e8f9"></i>Same-plane ISL</button>
         <button type="button" class="hud-chip" data-layer="inter" aria-pressed="true"><i style="border-top-color:#e0f2fe;border-top-style:dashed"></i>Inter-plane ISL</button>
         <button type="button" class="hud-chip" data-layer="orbit" aria-pressed="true"><i style="border-top-color:#f0abfc;border-top-style:dashed"></i>Inter-orbit ISL</button>
         <button type="button" class="hud-chip" data-layer="ground" aria-pressed="true"><i style="border-top-color:#fcd34d"></i>Ground links</button>
@@ -1668,7 +1668,7 @@
           <div class="tl-body">
             <p class="tl-org">University of Ulsan &middot; Ulsan, South Korea</p>
             <p class="tl-role">M.Sc. in Electrical Engineering &mdash; BK21+ Scholarship</p>
-            <p class="tl-desc">Focus: M.Sc. thesis, <em>"Optimization of Resources Allocation and Security in Wireless Powered IoT Networks."</em></p>
+            <p class="tl-desc">Focus: <em>Optimization of Resources Allocation and Security in Wireless Powered IoT Networks</em>.</p>
           </div>
           <span class="tl-date">2022 &ndash; 2025</span>
         </div>
@@ -1818,7 +1818,7 @@
         <span><i class="d-study"></i>Study &amp; work</span>
         <span><i class="d-training"></i>Training schools</span>
         <span><i class="d-conf"></i>Conferences</span>
-        <span style="margin-left:auto">Dashed arcs: trips from Espoo since 2025</span>
+        <span style="margin-left:auto">Dashed arcs: training schools and conferences</span>
       </div>
     </div>
     <ul class="places">
@@ -2368,7 +2368,7 @@
         if (l.kind === 'ground') served.push(l.a.name); else n[l.kind]++;
       });
       var parts = [];
-      if (n.intra) parts.push(n.intra + ' intra-plane');
+      if (n.intra) parts.push(n.intra + ' same-plane');
       if (n.inter) parts.push(n.inter + ' inter-plane');
       if (n.orbit) parts.push(n.orbit + ' inter-orbit');
       return '<b>' + o.name + '</b> &middot; ' + (o.leo ? 'LEO plane ' + (o.plane + 1) : 'upper orbital layer') +
@@ -2389,7 +2389,7 @@
       var isl = links.filter(function (l) { return l.kind !== 'ground'; }).length;
       var inContact = gss.filter(function (g) { return g.serving; }).length;
       statsEl.textContent = isl + ' optical ISLs active · ' + inContact + '/' + gss.length +
-        ' ground stations in contact · ' + handovers + ' handovers';
+        ' ground stations in contact · ' + handovers + (handovers === 1 ? ' handover' : ' handovers');
     }
 
     function draw(now) {
@@ -2504,8 +2504,9 @@
     { name: 'Glasgow',        lon: -4.25,  lat: 55.86, type: 'conf',     dx: 0,  dy: -11, anchor: 'middle', trip: true },
     { name: 'Bannu',          lon: 70.60,  lat: 32.99, type: 'study',    dx: 9,  dy: 4 },
     { name: 'Macau',          lon: 113.54, lat: 22.20, type: 'conf',     dx: 9,  dy: 4,  trip: true, pulse: true },
-    { name: 'Jeju',           lon: 126.53, lat: 33.50, type: 'conf',     dx: -9, dy: 12, anchor: 'end' },
-    { name: 'Ulsan & Busan',  lon: 129.31, lat: 35.54, type: 'study',    dx: -2, dy: -11, anchor: 'end' }
+    { name: 'Jeju',           lon: 126.53, lat: 33.50, type: 'conf',     dx: -9, dy: 12, anchor: 'end', trip: true },
+    // The arc to this pin stands for the ICMT 2023 trip to Busan, so it takes the conference colour.
+    { name: 'Ulsan & Busan',  lon: 129.31, lat: 35.54, type: 'study',    dx: -2, dy: -11, anchor: 'end', trip: true, arcType: 'conf' }
   ];
   var mapSvg = document.getElementById('travel-map');
   function mapMessage(text) {
@@ -2529,7 +2530,7 @@
     svg.append('g').selectAll('path')
       .data(PLACES.filter(function (p) { return p.trip; }))
       .join('path')
-      .attr('class', function (p) { return 'arc t-' + p.type; })
+      .attr('class', function (p) { return 'arc t-' + (p.arcType || p.type); })
       .attr('d', function (p) { return path({ type: 'LineString', coordinates: [[home.lon, home.lat], [p.lon, p.lat]] }); });
     var pins = svg.append('g').selectAll('g').data(PLACES).join('g')
       .attr('transform', function (p) { var xy = proj([p.lon, p.lat]); return 'translate(' + xy[0] + ',' + xy[1] + ')'; });
