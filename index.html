@@ -364,7 +364,7 @@
     .stats {
       grid-column: 1 / -1;
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(3, 1fr);
       gap: 0.75rem;
     }
     .stat {
@@ -892,7 +892,9 @@
       .bio .intro { max-width: 100%; text-align: left; }
       .award-desc { text-align: left; }
       .cta-row, .affils { justify-content: center; }
-      .stats { grid-template-columns: repeat(2, 1fr); margin-top: 1rem; text-align: left; }
+      .stats { grid-template-columns: 1fr; margin-top: 1rem; text-align: left; }
+      .stat { display: flex; align-items: baseline; gap: 0.75rem; padding: 0.65rem 1rem; }
+      .stat-num { font-size: 1.25rem; min-width: 4.2rem; }
       .research-grid { grid-template-columns: 1fr; }
       .news-item { grid-template-columns: 28px 1fr; column-gap: 0.75rem; row-gap: 0; }
       .n-icon { grid-column: 1; grid-row: 1 / span 2; }
@@ -961,6 +963,11 @@
   </symbol>
   <symbol id="ri-slice" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
     <path d="M16 4L29 10.5 16 17 3 10.5z"/><path d="M3 16l13 6.5L29 16"/><path d="M3 21.5L16 28l13-6.5"/>
+  </symbol>
+  <symbol id="ri-qkd" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="22" y="4" width="5" height="5" rx="1"/><path d="M19.5 2.5v8M29.5 2.5v8M19.5 6.5H22M27 6.5h2.5"/>
+    <path d="M22 9.5L12.2 18.6" stroke-dasharray="2.4 2.2"/>
+    <circle cx="8.6" cy="21.6" r="3.8"/><path d="M11.3 24.3L17.5 30.5M14.3 27.3l1.8-1.8M16.3 29.3l1.6-1.6"/>
   </symbol>
   <symbol id="ri-iot" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
     <circle cx="16" cy="19" r="3.6"/><path d="M16 22.6V29M12 29h8"/>
@@ -1232,10 +1239,9 @@
     </div>
 
     <div class="stats">
-      <div class="stat"><span class="stat-num" data-count="journal">6</span><span class="stat-label">Journal articles</span></div>
-      <div class="stat"><span class="stat-num" data-count="conf">4</span><span class="stat-label">Conference papers</span></div>
       <div class="stat"><span class="stat-num">MSCA</span><span class="stat-label">Doctoral Fellow, FOCAL DN</span></div>
-      <div class="stat"><span class="stat-num">3</span><span class="stat-label">Countries of study and research</span></div>
+      <div class="stat"><span class="stat-num">BK21+</span><span class="stat-label">Brain Korea scholarship, Master's</span></div>
+      <div class="stat"><span class="stat-num">HEC</span><span class="stat-label">Fully funded scholarship, Bachelor's</span></div>
     </div>
   </div>
 
@@ -1256,16 +1262,16 @@
         <div class="r-tags"><span>FSO</span><span>ISL routing</span><span>Load balancing</span></div>
       </article>
       <article class="r-card">
-        <div class="r-icon"><svg><use href="#ri-slice"/></svg></div>
-        <h3 class="r-title">Slicing for Time-Sensitive Traffic</h3>
-        <p class="r-desc">Hop-by-hop reservation of time-frequency resources, so delay-critical flows meet their end-to-end delay budget over multi-hop LEO paths.</p>
-        <div class="r-tags"><span>Network slicing</span><span>E2E delay</span><span>Multi-hop LEO</span></div>
-      </article>
-      <article class="r-card">
         <div class="r-icon"><svg><use href="#ri-iot"/></svg></div>
-        <h3 class="r-title">Wireless-Powered IoT and IRS</h3>
+        <h3 class="r-title">Wireless-Powered IoT Networks</h3>
         <p class="r-desc">Energy harvesting, IRS-assisted links and physical layer security, optimized with particle swarm and genetic algorithms.</p>
         <div class="r-tags"><span>WPCN</span><span>IRS</span><span>PHY security</span></div>
+      </article>
+      <article class="r-card">
+        <div class="r-icon"><svg><use href="#ri-qkd"/></svg></div>
+        <h3 class="r-title">Classical and Quantum Communications in NTNs</h3>
+        <p class="r-desc">NTN architecture design for free-space optical data links and quantum key distribution (QKD), within FOCAL Work Package 2 (Deliverable D2.2).</p>
+        <div class="r-tags"><span>FSO</span><span>QKD</span><span>NTN architecture</span></div>
       </article>
     </div>
   </section>
