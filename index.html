@@ -285,10 +285,7 @@
     .hud-chip[aria-pressed="false"] { opacity: 0.45; }
     .hud-chip[aria-pressed="false"] i { border-top-color: rgba(230,241,255,0.4) !important; }
     .hud-stats { margin-top: 0.55rem; font-size: 0.68rem; color: rgba(214,232,255,0.8); font-variant-numeric: tabular-nums; text-shadow: 0 1px 6px rgba(0,0,0,0.45); }
-    .hero-ctrl { position: absolute; right: 1.75rem; top: 0.85rem; z-index: 3; display: flex; align-items: center; gap: 0.6rem; }
-    .hero-hint { font-size: 0.66rem; color: rgba(214,232,255,0.65); pointer-events: none; }
-    .hero-play svg { width: 10px; height: 10px; fill: currentColor; }
-    .hero-play[aria-pressed="false"] { opacity: 1; border-color: rgba(125,211,252,0.7); }
+    .hero-hint { position: absolute; right: 1.75rem; top: 1rem; z-index: 3; font-size: 0.66rem; color: rgba(214,232,255,0.65); pointer-events: none; }
     .hero-tip {
       position: absolute;
       z-index: 4;
@@ -955,7 +952,6 @@
     @media (max-width: 620px) {
       .hero-banner { height: 200px; }
       .hero-tag, .hero-hint, .hud-chips, .hud-stats { display: none; }
-      .hero-ctrl { right: 1rem; top: 0.7rem; }
       .hero-hud { left: 1rem; top: 0.8rem; max-width: 46%; }
       #about {
         grid-template-columns: 1fr;
@@ -1185,10 +1181,7 @@
       </div>
       <p class="hud-stats" id="heroStats"></p>
     </div>
-    <div class="hero-ctrl">
-      <span class="hero-hint">Drag to rotate &middot; hover or tap for details</span>
-      <button type="button" class="hud-chip hero-play" id="heroPlay" aria-pressed="true">Pause</button>
-    </div>
+    <span class="hero-hint">Drag to rotate &middot; hover or tap for details</span>
     <div class="hero-tip" id="heroTip" hidden></div>
     <div class="hero-tag">6G &middot; <span>Multi-layer Optical Non-Terrestrial Networks</span></div>
   </div>
@@ -1825,7 +1818,7 @@
         <span><i class="d-study"></i>Study &amp; work</span>
         <span><i class="d-training"></i>Training schools</span>
         <span><i class="d-conf"></i>Conferences</span>
-        <span style="margin-left:auto">Dashed arcs: training schools and conferences</span>
+        <span style="margin-left:auto">Dashed arcs: connections from Espoo</span>
       </div>
     </div>
     <ul class="places">
@@ -2426,22 +2419,10 @@
       draw(now);
       rafId = requestAnimationFrame(frame);
     }
-    // The owner wants the cover in motion for every visitor, so it ignores the system's reduced-motion
-    // request (for example Windows "Animation effects" off); the Pause button lets a visitor stop it.
-    var paused = false, playBtn = document.getElementById('heroPlay');
-    function paintPlay() {
-      playBtn.setAttribute('aria-pressed', String(!paused));
-      playBtn.setAttribute('aria-label', paused ? 'Play the animation' : 'Pause the animation');
-      playBtn.innerHTML = paused
-        ? '<svg viewBox="0 0 10 10" aria-hidden="true"><path d="M2 1l7 4-7 4z"/></svg>Play'
-        : '<svg viewBox="0 0 10 10" aria-hidden="true"><path d="M2 1h2v8H2zM6 1h2v8H6z"/></svg>Pause';
-    }
-    if (playBtn) {
-      playBtn.addEventListener('click', function () { paused = !paused; paintPlay(); setRunning(); });
-      paintPlay();
-    }
+    // The owner wants the cover always in motion for every visitor, so it ignores the system's
+    // reduced-motion request (for example Windows "Animation effects" off) and has no pause control.
     function setRunning() {                            // animate only while the banner is on screen
-      var want = !paused && visible && !document.hidden;
+      var want = visible && !document.hidden;
       if (want && !running) { running = true; last = 0; rafId = requestAnimationFrame(frame); }
       else if (!want && running) { running = false; if (rafId) cancelAnimationFrame(rafId); rafId = 0; }
     }
@@ -2523,7 +2504,7 @@
     { name: 'Berlin',         lon: 13.40,  lat: 52.52, type: 'training', dx: 9,  dy: 4,  trip: true },
     { name: 'Delft & Leiden', lon: 4.36,   lat: 52.01, type: 'training', dx: 0,  dy: 18, anchor: 'middle', trip: true },
     { name: 'Glasgow',        lon: -4.25,  lat: 55.86, type: 'conf',     dx: 0,  dy: -11, anchor: 'middle', trip: true },
-    { name: 'Bannu',          lon: 70.60,  lat: 32.99, type: 'study',    dx: 9,  dy: 4 },
+    { name: 'Bannu',          lon: 70.60,  lat: 32.99, type: 'study',    dx: 9,  dy: 4,  trip: true },
     { name: 'Macau',          lon: 113.54, lat: 22.20, type: 'conf',     dx: 9,  dy: 4,  trip: true, pulse: true },
     { name: 'Jeju',           lon: 126.53, lat: 33.50, type: 'conf',     dx: -9, dy: 12, anchor: 'end', trip: true },
     // The arc to this pin stands for the ICMT 2023 trip to Busan, so it takes the conference colour.
