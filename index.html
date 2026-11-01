@@ -231,17 +231,78 @@
       border-bottom: 1px solid var(--border);
     }
 
-    /* ── Hero banner (unchanged) ─────────────────────────────────── */
+    /* ── Hero banner: simulated multi-layer optical NTN (canvas) ── */
     .hero-banner {
       position: relative;
-      height: 200px;
+      height: 260px;
       border-radius: 0 0 18px 18px;
       margin: 0 -1.75rem;
-      background: linear-gradient(120deg, #00102b 0%, #002e6d 50%, #073b7a 100%);
+      background: radial-gradient(ellipse at 63% 52%, #0a3a78 0%, rgba(10,58,120,0) 46%),
+                  linear-gradient(120deg, #00102b 0%, #002e6d 55%, #073b7a 100%);
       overflow: hidden;
       box-shadow: var(--shadow-sm);
+      cursor: grab;
+      touch-action: pan-y;
+      user-select: none;
     }
-    .hero-banner svg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+    .hero-banner.dragging { cursor: grabbing; }
+    #heroCanvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+    .hero-hud { position: absolute; left: 1.75rem; top: 1rem; z-index: 3; max-width: 44%; pointer-events: none; }
+    .hud-title {
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      margin-bottom: 0.55rem;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.92);
+      text-shadow: 0 1px 6px rgba(0,0,0,0.45);
+    }
+    .live-dot { width: 7px; height: 7px; border-radius: 50%; background: #34d399; animation: live 2s ease-out infinite; }
+    @keyframes live { from { box-shadow: 0 0 0 0 rgba(52,211,153,0.6); } to { box-shadow: 0 0 0 8px rgba(52,211,153,0); } }
+    .hud-chips { display: flex; flex-wrap: wrap; gap: 0.35rem; pointer-events: auto; }
+    .hud-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.2rem 0.6rem 0.2rem 0.5rem;
+      font: inherit;
+      font-size: 0.68rem;
+      font-weight: 600;
+      color: #e6f1ff;
+      background: rgba(6,22,50,0.55);
+      border: 1px solid rgba(158,203,255,0.28);
+      border-radius: 999px;
+      cursor: pointer;
+      backdrop-filter: blur(4px);
+      transition: opacity 0.2s, border-color 0.2s;
+    }
+    .hud-chip i { display: inline-block; width: 14px; border-top: 2px solid; }
+    .hud-chip:hover { border-color: rgba(158,203,255,0.65); }
+    .hud-chip:focus-visible { outline: 2px solid #7dd3fc; outline-offset: 2px; }
+    .hud-chip[aria-pressed="false"] { opacity: 0.45; }
+    .hud-chip[aria-pressed="false"] i { border-top-color: rgba(230,241,255,0.4) !important; }
+    .hud-stats { margin-top: 0.55rem; font-size: 0.68rem; color: rgba(214,232,255,0.8); font-variant-numeric: tabular-nums; text-shadow: 0 1px 6px rgba(0,0,0,0.45); }
+    .hero-hint { position: absolute; right: 1.75rem; top: 1rem; z-index: 3; font-size: 0.66rem; color: rgba(214,232,255,0.65); pointer-events: none; }
+    .hero-tip {
+      position: absolute;
+      z-index: 4;
+      max-width: 260px;
+      padding: 0.4rem 0.6rem;
+      font-size: 0.7rem;
+      line-height: 1.45;
+      color: #e6f1ff;
+      background: rgba(4,16,38,0.92);
+      border: 1px solid rgba(125,211,252,0.35);
+      border-radius: 8px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.35);
+      pointer-events: none;
+      transform: translate(14px, -50%);
+    }
+    .hero-tip.flip { transform: translate(calc(-100% - 14px), -50%); }
+    .hero-tip b { color: #fff; }
     .hero-tag {
       position: absolute;
       right: 1.75rem;
@@ -660,6 +721,8 @@
       justify-content: center;
       box-shadow: 0 0 0 4px var(--bg), var(--shadow-sm);
     }
+    .mono.logo { background: #fff; padding: 2px; overflow: hidden; border: 1px solid var(--border); }
+    .mono.logo img { display: block; width: 100%; height: 100%; object-fit: contain; border-radius: 8px; }
     .tl-date {
       font-size: 0.72rem;
       font-weight: 600;
@@ -857,7 +920,7 @@
     .js .reveal.in { opacity: 1; transform: none; }
 
     @media (prefers-reduced-motion: reduce) {
-      .isl, .twinkle, #travel-map .arc, #travel-map .halo { animation: none; }
+      .isl, .twinkle, .live-dot, #travel-map .arc, #travel-map .halo { animation: none; }
       .js .reveal { opacity: 1; transform: none; transition: none; }
       .bar-fill { transition: none; }
       .js .reveal:not(.in) .bar-fill { width: calc(var(--v) * 100% / 210); }
@@ -887,8 +950,9 @@
       .places { grid-template-columns: 1fr; }
     }
     @media (max-width: 620px) {
-      .hero-banner { height: 150px; }
-      .hero-tag { display: none; }
+      .hero-banner { height: 200px; }
+      .hero-tag, .hero-hint, .hud-chips, .hud-stats { display: none; }
+      .hero-hud { left: 1rem; top: 0.8rem; max-width: 46%; }
       #about {
         grid-template-columns: 1fr;
         justify-items: center;
@@ -933,6 +997,28 @@
       <rect x="-10" y="-2.2" width="6.5" height="4.4" fill="#2a5fa8" stroke="#7db3f0" stroke-width=".5"/>
       <rect x="3.5" y="-2.2" width="6.5" height="4.4" fill="#2a5fa8" stroke="#7db3f0" stroke-width=".5"/>
       <rect x="-3.5" y="-3" width="7" height="6" rx="1" fill="#e8eef5"/>
+    </g>
+    <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0" stop-color="#7dd3fc" stop-opacity="0.5"/>
+      <stop offset="1" stop-color="#7dd3fc" stop-opacity="0"/>
+    </radialGradient>
+    <!-- realistic LEO satellite used by the featured-paper figure and the contact card -->
+    <g id="rsat">
+      <circle r="26" fill="url(#glow)"/>
+      <rect x="-46" y="-9" width="29" height="18" rx="1.5" fill="#15386c" stroke="#4f9fe6" stroke-width="0.8"/>
+      <rect x="17"  y="-9" width="29" height="18" rx="1.5" fill="#15386c" stroke="#4f9fe6" stroke-width="0.8"/>
+      <g stroke="#3f80c6" stroke-width="0.7">
+        <line x1="-39" y1="-9" x2="-39" y2="9"/><line x1="-31.5" y1="-9" x2="-31.5" y2="9"/><line x1="-24" y1="-9" x2="-24" y2="9"/>
+        <line x1="-46" y1="0" x2="-17" y2="0"/>
+        <line x1="24" y1="-9" x2="24" y2="9"/><line x1="31.5" y1="-9" x2="31.5" y2="9"/><line x1="39" y1="-9" x2="39" y2="9"/>
+        <line x1="17" y1="0" x2="46" y2="0"/>
+      </g>
+      <line x1="-17" y1="0" x2="-10" y2="0" stroke="#9fb6cf" stroke-width="1.5"/>
+      <line x1="17"  y1="0" x2="10"  y2="0" stroke="#9fb6cf" stroke-width="1.5"/>
+      <rect x="-10" y="-9" width="20" height="18" rx="2.5" fill="#e8eef5" stroke="#aab8c8"/>
+      <rect x="-10" y="-2" width="20" height="4" fill="#cbb46a"/>
+      <line x1="0" y1="9" x2="0" y2="13" stroke="#9fb6cf" stroke-width="1"/>
+      <ellipse cx="0" cy="13" rx="6" ry="3" fill="#dfe8f2" stroke="#9fb6cf" stroke-width="0.8"/>
     </g>
   </defs>
 
@@ -1082,130 +1168,22 @@
 <div class="page">
 
   <!-- ═══════════════════════════ HERO BANNER (6G / NTN cover) ════════════════ -->
-  <div class="hero-banner">
-    <svg viewBox="0 0 1200 320" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-      <defs>
-        <linearGradient id="sky" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0" stop-color="#00102b"/>
-          <stop offset="0.55" stop-color="#002e6d"/>
-          <stop offset="1" stop-color="#0a4a93"/>
-        </linearGradient>
-        <radialGradient id="earth" cx="50%" cy="14%" r="90%">
-          <stop offset="0" stop-color="#2280d6"/>
-          <stop offset="0.5" stop-color="#0b4d96"/>
-          <stop offset="1" stop-color="#04224a"/>
-        </radialGradient>
-        <radialGradient id="atmos" cx="50%" cy="12%" r="62%">
-          <stop offset="0.64" stop-color="#38bdf8" stop-opacity="0"/>
-          <stop offset="0.87" stop-color="#7dd3fc" stop-opacity="0.85"/>
-          <stop offset="1" stop-color="#7dd3fc" stop-opacity="0"/>
-        </radialGradient>
-        <linearGradient id="beamDown" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stop-color="#7dd3fc" stop-opacity="0.5"/>
-          <stop offset="1" stop-color="#7dd3fc" stop-opacity="0.02"/>
-        </linearGradient>
-        <linearGradient id="beamUp" x1="0" y1="1" x2="0" y2="0">
-          <stop offset="0" stop-color="#fcd34d" stop-opacity="0.5"/>
-          <stop offset="1" stop-color="#fcd34d" stop-opacity="0.02"/>
-        </linearGradient>
-        <radialGradient id="glow" cx="50%" cy="50%" r="50%">
-          <stop offset="0" stop-color="#7dd3fc" stop-opacity="0.5"/>
-          <stop offset="1" stop-color="#7dd3fc" stop-opacity="0"/>
-        </radialGradient>
-        <radialGradient id="foot" cx="50%" cy="50%" r="50%">
-          <stop offset="0" stop-color="#7dd3fc" stop-opacity="0.55"/>
-          <stop offset="1" stop-color="#7dd3fc" stop-opacity="0"/>
-        </radialGradient>
-
-        <!-- reusable realistic LEO satellite -->
-        <g id="rsat">
-          <circle r="26" fill="url(#glow)"/>
-          <!-- solar wings -->
-          <rect x="-46" y="-9" width="29" height="18" rx="1.5" fill="#15386c" stroke="#4f9fe6" stroke-width="0.8"/>
-          <rect x="17"  y="-9" width="29" height="18" rx="1.5" fill="#15386c" stroke="#4f9fe6" stroke-width="0.8"/>
-          <g stroke="#3f80c6" stroke-width="0.7">
-            <line x1="-39" y1="-9" x2="-39" y2="9"/><line x1="-31.5" y1="-9" x2="-31.5" y2="9"/><line x1="-24" y1="-9" x2="-24" y2="9"/>
-            <line x1="-46" y1="0" x2="-17" y2="0"/>
-            <line x1="24" y1="-9" x2="24" y2="9"/><line x1="31.5" y1="-9" x2="31.5" y2="9"/><line x1="39" y1="-9" x2="39" y2="9"/>
-            <line x1="17" y1="0" x2="46" y2="0"/>
-          </g>
-          <!-- booms -->
-          <line x1="-17" y1="0" x2="-10" y2="0" stroke="#9fb6cf" stroke-width="1.5"/>
-          <line x1="17"  y1="0" x2="10"  y2="0" stroke="#9fb6cf" stroke-width="1.5"/>
-          <!-- body -->
-          <rect x="-10" y="-9" width="20" height="18" rx="2.5" fill="#e8eef5" stroke="#aab8c8"/>
-          <rect x="-10" y="-2" width="20" height="4" fill="#cbb46a"/>
-          <!-- downlink comms dish -->
-          <line x1="0" y1="9" x2="0" y2="13" stroke="#9fb6cf" stroke-width="1"/>
-          <ellipse cx="0" cy="13" rx="6" ry="3" fill="#dfe8f2" stroke="#9fb6cf" stroke-width="0.8"/>
-        </g>
-      </defs>
-
-      <!-- background -->
-      <rect width="1200" height="320" fill="url(#sky)"/>
-
-      <!-- stars -->
-      <g fill="#ffffff">
-        <circle class="twinkle" cx="120" cy="48" r="1.4"/>
-        <circle cx="220" cy="86" r="1"/>
-        <circle class="twinkle" cx="340" cy="36" r="1.6" style="animation-delay:1s"/>
-        <circle cx="470" cy="64" r="1"/>
-        <circle class="twinkle" cx="600" cy="26" r="1.3" style="animation-delay:.5s"/>
-        <circle cx="720" cy="60" r="1.1"/>
-        <circle class="twinkle" cx="900" cy="40" r="1.5" style="animation-delay:1.6s"/>
-        <circle cx="1010" cy="70" r="1"/>
-        <circle class="twinkle" cx="1100" cy="36" r="1.4" style="animation-delay:.9s"/>
-        <circle cx="1160" cy="86" r="1.1"/>
-        <circle cx="60" cy="110" r="1"/>
-        <circle class="twinkle" cx="790" cy="30" r="1.2" style="animation-delay:2.1s"/>
-      </g>
-
-      <!-- orbital shells (multi-layer NTN) -->
-      <g fill="none" stroke="#9ecbff">
-        <ellipse cx="600" cy="900" rx="1000" ry="780" stroke-opacity="0.24" stroke-width="1.4" stroke-dasharray="3 8"/>
-        <ellipse cx="600" cy="900" rx="1130" ry="880" stroke-opacity="0.15" stroke-width="1.4" stroke-dasharray="3 8"/>
-      </g>
-
-      <!-- atmosphere glow + earth limb -->
-      <circle cx="600" cy="780" r="600" fill="url(#atmos)"/>
-      <circle cx="600" cy="780" r="575" fill="url(#earth)"/>
-      <!-- subtle land / cloud detail along the limb -->
-      <path d="M 110 250 Q 300 214 520 233" fill="none" stroke="#5cc79a" stroke-opacity="0.22" stroke-width="7" stroke-linecap="round"/>
-      <path d="M 690 233 Q 900 212 1090 250" fill="none" stroke="#74b8e6" stroke-opacity="0.20" stroke-width="7" stroke-linecap="round"/>
-      <path d="M 30 250 Q 600 196 1170 250" fill="none" stroke="#9fe0ff" stroke-opacity="0.55" stroke-width="2"/>
-
-      <!-- feeder uplink beam: gateway -> S2 -->
-      <polygon points="424,214 440,219 654,104 632,98" fill="url(#beamUp)"/>
-
-      <!-- optical inter-satellite links (FSO) -->
-      <g fill="none" stroke="#67e8f9" stroke-width="2" stroke-opacity="0.85">
-        <path id="islA" class="isl" d="M300,150 L640,96"/>
-        <path id="islB" class="isl" d="M640,96 L950,150" style="animation-delay:.6s"/>
-      </g>
-      <!-- data pulses travelling along the optical links -->
-      <g fill="#a5f3fc">
-        <circle r="3"><animateMotion dur="2.8s" repeatCount="indefinite"><mpath href="#islA"/></animateMotion></circle>
-        <circle r="2.6"><animateMotion dur="2.8s" begin="1.4s" repeatCount="indefinite"><mpath href="#islB"/></animateMotion></circle>
-      </g>
-
-      <!-- gateway ground station (feeder-link dish) -->
-      <g transform="translate(430,222)">
-        <circle r="15" fill="url(#glow)"/>
-        <rect x="-8" y="6" width="16" height="5" rx="1" fill="#9fb6cf"/>
-        <line x1="0" y1="6" x2="0" y2="0" stroke="#cfddee" stroke-width="2"/>
-        <g transform="rotate(-38)">
-          <path d="M -11 0 A 11 11 0 0 1 11 0 Z" fill="#e8eef5" stroke="#aab8c8" stroke-width="0.8"/>
-          <line x1="0" y1="0" x2="0" y2="-9" stroke="#9fb6cf" stroke-width="1.2"/>
-          <circle cx="0" cy="-9" r="1.6" fill="#fcd34d"/>
-        </g>
-      </g>
-
-      <!-- satellites -->
-      <use href="#rsat" transform="translate(300,150)"/>
-      <use href="#rsat" transform="translate(640,96)"/>
-      <use href="#rsat" transform="translate(950,150)"/>
-    </svg>
-    <div class="hero-tag">6G &middot; Non-Terrestrial Networks &middot; <span>Optical Satellite Communications</span></div>
+  <!-- Canvas simulation drawn by the "Hero" block in the script at the end of the page -->
+  <div class="hero-banner" id="hero">
+    <canvas id="heroCanvas" role="img" aria-label="Simulated multi-layer optical satellite network: three LEO orbital planes and one upper orbital layer around the Earth, linked by intra-plane, inter-plane and inter-orbit free-space optical links, with three ground stations that hand over between satellites over time. Drag to rotate."></canvas>
+    <div class="hero-hud">
+      <p class="hud-title"><span class="live-dot"></span>Simulated multi-layer optical NTN</p>
+      <div class="hud-chips" role="group" aria-label="Show or hide link types">
+        <button type="button" class="hud-chip" data-layer="intra" aria-pressed="true"><i style="border-top-color:#67e8f9"></i>Intra-plane ISL</button>
+        <button type="button" class="hud-chip" data-layer="inter" aria-pressed="true"><i style="border-top-color:#e0f2fe;border-top-style:dashed"></i>Inter-plane ISL</button>
+        <button type="button" class="hud-chip" data-layer="orbit" aria-pressed="true"><i style="border-top-color:#f0abfc;border-top-style:dashed"></i>Inter-orbit ISL</button>
+        <button type="button" class="hud-chip" data-layer="ground" aria-pressed="true"><i style="border-top-color:#fcd34d"></i>Ground links</button>
+      </div>
+      <p class="hud-stats" id="heroStats"></p>
+    </div>
+    <span class="hero-hint">Drag to rotate &middot; hover or tap for details</span>
+    <div class="hero-tip" id="heroTip" hidden></div>
+    <div class="hero-tag">6G &middot; <span>Multi-layer Optical Non-Terrestrial Networks</span></div>
   </div>
 
   <!-- ═══════════════════════════ ABOUT / HERO ══════════════════════════════ -->
@@ -1677,7 +1655,7 @@
       <p class="group-title">Education</p>
       <div class="tl">
         <div class="tl-item">
-          <span class="mono" style="background:linear-gradient(135deg,#002e6d,#0b4ea2)">A</span>
+          <span class="mono logo"><img src="img/logos/aalto.png" width="96" height="96" alt="Aalto University logo"></span>
           <div class="tl-body">
             <p class="tl-org">Aalto University &middot; Espoo, Finland</p>
             <p class="tl-role">D.Sc. (Tech.) in Electrical Engineering &mdash; MSCA Doctoral Fellow</p>
@@ -1686,16 +1664,16 @@
           <span class="tl-date">2025 &ndash; present</span>
         </div>
         <div class="tl-item">
-          <span class="mono" style="background:linear-gradient(135deg,#0f766e,#14b8a6)">UOU</span>
+          <span class="mono logo"><img src="img/logos/ulsan.png" width="96" height="96" alt="University of Ulsan logo"></span>
           <div class="tl-body">
             <p class="tl-org">University of Ulsan &middot; Ulsan, South Korea</p>
             <p class="tl-role">M.Sc. in Electrical Engineering &mdash; BK21+ Scholarship</p>
-            <p class="tl-desc">Focus: wireless-powered IoT, IRS-assisted systems, NOMA/TDMA, and metaheuristic optimization (PSO, GA).</p>
+            <p class="tl-desc">Focus: M.Sc. thesis, <em>"Optimization of Resources Allocation and Security in Wireless Powered IoT Networks."</em></p>
           </div>
           <span class="tl-date">2022 &ndash; 2025</span>
         </div>
         <div class="tl-item">
-          <span class="mono" style="background:linear-gradient(135deg,#166534,#22c55e)">UST</span>
+          <span class="mono logo"><img src="img/logos/ust-bannu.png" width="96" height="96" alt="University of Science and Technology Bannu logo"></span>
           <div class="tl-body">
             <p class="tl-org">University of Science &amp; Technology Bannu &middot; Bannu, Pakistan</p>
             <p class="tl-role">B.E. in Electrical Engineering (Telecom) &mdash; HEC Fully Funded Scholarship</p>
@@ -1710,7 +1688,7 @@
       <p class="group-title">Experience</p>
       <div class="tl">
         <div class="tl-item">
-          <span class="mono" style="background:linear-gradient(135deg,#002e6d,#0b4ea2)">A</span>
+          <span class="mono logo"><img src="img/logos/aalto.png" width="96" height="96" alt="Aalto University logo"></span>
           <div class="tl-body">
             <p class="tl-org">Aalto University &middot; Wireless Signal Processing Group</p>
             <p class="tl-role">MSCA Doctoral Fellow, FOCAL Doctoral Network</p>
@@ -1719,7 +1697,7 @@
           <span class="tl-date">2025 &ndash; present</span>
         </div>
         <div class="tl-item">
-          <span class="mono" style="background:linear-gradient(135deg,#0f766e,#14b8a6)">MCSL</span>
+          <span class="mono logo"><img src="img/logos/ulsan.png" width="96" height="96" alt="University of Ulsan logo"></span>
           <div class="tl-body">
             <p class="tl-org">Multimedia Communication and Systems Lab (MCSL), University of Ulsan</p>
             <p class="tl-role">Graduate Research Assistant</p>
@@ -1737,7 +1715,7 @@
           <span class="tl-date">Jan &ndash; Dec 2021</span>
         </div>
         <div class="tl-item">
-          <span class="mono" style="background:linear-gradient(135deg,#166534,#22c55e)">PTCL</span>
+          <span class="mono logo"><img src="img/logos/ptcl.png" width="96" height="96" alt="PTCL logo"></span>
           <div class="tl-body">
             <p class="tl-org">Pakistan Telecommunication Limited (PTCL) &middot; Peshawar, Pakistan</p>
             <p class="tl-role">Trainee Engineer</p>
@@ -1746,7 +1724,7 @@
           <span class="tl-date">Jul &ndash; Aug 2019</span>
         </div>
         <div class="tl-item">
-          <span class="mono" style="background:linear-gradient(135deg,#1e3a8a,#3b82f6)">PTV</span>
+          <span class="mono logo"><img src="img/logos/ptv.png" width="96" height="96" alt="Pakistan Television logo"></span>
           <div class="tl-body">
             <p class="tl-org">Pakistan Television (PTV) &middot; Peshawar, Pakistan</p>
             <p class="tl-role">Trainee Engineer</p>
@@ -1755,7 +1733,7 @@
           <span class="tl-date">Aug &ndash; Sep 2018</span>
         </div>
         <div class="tl-item">
-          <span class="mono" style="background:linear-gradient(135deg,#92400e,#f59e0b)">TESCO</span>
+          <span class="mono logo"><img src="img/logos/tesco.png" width="96" height="96" alt="TESCO logo"></span>
           <div class="tl-body">
             <p class="tl-org">Tribal Areas Electricity Supply Company (TESCO) &middot; Peshawar, Pakistan</p>
             <p class="tl-role">Trainee Engineer</p>
@@ -2093,6 +2071,431 @@
   var lastMod = new Date(document.lastModified);
   if (!isNaN(lastMod)) document.getElementById('lastUpdated').textContent = lastMod.toLocaleDateString('en-GB', { month: 'long', year: 'numeric' });
 
+  /* ── Hero: simulated multi-layer optical NTN ──────────────── */
+  // One world-atlas request is shared by the hero globe and the travel map.
+  var worldReq = (window.d3 && window.topojson)
+    ? d3.json('https://cdn.jsdelivr.net/npm/world-atlas@2.0.2/countries-110m.json') : null;
+  (function () {
+    var box = document.getElementById('hero');
+    var cv = document.getElementById('heroCanvas');
+    if (!box || !cv || !cv.getContext) return;
+    var ctx = cv.getContext('2d');
+    var tipEl = document.getElementById('heroTip');
+    var statsEl = document.getElementById('heroStats');
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var RAD = Math.PI / 180, TAU = 2 * Math.PI;
+
+    // Lengths in Earth radii. Altitudes are exaggerated so that the two layers stay legible.
+    var LEO_R = 1.30, UP_R = 1.62, NP = 3, NS = 8, NU = 5;
+    var LEO_W = TAU / 40;                              // one LEO orbit every 40 s
+    var UP_W = LEO_W * Math.pow(LEO_R / UP_R, 1.5);   // Kepler's third law for the upper layer
+    var DRIFT = -TAU / 900;                            // node drift relative to the rotating Earth
+    var MIN_EL = 15 * RAD;                             // minimum elevation for a ground contact
+    var PLANE_COL = ['#67e8f9', '#a5b4fc', '#86efac'], UP_COL = '#f0abfc';
+    var LINK = {
+      intra:  { col: null,      w: 1.2, dash: [],     a: 0.6 },
+      inter:  { col: '#e0f2fe', w: 1,   dash: [3, 4], a: 0.55 },
+      orbit:  { col: UP_COL,    w: 1.3, dash: [5, 4], a: 0.75 },
+      ground: { col: '#fcd34d', w: 1.6, dash: [],     a: 0.9 }
+    };
+    var KINDS = ['intra', 'inter', 'orbit', 'ground'];
+    var show = { intra: true, inter: true, orbit: true, ground: true };
+
+    var sats = [];
+    for (var p = 0; p < NP; p++) {
+      for (var k = 0; k < NS; k++) {
+        sats.push({ leo: true, plane: p, r: LEO_R, inc: 53 * RAD, raan: p * 60 * RAD,
+                    u0: (k * 360 / NS + p * 15) * RAD, w: LEO_W, col: PLANE_COL[p],
+                    name: 'P' + (p + 1) + '-S' + (k + 1), k: k });
+      }
+    }
+    for (var m = 0; m < NU; m++) {
+      sats.push({ leo: false, plane: NP, r: UP_R, inc: 18 * RAD, raan: 30 * RAD,
+                  u0: m * 360 / NU * RAD, w: UP_W, col: UP_COL, name: 'U-S' + (m + 1), k: m });
+    }
+    sats.forEach(function (s, i) { s.id = i; });
+    var gss = [
+      { name: 'Espoo', lat: 60.18, lon: 24.83, left: false },
+      { name: 'Seoul', lat: 37.57, lon: 126.98, left: false },
+      { name: 'Delft', lat: 52.01, lon: 4.36, left: true }
+    ].map(function (g, i) {
+      var la = g.lat * RAD, lo = g.lon * RAD;
+      g.x = Math.cos(la) * Math.cos(lo); g.y = Math.cos(la) * Math.sin(lo); g.z = Math.sin(la);
+      g.id = 100 + i; g.gs = true; g.serving = null; g.since = 0; g.el = 0; g.handovers = 0;
+      return g;
+    });
+
+    var W = 0, H = 0, S = 1, cx = 0, cy = 0, dpr = 1, stars = [];
+    var t = reduce ? 14 : 0;                           // simulation time in seconds
+    // Centred between Delft (4 E) and Seoul (127 E) so all three stations face the viewer.
+    var view = { lon0: 64 * RAD, lat0: 30 * RAD, dLon: 0, dLat: 0, lon: 0, lat: 0 };
+    var cl = 1, sl = 0, cp = 1, sp = 0;
+    var links = [], rings = [], handovers = 0;
+    var hot = null, pointer = null, drag = null, tipObj = null, tipAt = 0, statAt = 0;
+    var earthCv = document.createElement('canvas'), ectx = earthCv.getContext('2d'), earthKey = '', earthSize = 0;
+    var land = null, grat = window.d3 ? d3.geoGraticule10() : null;
+    var running = false, visible = true, last = 0, rafId = 0;
+
+    function setView() {
+      var osc = reduce ? 0 : 8 * RAD * Math.sin(TAU * t / 80);
+      view.lon = view.lon0 + view.dLon + osc;
+      view.lat = Math.max(-10 * RAD, Math.min(60 * RAD, view.lat0 + view.dLat));
+      cl = Math.cos(view.lon); sl = Math.sin(view.lon); cp = Math.cos(view.lat); sp = Math.sin(view.lat);
+    }
+    // Orthographic view centred on (view.lon, view.lat); d >= 0 is the hemisphere facing the viewer.
+    function proj(x, y, z, o) {
+      var x1 = x * cl + y * sl, y1 = y * cl - x * sl;
+      o.d = x1 * cp + z * sp;
+      o.sx = cx + S * y1;
+      o.sy = cy - S * (z * cp - x1 * sp);
+      return o;
+    }
+    function orbitPoint(s, u, o) {
+      var nd = s.raan + DRIFT * t, cO = Math.cos(nd), sO = Math.sin(nd), cu = Math.cos(u), su = Math.sin(u);
+      o.x = s.r * (cO * cu - sO * su * Math.cos(s.inc));
+      o.y = s.r * (sO * cu + cO * su * Math.cos(s.inc));
+      o.z = s.r * su * Math.sin(s.inc);
+      return o;
+    }
+    function dist2(a, b) { var dx = a.x - b.x, dy = a.y - b.y, dz = a.z - b.z; return dx * dx + dy * dy + dz * dz; }
+    function clear(a, b) {                             // the chord stays above the Earth's surface
+      var dx = b.x - a.x, dy = b.y - a.y, dz = b.z - a.z;
+      var q = Math.max(0, Math.min(1, -(a.x * dx + a.y * dy + a.z * dz) / (dx * dx + dy * dy + dz * dz)));
+      var px = a.x + dx * q, py = a.y + dy * q, pz = a.z + dz * q;
+      return px * px + py * py + pz * pz > 1.03;
+    }
+    function elevation(g, s) {
+      var dx = s.x - g.x, dy = s.y - g.y, dz = s.z - g.z;
+      return Math.asin((dx * g.x + dy * g.y + dz * g.z) / Math.sqrt(dx * dx + dy * dy + dz * dz));
+    }
+
+    function buildLinks(now) {
+      links.length = 0;
+      var nLeo = NP * NS, i, j;
+      for (i = 0; i < nLeo; i++) {
+        var a = sats[i];
+        links.push({ kind: 'intra', a: a, b: sats[a.plane * NS + (a.k + 1) % NS] });
+        if (a.plane < NP - 1) {                        // no links across the seam between the first and last plane
+          var best = null, bd = 1.0;
+          for (j = 0; j < NS; j++) {
+            var c = sats[(a.plane + 1) * NS + j], d2 = dist2(a, c);
+            if (d2 < bd && clear(a, c)) { bd = d2; best = c; }
+          }
+          if (best) links.push({ kind: 'inter', a: a, b: best });
+        }
+      }
+      for (i = nLeo; i < sats.length; i++) {
+        var up = sats[i], near = null, nd = 0.8;
+        for (j = 0; j < nLeo; j++) {
+          var e = dist2(up, sats[j]);
+          if (e < nd && clear(up, sats[j])) { nd = e; near = sats[j]; }
+        }
+        if (near) links.push({ kind: 'orbit', a: up, b: near });
+      }
+      gss.forEach(function (g) {                      // keep a satellite until it drops below MIN_EL, then hand over
+        var cur = g.serving, el = cur ? elevation(g, cur) : -1;
+        if (!cur || el < MIN_EL) {
+          var pick = null, pe = MIN_EL;
+          sats.forEach(function (s) { var v = elevation(g, s); if (v > pe) { pe = v; pick = s; } });
+          if (pick && cur && pick !== cur) { g.handovers++; handovers++; }
+          if (pick && pick !== cur && !reduce) rings.push({ g: g, t0: now });
+          if (pick !== cur) g.since = t;
+          g.serving = pick; el = pe;
+        }
+        g.el = el;
+        if (g.serving) links.push({ kind: 'ground', a: g, b: g.serving });
+      });
+    }
+
+    function paintEarth(size) {
+      var e = ectx, c = size / 2;
+      e.clearRect(0, 0, size, size);
+      var at = e.createRadialGradient(c, c, S * 0.95, c, c, S * 1.16);
+      at.addColorStop(0, 'rgba(125,211,252,0.5)'); at.addColorStop(1, 'rgba(125,211,252,0)');
+      e.fillStyle = at; e.beginPath(); e.arc(c, c, S * 1.16, 0, TAU); e.fill();
+      var oc = e.createRadialGradient(c - S * 0.35, c - S * 0.4, S * 0.1, c, c, S);
+      oc.addColorStop(0, '#2a8ae0'); oc.addColorStop(0.55, '#0b4d96'); oc.addColorStop(1, '#04224a');
+      e.fillStyle = oc; e.beginPath(); e.arc(c, c, S, 0, TAU); e.fill();
+      if (window.d3) {
+        var gp = d3.geoPath(d3.geoOrthographic().scale(S).translate([c, c]).clipAngle(90)
+          .rotate([-view.lon / RAD, -view.lat / RAD]), e);
+        e.beginPath(); gp(grat); e.strokeStyle = 'rgba(158,203,255,0.14)'; e.lineWidth = 0.6; e.stroke();
+        if (land) {
+          e.beginPath(); gp(land);
+          e.fillStyle = 'rgba(94,199,154,0.4)'; e.fill();
+          e.strokeStyle = 'rgba(167,243,208,0.35)'; e.lineWidth = 0.5; e.stroke();
+        }
+      }
+      var sh = e.createRadialGradient(c - S * 0.3, c - S * 0.35, S * 0.2, c, c, S);
+      sh.addColorStop(0, 'rgba(255,255,255,0.07)'); sh.addColorStop(0.7, 'rgba(0,0,0,0)'); sh.addColorStop(1, 'rgba(0,10,30,0.45)');
+      e.fillStyle = sh; e.beginPath(); e.arc(c, c, S, 0, TAU); e.fill();
+    }
+    function drawEarth() {
+      var size = Math.ceil(S * 2.4);
+      var key = Math.round(view.lon / RAD * 4) + ',' + Math.round(view.lat / RAD * 4) + ',' + size + ',' + dpr + ',' + (land ? 1 : 0);
+      if (key !== earthKey) {                          // repaint the globe only after a 0.25 degree view change
+        var px = Math.ceil(size * dpr);              // the buffer follows the device pixel ratio as well as the size
+        if (px !== earthSize) { earthCv.width = px; earthCv.height = px; earthSize = px; }
+        ectx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        paintEarth(size);
+        earthKey = key;
+      }
+      ctx.globalAlpha = 1;
+      ctx.drawImage(earthCv, cx - size / 2, cy - size / 2, size, size);
+    }
+    function drawStars() {
+      ctx.fillStyle = '#fff';
+      for (var i = 0; i < stars.length; i++) {
+        var s = stars[i];
+        ctx.globalAlpha = s.tw ? 0.25 + 0.65 * Math.abs(Math.sin(t * 0.8 + s.ph)) : 0.5;
+        ctx.fillRect(s.x, s.y, s.r, s.r);
+      }
+    }
+    var P = {};
+    function drawOrbits(front) {
+      ctx.setLineDash([]); ctx.lineWidth = 1;
+      for (var p = 0; p <= NP; p++) {
+        var s0 = sats[p < NP ? p * NS : NP * NS], px = 0, py = 0, pd = 0;
+        ctx.beginPath();
+        for (var j = 0; j <= 120; j++) {
+          proj(orbitPoint(s0, j / 120 * TAU, P).x, P.y, P.z, P);
+          if (j && (pd + P.d >= 0) === front) { ctx.moveTo(px, py); ctx.lineTo(P.sx, P.sy); }
+          px = P.sx; py = P.sy; pd = P.d;
+        }
+        ctx.strokeStyle = s0.col; ctx.globalAlpha = front ? 0.24 : 0.09; ctx.stroke();
+      }
+    }
+    // Depth and screen position are linear along a chord, so each link splits at most once at d = 0.
+    function span(l, front) {
+      var a = l.a, b = l.b;
+      if ((a.d >= 0) === (b.d >= 0)) return (a.d >= 0) === front ? [0, 1] : null;
+      var fc = a.d / (a.d - b.d);
+      return (a.d >= 0) === front ? [0, fc] : [fc, 1];
+    }
+    function drawLinks(front) {
+      KINDS.forEach(function (kind) {
+        if (!show[kind]) return;
+        var st = LINK[kind];
+        ctx.setLineDash(st.dash); ctx.lineDashOffset = -t * 12;
+        links.forEach(function (l) {
+          if (l.kind !== kind) return;
+          var f = span(l, front); if (!f) return;
+          var a = l.a, b = l.b, on = hot && (a === hot || b === hot);
+          ctx.globalAlpha = on ? 1 : (front ? st.a : st.a * 0.3) * (hot ? 0.45 : 1);
+          ctx.strokeStyle = st.col || a.col; ctx.lineWidth = st.w + (on ? 1 : 0);
+          ctx.beginPath();
+          ctx.moveTo(a.sx + (b.sx - a.sx) * f[0], a.sy + (b.sy - a.sy) * f[0]);
+          ctx.lineTo(a.sx + (b.sx - a.sx) * f[1], a.sy + (b.sy - a.sy) * f[1]);
+          ctx.stroke();
+        });
+      });
+      ctx.setLineDash([]);
+    }
+    function drawPulses() {                            // data packets travelling along the optical links
+      links.forEach(function (l) {
+        if (l.kind === 'intra' || !show[l.kind]) return;
+        var f = (t * (l.kind === 'ground' ? 0.7 : 0.45) + (l.a.id * 0.618 + l.b.id * 0.317) % 1) % 1;
+        if (l.kind === 'ground' && l.a.id % 2) f = 1 - f;
+        var a = l.a, b = l.b, d = a.d + (b.d - a.d) * f, x = a.sx + (b.sx - a.sx) * f, y = a.sy + (b.sy - a.sy) * f;
+        if (d < 0 && (x - cx) * (x - cx) + (y - cy) * (y - cy) < S * S) return;
+        ctx.globalAlpha = 0.95;
+        ctx.fillStyle = l.kind === 'ground' ? '#fde68a' : l.kind === 'orbit' ? '#f5d0fe' : '#ecfeff';
+        ctx.beginPath(); ctx.arc(x, y, 1.8, 0, TAU); ctx.fill();
+      });
+    }
+    function drawSats(front) {
+      sats.forEach(function (s) {
+        if ((s.d >= 0) !== front) return;
+        var x = s.sx, y = s.sy, k = s.leo ? 1 : 1.25;
+        if (front) { ctx.globalAlpha = 0.22; ctx.fillStyle = s.col; ctx.beginPath(); ctx.arc(x, y, 7 * k, 0, TAU); ctx.fill(); }
+        ctx.globalAlpha = front ? 1 : 0.4;
+        ctx.fillStyle = '#4f9fe6';
+        ctx.fillRect(x - 7 * k, y - 1.4 * k, 4.4 * k, 2.8 * k);
+        ctx.fillRect(x + 2.6 * k, y - 1.4 * k, 4.4 * k, 2.8 * k);
+        ctx.fillStyle = '#e8eef5'; ctx.fillRect(x - 2.2 * k, y - 2.2 * k, 4.4 * k, 4.4 * k);
+        ctx.fillStyle = s.col; ctx.fillRect(x - 2.2 * k, y - 0.6 * k, 4.4 * k, 1.2 * k);
+        if (s === hot) { ctx.globalAlpha = 1; ctx.strokeStyle = '#fff'; ctx.lineWidth = 1.2; ctx.beginPath(); ctx.arc(x, y, 9 * k, 0, TAU); ctx.stroke(); }
+      });
+    }
+    function drawStations() {
+      ctx.font = '600 10px Inter, -apple-system, sans-serif';
+      gss.forEach(function (g) {
+        if (g.d < 0.05) return;                        // behind the Earth or on the limb
+        var x = g.sx, y = g.sy;
+        ctx.globalAlpha = 1;
+        ctx.fillStyle = '#cfddee';
+        ctx.beginPath(); ctx.moveTo(x - 3.5, y + 3.5); ctx.lineTo(x + 3.5, y + 3.5); ctx.lineTo(x, y - 0.5); ctx.closePath(); ctx.fill();
+        ctx.fillStyle = g.serving ? '#fcd34d' : 'rgba(252,211,77,0.45)';
+        ctx.beginPath(); ctx.arc(x, y - 1.5, 2.6, 0, TAU); ctx.fill();
+        if (g === hot) { ctx.strokeStyle = '#fff'; ctx.lineWidth = 1.2; ctx.beginPath(); ctx.arc(x, y - 1, 7, 0, TAU); ctx.stroke(); }
+        ctx.fillStyle = 'rgba(255,255,255,0.85)';
+        ctx.textAlign = g.left ? 'right' : 'left';
+        ctx.fillText(g.name, g.left ? x - 6 : x + 6, y + 3);
+      });
+      ctx.textAlign = 'left';
+    }
+    function drawRings(now) {                          // contact acquired or handed over
+      for (var i = rings.length - 1; i >= 0; i--) {
+        var r = rings[i], q = (now - r.t0) / 900;
+        if (q >= 1 || q < 0) { rings.splice(i, 1); continue; }
+        if (r.g.d < 0.05) continue;
+        ctx.globalAlpha = 1 - q; ctx.strokeStyle = '#fcd34d'; ctx.lineWidth = 1.5;
+        ctx.beginPath(); ctx.arc(r.g.sx, r.g.sy - 1.5, 3 + 14 * q, 0, TAU); ctx.stroke();
+      }
+    }
+
+    function pick(x, y) {
+      var best = null, bd = 14 * 14;
+      function test(o, ok) {
+        if (!ok) return;
+        var d2 = (o.sx - x) * (o.sx - x) + (o.sy - y) * (o.sy - y);
+        if (d2 < bd) { bd = d2; best = o; }
+      }
+      sats.forEach(function (s) { test(s, s.d >= 0 || (s.sx - cx) * (s.sx - cx) + (s.sy - cy) * (s.sy - cy) > S * S); });
+      gss.forEach(function (g) { test(g, g.d > 0.05); });
+      return best;
+    }
+    function describe(o) {
+      if (o.gs) {
+        var head = '<b>' + o.name + ' ground station</b><br>';
+        if (!o.serving) return head + 'No satellite above 15&deg; elevation';
+        return head + 'Serving satellite: ' + o.serving.name + ' &middot; elevation ' + Math.round(o.el / RAD) + '&deg;<br>' +
+          'In contact for ' + Math.round(t - o.since) + ' s &middot; handovers: ' + o.handovers;
+      }
+      var n = { intra: 0, inter: 0, orbit: 0 }, served = [];
+      links.forEach(function (l) {
+        if (l.a !== o && l.b !== o) return;
+        if (l.kind === 'ground') served.push(l.a.name); else n[l.kind]++;
+      });
+      var parts = [];
+      if (n.intra) parts.push(n.intra + ' intra-plane');
+      if (n.inter) parts.push(n.inter + ' inter-plane');
+      if (n.orbit) parts.push(n.orbit + ' inter-orbit');
+      return '<b>' + o.name + '</b> &middot; ' + (o.leo ? 'LEO plane ' + (o.plane + 1) : 'upper orbital layer') +
+        '<br>Optical links: ' + (parts.join(', ') || 'none') +
+        (served.length ? '<br>Serving: ' + served.join(', ') + ' ground station' + (served.length > 1 ? 's' : '') : '');
+    }
+    function updateTip(now) {
+      if (!hot) { tipEl.hidden = true; tipObj = null; return; }
+      if (hot !== tipObj || now - tipAt > 250) { tipEl.innerHTML = describe(hot); tipObj = hot; tipAt = now; }
+      tipEl.hidden = false;
+      tipEl.style.left = hot.sx + 'px';
+      tipEl.style.top = hot.sy + 'px';
+      tipEl.classList.toggle('flip', hot.sx > W - 260);
+    }
+    function updateStats(now) {
+      if (statAt && now - statAt < 500) return;
+      statAt = now;
+      var isl = links.filter(function (l) { return l.kind !== 'ground'; }).length;
+      var inContact = gss.filter(function (g) { return g.serving; }).length;
+      statsEl.textContent = isl + ' optical ISLs active · ' + inContact + '/' + gss.length +
+        ' ground stations in contact · ' + handovers + ' handovers';
+    }
+
+    function draw(now) {
+      if (!W) return;
+      now = now || performance.now();
+      setView();
+      sats.forEach(function (s) { proj(orbitPoint(s, s.u0 + s.w * t, s).x, s.y, s.z, s); });
+      gss.forEach(function (g) { proj(g.x, g.y, g.z, g); });
+      buildLinks(now);
+      if (pointer && pointer.until && now > pointer.until) pointer = null;
+      hot = pointer && !drag ? pick(pointer.x, pointer.y) : null;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      ctx.clearRect(0, 0, W, H);
+      drawStars();
+      drawOrbits(false); drawLinks(false); drawSats(false); // far side first, then the opaque globe
+      drawEarth();
+      drawStations();
+      drawOrbits(true); drawLinks(true); drawPulses(); drawSats(true); drawRings(now);
+      ctx.globalAlpha = 1;
+      updateTip(now);
+      updateStats(now);
+    }
+    function frame(now) {
+      rafId = 0;
+      if (!running) return;
+      t += last ? Math.min(0.05, (now - last) / 1000) : 0;
+      last = now;
+      draw(now);
+      rafId = requestAnimationFrame(frame);
+    }
+    function setRunning() {                            // animate only while the banner is on screen
+      var want = !reduce && visible && !document.hidden;
+      if (want && !running) { running = true; last = 0; rafId = requestAnimationFrame(frame); }
+      else if (!want && running) { running = false; if (rafId) cancelAnimationFrame(rafId); rafId = 0; }
+    }
+    function redraw() { if (!running) draw(); }
+    function resize() {
+      var r = box.getBoundingClientRect();
+      W = r.width; H = r.height;
+      if (!W || !H) return;
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr);
+      var narrow = W < 720;
+      S = Math.min(H * (narrow ? 0.27 : 0.29), W * 0.2);
+      // On phones the profile photo overlaps the bottom centre, so the globe moves right.
+      cx = W * (narrow ? 0.7 : 0.63); cy = H * (narrow ? 0.45 : 0.52);
+      stars = [];
+      for (var i = 0, n = Math.round(W * H / 1500); i < n; i++) {
+        stars.push({ x: Math.random() * W, y: Math.random() * H, r: 0.6 + Math.random() * 1.1,
+                     tw: Math.random() < 0.3, ph: Math.random() * TAU });
+      }
+      earthKey = '';
+      draw();
+    }
+
+    function local(e) { var r = cv.getBoundingClientRect(); return { x: e.clientX - r.left, y: e.clientY - r.top }; }
+    box.addEventListener('pointerdown', function (e) {
+      if (e.target.closest('.hud-chip')) return;
+      drag = { x: e.clientX, y: e.clientY, lon: view.dLon, lat: view.dLat, moved: false };
+      try { box.setPointerCapture(e.pointerId); } catch (err) {}
+    });
+    box.addEventListener('pointermove', function (e) {
+      if (drag) {
+        var dx = e.clientX - drag.x, dy = e.clientY - drag.y;
+        if (Math.abs(dx) + Math.abs(dy) > 4) { drag.moved = true; box.classList.add('dragging'); }
+        view.dLon = drag.lon - dx * 0.35 * RAD;
+        view.dLat = drag.lat + dy * 0.3 * RAD;
+      } else if (e.pointerType === 'mouse') {
+        pointer = local(e);
+      }
+      redraw();
+    });
+    function endDrag(e) {
+      if (drag && !drag.moved && e.type === 'pointerup' && e.pointerType !== 'mouse') {
+        pointer = local(e); pointer.until = performance.now() + 3500;   // a tap shows details for a few seconds
+      }
+      drag = null;
+      box.classList.remove('dragging');
+      redraw();
+    }
+    box.addEventListener('pointerup', endDrag);
+    box.addEventListener('pointercancel', endDrag);
+    box.addEventListener('pointerleave', function (e) {
+      if (e.pointerType === 'mouse' && !drag) { pointer = null; redraw(); }
+    });
+    box.querySelectorAll('.hud-chip').forEach(function (b) {
+      b.addEventListener('click', function () {
+        var kind = b.dataset.layer;
+        show[kind] = !show[kind];
+        b.setAttribute('aria-pressed', String(show[kind]));
+        redraw();
+      });
+    });
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (entries) { visible = entries[0].isIntersecting; setRunning(); }).observe(box);
+    }
+    document.addEventListener('visibilitychange', setRunning);
+    if ('ResizeObserver' in window) new ResizeObserver(resize).observe(box);
+    window.addEventListener('resize', resize);       // also catches browser zoom, which changes devicePixelRatio
+    if (worldReq) {
+      worldReq.then(function (w) { land = topojson.feature(w, w.objects.land); earthKey = ''; redraw(); }, function () {});
+    }
+    resize();
+    setRunning();
+  })();
+
   /* ── Travel map ───────────────────────────────────────────── */
   var PLACES = [
     { name: 'Espoo',          lon: 24.83,  lat: 60.18, type: 'work',     dx: 9,  dy: -7, pulse: true },
@@ -2112,7 +2515,7 @@
     mapMessage('Map needs an internet connection (d3 and world-atlas from jsDelivr).');
     return;
   }
-  d3.json('https://cdn.jsdelivr.net/npm/world-atlas@2.0.2/countries-110m.json').then(function (world) {
+  worldReq.then(function (world) {
     var W = 880, H = 400;
     var svg = d3.select(mapSvg);
     var proj = d3.geoMercator().fitExtent([[18, 18], [W - 18, H - 18]],
