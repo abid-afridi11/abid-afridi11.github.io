@@ -1827,7 +1827,8 @@
       <li><i class="d-training"></i><div><b>Delft &amp; Leiden, Netherlands</b><span>2nd FOCAL Training School, TNO &amp; Airbus &middot; Apr 2026</span></div></li>
       <li><i class="d-conf"></i><div><b>Glasgow, United Kingdom</b><span>IEEE ICC 2026, paper presentation &middot; May 2026</span></div></li>
       <li><i class="d-conf"></i><div><b>Macau, China</b><span>IEEE GLOBECOM 2026 Workshops &middot; upcoming</span></div></li>
-      <li><i class="d-study"></i><div><b>Ulsan &amp; Busan, South Korea</b><span>M.Sc., University of Ulsan; ICMT 2023 in Busan &middot; 2022 &ndash; 2025</span></div></li>
+      <li><i class="d-study"></i><div><b>Ulsan, South Korea</b><span>M.Sc., University of Ulsan &middot; 2022 &ndash; 2025</span></div></li>
+      <li><i class="d-conf"></i><div><b>Busan, South Korea</b><span>ICMT 2023 &middot; Oct 2023</span></div></li>
       <li><i class="d-conf"></i><div><b>Jeju, South Korea</b><span>KICS Symposium &middot; 2024</span></div></li>
       <li><i class="d-study"></i><div><b>Bannu, Pakistan</b><span>B.E. Telecom, UST Bannu &middot; 2016 &ndash; 2020</span></div></li>
     </ul>
@@ -2507,8 +2508,10 @@
     { name: 'Bannu',          lon: 70.60,  lat: 32.99, type: 'study',    dx: 9,  dy: 4,  trip: true },
     { name: 'Macau',          lon: 113.54, lat: 22.20, type: 'conf',     dx: 9,  dy: 4,  trip: true, pulse: true },
     { name: 'Jeju',           lon: 126.53, lat: 33.50, type: 'conf',     dx: -9, dy: 12, anchor: 'end', trip: true },
-    // The arc to this pin stands for the ICMT 2023 trip to Busan, so it takes the conference colour.
-    { name: 'Ulsan & Busan',  lon: 129.31, lat: 35.54, type: 'study',    dx: -2, dy: -11, anchor: 'end', trip: true, arcType: 'conf' }
+    // Ulsan (35.54 N, 129.31 E) and Busan (35.18 N, 129.08 E) are 45 km apart, under 3 px on this map,
+    // so both pins are drawn about 0.7 degrees from their true positions to keep them apart.
+    { name: 'Ulsan',          lon: 129.55, lat: 36.60, type: 'study',    dx: 9,  dy: -2, trip: true },
+    { name: 'Busan',          lon: 129.25, lat: 34.40, type: 'conf',     dx: 9,  dy: 9,  trip: true }
   ];
   var mapSvg = document.getElementById('travel-map');
   function mapMessage(text) {
