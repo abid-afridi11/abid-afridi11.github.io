@@ -110,7 +110,7 @@
       background: var(--bg);
       color: var(--text);
       line-height: 1.6;
-      font-size: 15px;
+      font-size: 0.9375rem;                          /* 15 px at the default root size; grows with the root on wide screens */
       -webkit-font-smoothing: antialiased;
       transition: background 0.25s, color 0.25s;
       overflow-x: hidden;                            /* fallback for browsers without clip */
@@ -932,7 +932,16 @@
 
     /* ── Wide screens: edge-to-edge cover, wider grids ────────────── */
     @media (min-width: 621px) {
-      .hero-banner { margin: 0 calc(50% - 50vw); border-radius: 0; height: clamp(260px, 17vw, 340px); }
+      .hero-banner { margin: 0 calc(50% - 50vw); border-radius: 0; height: clamp(300px, 22vw, 440px); }
+      .hero-hud { top: 1.25rem; max-width: 40%; }
+      .hud-title { font-size: 0.8rem; margin-bottom: 0.7rem; }
+      .live-dot { width: 8px; height: 8px; }
+      .hud-chip { font-size: 0.76rem; padding: 0.28rem 0.75rem 0.28rem 0.6rem; }
+      .hud-chip i { width: 16px; }
+      .hud-stats { font-size: 0.76rem; margin-top: 0.7rem; }
+      .hero-hint { top: 1.3rem; font-size: 0.74rem; }
+      .hero-tag { bottom: 1.2rem; font-size: 0.86rem; letter-spacing: 0.1em; }
+      .hero-tip { font-size: 0.78rem; max-width: 300px; }
       /* --sb (scrollbar width, set by the hero script) keeps the overlay text on the content edge */
       .hero-hud { left: max(calc(1.75rem + var(--sb, 0px) / 2), calc(50vw - var(--page-w) / 2 + 1.75rem)); }
       .hero-hint, .hero-tag { right: max(calc(1.75rem + var(--sb, 0px) / 2), calc(50vw - var(--page-w) / 2 + 1.75rem)); }
@@ -940,10 +949,19 @@
     @media (min-width: 1100px) {
       .research-grid { grid-template-columns: repeat(4, 1fr); }
       .places { grid-template-columns: repeat(3, 1fr); }
+      /* certifications and languages: two columns, every row keeps its divider */
+      .cred-list { display: grid; grid-template-columns: repeat(2, 1fr); column-gap: 2.5rem; row-gap: 0.55rem; }
+      .cred-item:last-child { border-bottom: 1px solid var(--border); padding-bottom: 0.5rem; }
+    }
+    @media (min-width: 1200px) {
+      html { font-size: 17px; }                      /* every rem-based size grows about 6 %, proportions unchanged */
+      .avatar { width: 168px; height: 168px; }
+      #about { margin-top: -84px; }
+      .bio { padding-top: 90px; }
     }
     @media (min-width: 1800px) {
       :root { --page-w: 1440px; }
-      body { font-size: 16px; }
+      html { font-size: 18px; }
     }
 
     /* ── Responsive ──────────────────────────────────────────────── */
@@ -2145,7 +2163,7 @@
       return g;
     });
 
-    var W = 0, H = 0, S = 1, cx = 0, cy = 0, dpr = 1, stars = [];
+    var W = 0, H = 0, S = 1, Z = 1, cx = 0, cy = 0, dpr = 1, stars = [];   // Z scales icons, lines and labels
     var t = 0;                                         // simulation time in seconds
     // Centred between Delft (4 E) and Seoul (127 E) so all three stations face the viewer.
     var view = { lon0: 64 * RAD, lat0: 30 * RAD, dLon: 0, dLat: 0, lon: 0, lat: 0 };
@@ -2273,7 +2291,7 @@
     }
     var P = {};
     function drawOrbits(front) {
-      ctx.setLineDash([]); ctx.lineWidth = 1;
+      ctx.setLineDash([]); ctx.lineWidth = Z;
       for (var p = 0; p <= NP; p++) {
         var s0 = sats[p < NP ? p * NS : NP * NS], px = 0, py = 0, pd = 0;
         ctx.beginPath();
@@ -2302,7 +2320,7 @@
           var f = span(l, front); if (!f) return;
           var a = l.a, b = l.b, on = hot && (a === hot || b === hot);
           ctx.globalAlpha = on ? 1 : (front ? st.a : st.a * 0.3) * (hot ? 0.45 : 1);
-          ctx.strokeStyle = st.col || a.col; ctx.lineWidth = st.w + (on ? 1 : 0);
+          ctx.strokeStyle = st.col || a.col; ctx.lineWidth = st.w * Z + (on ? 1 : 0);
           ctx.beginPath();
           ctx.moveTo(a.sx + (b.sx - a.sx) * f[0], a.sy + (b.sy - a.sy) * f[0]);
           ctx.lineTo(a.sx + (b.sx - a.sx) * f[1], a.sy + (b.sy - a.sy) * f[1]);
@@ -2320,13 +2338,13 @@
         if (d < 0 && (x - cx) * (x - cx) + (y - cy) * (y - cy) < S * S) return;
         ctx.globalAlpha = 0.95;
         ctx.fillStyle = l.kind === 'ground' ? '#fde68a' : l.kind === 'orbit' ? '#f5d0fe' : '#ecfeff';
-        ctx.beginPath(); ctx.arc(x, y, 1.8, 0, TAU); ctx.fill();
+        ctx.beginPath(); ctx.arc(x, y, 1.8 * Z, 0, TAU); ctx.fill();
       });
     }
     function drawSats(front) {
       sats.forEach(function (s) {
         if ((s.d >= 0) !== front) return;
-        var x = s.sx, y = s.sy, k = s.leo ? 1 : 1.25;
+        var x = s.sx, y = s.sy, k = (s.leo ? 1 : 1.25) * Z;
         if (front) { ctx.globalAlpha = 0.22; ctx.fillStyle = s.col; ctx.beginPath(); ctx.arc(x, y, 7 * k, 0, TAU); ctx.fill(); }
         ctx.globalAlpha = front ? 1 : 0.4;
         ctx.fillStyle = '#4f9fe6';
@@ -2338,19 +2356,19 @@
       });
     }
     function drawStations() {
-      ctx.font = '600 10px Inter, -apple-system, sans-serif';
+      ctx.font = '600 ' + Math.round(10.5 * Z) + 'px Inter, -apple-system, sans-serif';
       gss.forEach(function (g) {
         if (g.d < 0.05) return;                        // behind the Earth or on the limb
         var x = g.sx, y = g.sy;
         ctx.globalAlpha = 1;
         ctx.fillStyle = '#cfddee';
-        ctx.beginPath(); ctx.moveTo(x - 3.5, y + 3.5); ctx.lineTo(x + 3.5, y + 3.5); ctx.lineTo(x, y - 0.5); ctx.closePath(); ctx.fill();
+        ctx.beginPath(); ctx.moveTo(x - 3.5 * Z, y + 3.5 * Z); ctx.lineTo(x + 3.5 * Z, y + 3.5 * Z); ctx.lineTo(x, y - 0.5 * Z); ctx.closePath(); ctx.fill();
         ctx.fillStyle = g.serving ? '#fcd34d' : 'rgba(252,211,77,0.45)';
-        ctx.beginPath(); ctx.arc(x, y - 1.5, 2.6, 0, TAU); ctx.fill();
-        if (g === hot) { ctx.strokeStyle = '#fff'; ctx.lineWidth = 1.2; ctx.beginPath(); ctx.arc(x, y - 1, 7, 0, TAU); ctx.stroke(); }
+        ctx.beginPath(); ctx.arc(x, y - 1.5 * Z, 2.6 * Z, 0, TAU); ctx.fill();
+        if (g === hot) { ctx.strokeStyle = '#fff'; ctx.lineWidth = 1.2; ctx.beginPath(); ctx.arc(x, y - Z, 7 * Z, 0, TAU); ctx.stroke(); }
         ctx.fillStyle = 'rgba(255,255,255,0.85)';
         ctx.textAlign = g.left ? 'right' : 'left';
-        ctx.fillText(g.name, g.left ? x - 6 : x + 6, y + 3);
+        ctx.fillText(g.name, g.left ? x - 6 * Z : x + 6 * Z, y + 3 * Z);
       });
       ctx.textAlign = 'left';
     }
@@ -2360,12 +2378,12 @@
         if (q >= 1 || q < 0) { rings.splice(i, 1); continue; }
         if (r.g.d < 0.05) continue;
         ctx.globalAlpha = 1 - q; ctx.strokeStyle = '#fcd34d'; ctx.lineWidth = 1.5;
-        ctx.beginPath(); ctx.arc(r.g.sx, r.g.sy - 1.5, 3 + 14 * q, 0, TAU); ctx.stroke();
+        ctx.beginPath(); ctx.arc(r.g.sx, r.g.sy - 1.5 * Z, (3 + 14 * q) * Z, 0, TAU); ctx.stroke();
       }
     }
 
     function pick(x, y) {
-      var best = null, bd = 14 * 14;
+      var best = null, bd = 14 * 14 * Z * Z;
       function test(o, ok) {
         if (!ok) return;
         var d2 = (o.sx - x) * (o.sx - x) + (o.sy - y) * (o.sy - y);
@@ -2456,12 +2474,13 @@
       dpr = Math.min(window.devicePixelRatio || 1, 2);
       cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr);
       var narrow = W < 720;
-      S = Math.min(H * (narrow ? 0.27 : 0.29), W * 0.2);
+      S = Math.min(H * (narrow ? 0.27 : 0.31), W * 0.2);
+      Z = narrow ? 1 : Math.max(1, Math.min(1.7, S / 78));
       // On phones the profile photo overlaps the bottom centre, so the globe moves right.
       // On wide screens the cover spans the window, so the globe is placed relative to the content column.
       var pageW = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--page-w')) || 1280;
       var colW = Math.min(W, pageW), colX = (W - colW) / 2;
-      cx = narrow ? W * 0.7 : colX + colW * 0.63; cy = H * (narrow ? 0.45 : 0.52);
+      cx = narrow ? W * 0.7 : colX + colW * 0.56; cy = H * 0.45;   // keeps the globe clear of the tagline
       stars = [];
       for (var i = 0, n = Math.round(W * H / 1500); i < n; i++) {
         stars.push({ x: Math.random() * W, y: Math.random() * H, r: 0.6 + Math.random() * 1.1,
