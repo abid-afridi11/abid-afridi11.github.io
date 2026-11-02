@@ -113,6 +113,8 @@
       font-size: 15px;
       -webkit-font-smoothing: antialiased;
       transition: background 0.25s, color 0.25s;
+      overflow-x: hidden;                            /* fallback for browsers without clip */
+      overflow-x: clip;                              /* the full-width cover uses 100vw, which includes the scrollbar */
     }
 
     a { color: var(--accent); text-decoration: none; }
@@ -135,7 +137,7 @@
       border-bottom: 1px solid var(--border);
     }
     .nav-wrap {
-      max-width: 880px;
+      max-width: var(--page-w);
       margin: 0 auto;
       padding: 0 1.75rem;
       height: 54px;
@@ -197,7 +199,9 @@
     .hamburger { display: none; }
 
     /* ── Page container ──────────────────────────────────────────── */
-    .page { max-width: 880px; margin: 0 auto; padding: 0 1.75rem; }
+    /* Content width: fills laptop screens, capped so text lines stay readable on large monitors */
+    :root { --page-w: 1280px; }
+    .page { max-width: var(--page-w); margin: 0 auto; padding: 0 1.75rem; }
 
     .section { padding: 3.25rem 0; border-bottom: 1px solid var(--border); }
     .section:last-child { border-bottom: none; }
@@ -382,7 +386,7 @@
       font-size: 0.89rem;
       color: var(--text-2);
       line-height: 1.78;
-      max-width: 560px;
+      max-width: 760px;
       margin-bottom: 1.4rem;
       text-align: justify;
       hyphens: auto;
@@ -924,6 +928,22 @@
       .js .reveal { opacity: 1; transform: none; transition: none; }
       .bar-fill { transition: none; }
       .js .reveal:not(.in) .bar-fill { width: calc(var(--v) * 100% / 210); }
+    }
+
+    /* ── Wide screens: edge-to-edge cover, wider grids ────────────── */
+    @media (min-width: 621px) {
+      .hero-banner { margin: 0 calc(50% - 50vw); border-radius: 0; height: clamp(260px, 17vw, 340px); }
+      /* --sb (scrollbar width, set by the hero script) keeps the overlay text on the content edge */
+      .hero-hud { left: max(calc(1.75rem + var(--sb, 0px) / 2), calc(50vw - var(--page-w) / 2 + 1.75rem)); }
+      .hero-hint, .hero-tag { right: max(calc(1.75rem + var(--sb, 0px) / 2), calc(50vw - var(--page-w) / 2 + 1.75rem)); }
+    }
+    @media (min-width: 1100px) {
+      .research-grid { grid-template-columns: repeat(4, 1fr); }
+      .places { grid-template-columns: repeat(3, 1fr); }
+    }
+    @media (min-width: 1800px) {
+      :root { --page-w: 1440px; }
+      body { font-size: 16px; }
     }
 
     /* ── Responsive ──────────────────────────────────────────────── */
@@ -2429,6 +2449,7 @@
     }
     function redraw() { if (!running) draw(); }
     function resize() {
+      document.documentElement.style.setProperty('--sb', (window.innerWidth - document.documentElement.clientWidth) + 'px');
       var r = box.getBoundingClientRect();
       W = r.width; H = r.height;
       if (!W || !H) return;
@@ -2437,7 +2458,10 @@
       var narrow = W < 720;
       S = Math.min(H * (narrow ? 0.27 : 0.29), W * 0.2);
       // On phones the profile photo overlaps the bottom centre, so the globe moves right.
-      cx = W * (narrow ? 0.7 : 0.63); cy = H * (narrow ? 0.45 : 0.52);
+      // On wide screens the cover spans the window, so the globe is placed relative to the content column.
+      var pageW = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--page-w')) || 1280;
+      var colW = Math.min(W, pageW), colX = (W - colW) / 2;
+      cx = narrow ? W * 0.7 : colX + colW * 0.63; cy = H * (narrow ? 0.45 : 0.52);
       stars = [];
       for (var i = 0, n = Math.round(W * H / 1500); i < n; i++) {
         stars.push({ x: Math.random() * W, y: Math.random() * H, r: 0.6 + Math.random() * 1.1,
