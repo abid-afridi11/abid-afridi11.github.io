@@ -68,6 +68,11 @@
       --c-bg: #fef3c7; --c-fg: #92400e;
       --t-bg: #ede9fe; --t-fg: #5b21b6;
       --amber-fg: #b45309; --cyan-fg: #0369a1; --violet-fg: #6d28d9; --green-fg: #047857;
+      --rose-fg: #be123c; --teal-fg: #0f766e;
+      /* profile links: brand colour (icon, tint) and readable text shade */
+      --mail: #ea4335; --mail-fg: #c5221f; --scholar: #4285f4; --scholar-fg: #1a5fd0;
+      --orcid: #a6ce39; --orcid-fg: #4d7c0f; --linkedin: #0a66c2; --linkedin-fg: #0a66c2;
+      --wos: #5e33bf; --wos-fg: #5e33bf;
       color-scheme: light;
     }
 
@@ -83,6 +88,8 @@
       --c-bg: rgba(245,158,11,0.16); --c-fg: #fcd34d;
       --t-bg: rgba(139,92,246,0.18); --t-fg: #c4b5fd;
       --amber-fg: #fbbf24; --cyan-fg: #38bdf8; --violet-fg: #a78bfa; --green-fg: #34d399;
+      --rose-fg: #fb7185; --teal-fg: #2dd4bf;
+      --mail-fg: #f28b82; --scholar-fg: #8ab4f8; --orcid-fg: #b8dd5a; --linkedin-fg: #70b5f9; --wos-fg: #b39dff;
       color-scheme: dark;
     }
 
@@ -99,6 +106,8 @@
         --c-bg: rgba(245,158,11,0.16); --c-fg: #fcd34d;
         --t-bg: rgba(139,92,246,0.18); --t-fg: #c4b5fd;
         --amber-fg: #fbbf24; --cyan-fg: #38bdf8; --violet-fg: #a78bfa; --green-fg: #34d399;
+        --rose-fg: #fb7185; --teal-fg: #2dd4bf;
+        --mail-fg: #f28b82; --scholar-fg: #8ab4f8; --orcid-fg: #b8dd5a; --linkedin-fg: #70b5f9; --wos-fg: #b39dff;
         color-scheme: dark;
       }
     }
@@ -172,15 +181,26 @@
       box-shadow: var(--shadow-sm);
     }
     .nav-right { display: flex; align-items: center; gap: 1rem; }
-    nav ul { list-style: none; display: flex; gap: 1.15rem; }
+    nav ul { list-style: none; display: flex; gap: 0.2rem; }
     nav ul a {
-      font-size: 0.83rem;
-      font-weight: 500;
-      color: var(--text-muted);
+      --nc: var(--accent);                           /* each section has its own colour, set below */
+      display: inline-block;
+      padding: 0.3rem 0.68rem;
+      border-radius: 999px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--nc);
       white-space: nowrap;
-      transition: color 0.15s;
+      transition: background 0.15s, box-shadow 0.15s;
     }
-    nav ul a:hover { color: var(--text); text-decoration: none; }
+    nav a[href="#news"]         { --nc: var(--cyan-fg); }
+    nav a[href="#publications"] { --nc: var(--green-fg); }
+    nav a[href="#cv"]           { --nc: var(--violet-fg); }
+    nav a[href="#travel"]       { --nc: var(--amber-fg); }
+    nav a[href="#awards"]       { --nc: var(--rose-fg); }
+    nav a[href="#contact"]      { --nc: var(--teal-fg); }
+    nav ul a:hover, nav ul a[aria-current] { background: color-mix(in srgb, var(--nc) 13%, transparent); text-decoration: none; }
+    nav ul a[aria-current] { box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--nc) 40%, transparent); }   /* section in view */
     .icon-btn {
       width: 32px;
       height: 32px;
@@ -410,20 +430,39 @@
     .btn-primary svg { width: 13px; height: 13px; }
     .pills { display: flex; flex-wrap: wrap; gap: 0.45rem; }
     .pill {
+      --pc: var(--accent); --pt: var(--accent);      /* brand colour and text shade, set per link below */
       display: inline-flex;
       align-items: center;
-      gap: 0.35rem;
-      padding: 0.28rem 0.72rem;
-      border: 1px solid var(--border);
+      gap: 0.45rem;
+      padding: 0.4rem 0.95rem 0.4rem 0.8rem;
+      border: 1px solid color-mix(in srgb, var(--pc) 36%, var(--border));
       border-radius: 999px;
-      font-size: 0.78rem;
-      font-weight: 500;
-      color: var(--text-muted);
+      background: color-mix(in srgb, var(--pc) 8%, var(--surface));
+      font-size: 0.84rem;
+      font-weight: 600;
+      color: var(--pt);
       white-space: nowrap;
-      transition: border-color 0.15s, color 0.15s, background 0.15s;
+      box-shadow: var(--shadow-sm);
+      transition: border-color 0.15s, color 0.15s, background 0.15s, transform 0.15s, box-shadow 0.15s;
     }
-    .pill svg { width: 12px; height: 12px; flex-shrink: 0; }
-    .pill:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-soft); text-decoration: none; }
+    .pill svg { width: 15px; height: 15px; flex-shrink: 0; color: var(--pc); transition: color 0.15s; }
+    .pill:hover {
+      background: var(--pt); border-color: var(--pt); color: #fff; text-decoration: none;
+      transform: translateY(-1px); box-shadow: 0 6px 16px color-mix(in srgb, var(--pc) 32%, transparent);
+    }
+    .pill:hover svg { color: #fff; }
+    .p-mail     { --pc: var(--mail);     --pt: var(--mail-fg); }
+    .p-scholar  { --pc: var(--scholar);  --pt: var(--scholar-fg); }
+    .p-orcid    { --pc: var(--orcid);    --pt: var(--orcid-fg); }
+    .p-linkedin { --pc: var(--linkedin); --pt: var(--linkedin-fg); }
+    .p-wos      { --pc: var(--wos);      --pt: var(--wos-fg); }
+    /* dark theme: the light text shades would carry white text poorly, so hover deepens the tint instead */
+    :root[data-theme="dark"] .pill:hover { background: color-mix(in srgb, var(--pc) 24%, var(--surface)); color: var(--pt); }
+    :root[data-theme="dark"] .pill:hover svg { color: var(--pt); }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) .pill:hover { background: color-mix(in srgb, var(--pc) 24%, var(--surface)); color: var(--pt); }
+      :root:not([data-theme="light"]) .pill:hover svg { color: var(--pt); }
+    }
 
     /* stats strip */
     .stats {
@@ -982,8 +1021,8 @@
         left: 0; right: 0;
         background: var(--surface);
         border-bottom: 1px solid var(--border);
-        padding: 1rem 1.75rem;
-        gap: 0.9rem;
+        padding: 0.8rem 1.1rem;
+        gap: 0.3rem;
         z-index: 100;
         box-shadow: 0 8px 18px rgba(0,0,0,0.08);
       }
@@ -1260,11 +1299,11 @@
         physical layer security.
       </p>
       <div class="cta-row">
-        <a class="pill" href="mailto:abid.afridi@aalto.fi"><svg><use href="#i-mail"/></svg>Email</a>
-        <a class="pill" href="https://scholar.google.com/citations?user=SswFXHwAAAAJ&hl=en" target="_blank"><svg><use href="#i-scholar"/></svg>Google Scholar</a>
-        <a class="pill" href="https://orcid.org/0009-0003-0329-4630" target="_blank"><svg><use href="#i-orcid"/></svg>ORCID</a>
-        <a class="pill" href="https://linkedin.com/in/abid-afridi" target="_blank"><svg><use href="#i-linkedin"/></svg>LinkedIn</a>
-        <a class="pill" href="https://www.webofscience.com/wos/author/record/NWH-7426-2025" target="_blank"><svg><use href="#i-wos"/></svg>Web of Science</a>
+        <a class="pill p-mail" href="mailto:abid.afridi@aalto.fi"><svg><use href="#i-mail"/></svg>Email</a>
+        <a class="pill p-scholar" href="https://scholar.google.com/citations?user=SswFXHwAAAAJ&hl=en" target="_blank"><svg><use href="#i-scholar"/></svg>Google Scholar</a>
+        <a class="pill p-orcid" href="https://orcid.org/0009-0003-0329-4630" target="_blank"><svg><use href="#i-orcid"/></svg>ORCID</a>
+        <a class="pill p-linkedin" href="https://linkedin.com/in/abid-afridi" target="_blank"><svg><use href="#i-linkedin"/></svg>LinkedIn</a>
+        <a class="pill p-wos" href="https://www.webofscience.com/wos/author/record/NWH-7426-2025" target="_blank"><svg><use href="#i-wos"/></svg>Web of Science</a>
       </div>
     </div>
 
@@ -1963,11 +2002,11 @@
           wireless communications, or potential opportunities. Feel free to reach out by email.
         </p>
         <div class="pills">
-          <a class="pill" href="mailto:abid.afridi@aalto.fi"><svg><use href="#i-mail"/></svg>abid.afridi@aalto.fi</a>
-          <a class="pill" href="https://scholar.google.com/citations?user=SswFXHwAAAAJ&hl=en" target="_blank"><svg><use href="#i-scholar"/></svg>Google Scholar</a>
-          <a class="pill" href="https://orcid.org/0009-0003-0329-4630" target="_blank"><svg><use href="#i-orcid"/></svg>ORCID</a>
-          <a class="pill" href="https://linkedin.com/in/abid-afridi" target="_blank"><svg><use href="#i-linkedin"/></svg>LinkedIn</a>
-          <a class="pill" href="https://www.webofscience.com/wos/author/record/NWH-7426-2025" target="_blank"><svg><use href="#i-wos"/></svg>Web of Science</a>
+          <a class="pill p-mail" href="mailto:abid.afridi@aalto.fi"><svg><use href="#i-mail"/></svg>abid.afridi@aalto.fi</a>
+          <a class="pill p-scholar" href="https://scholar.google.com/citations?user=SswFXHwAAAAJ&hl=en" target="_blank"><svg><use href="#i-scholar"/></svg>Google Scholar</a>
+          <a class="pill p-orcid" href="https://orcid.org/0009-0003-0329-4630" target="_blank"><svg><use href="#i-orcid"/></svg>ORCID</a>
+          <a class="pill p-linkedin" href="https://linkedin.com/in/abid-afridi" target="_blank"><svg><use href="#i-linkedin"/></svg>LinkedIn</a>
+          <a class="pill p-wos" href="https://www.webofscience.com/wos/author/record/NWH-7426-2025" target="_blank"><svg><use href="#i-wos"/></svg>Web of Science</a>
         </div>
       </div>
       <div class="contact-art" aria-hidden="true">
@@ -2025,6 +2064,18 @@
   navList.querySelectorAll('a').forEach(function (a) {
     a.addEventListener('click', function () { navList.classList.remove('open'); menuBtn.setAttribute('aria-expanded', 'false'); });
   });
+
+  /* ── Menu: mark the section in view ────────────────────────── */
+  var navLinks = Array.prototype.slice.call(navList.querySelectorAll('a[href^="#"]'));
+  var navTargets = navLinks.map(function (a) { return document.querySelector(a.getAttribute('href')); });
+  function markSection() {
+    var cur = -1, line = 90;                         // just below the sticky header
+    navTargets.forEach(function (sec, i) { if (sec && sec.getBoundingClientRect().top <= line) cur = i; });
+    if (innerHeight + scrollY >= document.documentElement.scrollHeight - 4) cur = navLinks.length - 1;   // page end: Contact
+    navLinks.forEach(function (a, i) { if (i === cur) a.setAttribute('aria-current', 'true'); else a.removeAttribute('aria-current'); });
+  }
+  addEventListener('scroll', markSection, { passive: true });
+  markSection();
 
   /* ── Scroll reveal ────────────────────────────────────────── */
   var revealEls = document.querySelectorAll('.reveal');
