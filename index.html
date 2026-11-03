@@ -59,7 +59,7 @@
       --cyan:         #0ea5e9;
       --conf:         #f59e0b;
       --border:       #e6eaf0;
-      --header-bg:    rgba(255,255,255,0.85);
+      --header-bg:    rgba(0,33,77,0.96);            /* navy band in both themes */
       --shadow-sm:    0 1px 2px rgba(15,23,42,0.04);
       --shadow-md:    0 8px 28px rgba(15,23,42,0.10);
       --map-land:     #dfe6f0;
@@ -68,7 +68,6 @@
       --c-bg: #fef3c7; --c-fg: #92400e;
       --t-bg: #ede9fe; --t-fg: #5b21b6;
       --amber-fg: #b45309; --cyan-fg: #0369a1; --violet-fg: #6d28d9; --green-fg: #047857;
-      --rose-fg: #be123c; --teal-fg: #0f766e;
       /* profile links: brand colour (icon, tint) and readable text shade */
       --mail: #ea4335; --mail-fg: #c5221f; --scholar: #4285f4; --scholar-fg: #1a5fd0;
       --orcid: #a6ce39; --orcid-fg: #4d7c0f; --linkedin: #0a66c2; --linkedin-fg: #0a66c2;
@@ -81,14 +80,13 @@
       --bg: #0b1220; --bg-subtle: #0f1a2d; --surface: #111b2e;
       --text: #e6ebf2; --text-2: #c4cdda; --text-muted: #93a1b5; --text-light: #66758c;
       --accent: #7aa2ff; --accent-hover: #a3bfff; --accent-soft: rgba(122,162,255,0.13);
-      --border: #1e2b44; --header-bg: rgba(11,18,32,0.82);
+      --border: #1e2b44;
       --shadow-sm: 0 1px 2px rgba(0,0,0,0.3); --shadow-md: 0 8px 28px rgba(0,0,0,0.45);
       --map-land: #1d2b45; --map-ocean: #0d1626;
       --j-bg: rgba(16,185,129,0.16); --j-fg: #6ee7b7;
       --c-bg: rgba(245,158,11,0.16); --c-fg: #fcd34d;
       --t-bg: rgba(139,92,246,0.18); --t-fg: #c4b5fd;
       --amber-fg: #fbbf24; --cyan-fg: #38bdf8; --violet-fg: #a78bfa; --green-fg: #34d399;
-      --rose-fg: #fb7185; --teal-fg: #2dd4bf;
       --mail-fg: #f28b82; --scholar-fg: #8ab4f8; --orcid-fg: #b8dd5a; --linkedin-fg: #70b5f9; --wos-fg: #b39dff;
       color-scheme: dark;
     }
@@ -99,14 +97,13 @@
         --bg: #0b1220; --bg-subtle: #0f1a2d; --surface: #111b2e;
         --text: #e6ebf2; --text-2: #c4cdda; --text-muted: #93a1b5; --text-light: #66758c;
         --accent: #7aa2ff; --accent-hover: #a3bfff; --accent-soft: rgba(122,162,255,0.13);
-        --border: #1e2b44; --header-bg: rgba(11,18,32,0.82);
+        --border: #1e2b44;
         --shadow-sm: 0 1px 2px rgba(0,0,0,0.3); --shadow-md: 0 8px 28px rgba(0,0,0,0.45);
         --map-land: #1d2b45; --map-ocean: #0d1626;
         --j-bg: rgba(16,185,129,0.16); --j-fg: #6ee7b7;
         --c-bg: rgba(245,158,11,0.16); --c-fg: #fcd34d;
         --t-bg: rgba(139,92,246,0.18); --t-fg: #c4b5fd;
         --amber-fg: #fbbf24; --cyan-fg: #38bdf8; --violet-fg: #a78bfa; --green-fg: #34d399;
-        --rose-fg: #fb7185; --teal-fg: #2dd4bf;
         --mail-fg: #f28b82; --scholar-fg: #8ab4f8; --orcid-fg: #b8dd5a; --linkedin-fg: #70b5f9; --wos-fg: #b39dff;
         color-scheme: dark;
       }
@@ -143,7 +140,8 @@
       background: var(--header-bg);
       backdrop-filter: blur(14px) saturate(140%);
       -webkit-backdrop-filter: blur(14px) saturate(140%);
-      border-bottom: 1px solid var(--border);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      --nav-fg: #dbe4f2;                             /* one colour for all header text */
     }
     .nav-wrap {
       max-width: var(--page-w);
@@ -161,11 +159,11 @@
       gap: 0.55rem;
       font-weight: 600;
       font-size: 0.93rem;
-      color: var(--text);
+      color: #ffffff;
       letter-spacing: -0.01em;
       white-space: nowrap;
     }
-    .nav-brand:hover { color: var(--accent); text-decoration: none; }
+    .nav-brand:hover { color: #ffffff; opacity: 0.85; text-decoration: none; }
     .brand-mark {
       width: 26px;
       height: 26px;
@@ -178,29 +176,22 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: var(--shadow-sm);
+      box-shadow: 0 0 0 1px rgba(255,255,255,0.22);
     }
     .nav-right { display: flex; align-items: center; gap: 1rem; }
     nav ul { list-style: none; display: flex; gap: 0.2rem; }
     nav ul a {
-      --nc: var(--accent);                           /* each section has its own colour, set below */
       display: inline-block;
       padding: 0.3rem 0.68rem;
       border-radius: 999px;
       font-size: 0.88rem;
       font-weight: 600;
-      color: var(--nc);
+      color: var(--nav-fg);
       white-space: nowrap;
-      transition: background 0.15s, box-shadow 0.15s;
+      transition: background 0.15s, box-shadow 0.15s, color 0.15s;
     }
-    nav a[href="#news"]         { --nc: var(--cyan-fg); }
-    nav a[href="#publications"] { --nc: var(--green-fg); }
-    nav a[href="#cv"]           { --nc: var(--violet-fg); }
-    nav a[href="#travel"]       { --nc: var(--amber-fg); }
-    nav a[href="#awards"]       { --nc: var(--rose-fg); }
-    nav a[href="#contact"]      { --nc: var(--teal-fg); }
-    nav ul a:hover, nav ul a[aria-current] { background: color-mix(in srgb, var(--nc) 13%, transparent); text-decoration: none; }
-    nav ul a[aria-current] { box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--nc) 40%, transparent); }   /* section in view */
+    nav ul a:hover, nav ul a[aria-current] { background: rgba(255,255,255,0.12); color: #ffffff; text-decoration: none; }
+    nav ul a[aria-current] { box-shadow: inset 0 0 0 1px rgba(255,255,255,0.3); }   /* section in view */
     .icon-btn {
       width: 32px;
       height: 32px;
@@ -215,6 +206,8 @@
       transition: color 0.15s, border-color 0.15s;
     }
     .icon-btn:hover { color: var(--accent); border-color: var(--accent); }
+    header .icon-btn { background: transparent; border-color: rgba(255,255,255,0.28); color: var(--nav-fg); }
+    header .icon-btn:hover { color: #ffffff; border-color: rgba(255,255,255,0.6); }
     .icon-btn svg { width: 16px; height: 16px; }
     .hamburger { display: none; }
 
@@ -1019,8 +1012,8 @@
         position: absolute;
         top: 54px;
         left: 0; right: 0;
-        background: var(--surface);
-        border-bottom: 1px solid var(--border);
+        background: #00214d;
+        border-bottom: 1px solid rgba(255,255,255,0.08);
         padding: 0.8rem 1.1rem;
         gap: 0.3rem;
         z-index: 100;
@@ -1669,12 +1662,12 @@
         <div class="pub-row">
           <div class="thumb"><svg viewBox="0 0 96 68"><use href="#t-fso"/></svg></div>
           <div class="pub-body">
-            <p class="pub-title"><a href="https://arxiv.org/abs/2603.12546" target="_blank">Load Balancing in Non-Terrestrial Networks Using Free Space Optical Inter-satellite Links</a></p>
+            <p class="pub-title"><a href="https://ieeexplore.ieee.org/document/11588143" target="_blank">Load Balancing in Non-Terrestrial Networks Using Free Space Optical Inter-satellite Links</a></p>
             <p class="pub-authors"><span class="me">A. Afridi</span>, A. A. Dowhuszko, J. Krivochiza, R. Wichman, J. H&auml;m&auml;l&auml;inen</p>
-            <p class="pub-venue"><span class="badge badge-c">ICC 2026</span>IEEE International Conference on Communications (ICC), Glasgow, Scotland, 2026</p>
+            <p class="pub-venue"><span class="badge badge-c">ICC 2026</span>IEEE International Conference on Communications (ICC), Glasgow, United Kingdom, pp.&nbsp;1&ndash;6, 2026</p>
             <div class="pub-actions">
-              <a class="act" href="https://arxiv.org/abs/2603.12546" target="_blank"><svg><use href="#i-link"/></svg>arXiv</a>
-              <a class="act" href="https://arxiv.org/pdf/2603.12546" target="_blank"><svg><use href="#i-doc"/></svg>PDF</a>
+              <a class="act" href="https://ieeexplore.ieee.org/document/11588143" target="_blank"><svg><use href="#i-link"/></svg>IEEE Xplore</a>
+              <a class="act" href="https://doi.org/10.1109/ICC59461.2026.11588143" target="_blank"><svg><use href="#i-doc"/></svg>DOI</a>
               <button class="act" type="button" data-bib="inproceedings"><svg><use href="#i-code"/></svg>BibTeX</button>
             </div>
           </div>
