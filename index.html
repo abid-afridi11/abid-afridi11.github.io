@@ -1029,6 +1029,7 @@
     }
     @media (max-width: 520px) {
       .tl-photos { flex-direction: column; }
+      .tl-photos-3 { flex-direction: row; }           /* the three ICC photos stay side by side */
       .pub-row { grid-template-columns: 64px 1fr; gap: 0.75rem; }
       .thumb { width: 64px; height: 46px; }
     }
@@ -1536,6 +1537,7 @@
     .cv-photo a:hover img { transform: scale(1.04); }
     .cv-photo figcaption { font-size: 0.64rem; color: var(--text-light); margin-top: 0.3rem; line-height: 1.35; }
     .cv-logo.conf { flex-direction: column; background: linear-gradient(135deg, #00629b, #0ea5e9); font-size: 1.3rem; line-height: 1.05; text-align: center; }
+    .tl-photos-3 { max-width: 660px; }               /* three photos in one row stay about 310 px tall */
     .cv-logo.conf small { font-size: 0.72rem; font-weight: 600; opacity: 0.9; }
     .ach-block { margin-top: 2rem; }
 
@@ -2554,8 +2556,22 @@
         <div class="cv-main">
           <h3 class="cv-title">IEEE International Conference on Communications (ICC 2026)</h3>
           <p class="cv-org">Glasgow, United Kingdom</p>
-          <p class="cv-date">May 2026</p>
+          <p class="cv-date">24&ndash;28 May 2026</p>
           <p class="role-desc">Presented our paper <em>"Load Balancing in Non-Terrestrial Networks Using Free Space Optical Inter-satellite Links"</em> with A. A. Dowhuszko, J. Krivochiza, R. Wichman and J. H&auml;m&auml;l&auml;inen. The paper treats load balancing across the satellite constellation as an anycast multi-commodity flow problem and is published in <a href="https://ieeexplore.ieee.org/document/11588143" target="_blank">IEEE Xplore</a>.</p>
+          <div class="tl-photos tl-photos-3">
+            <figure style="--ar:0.56">
+              <a href="img/icc2026-presentation.jpg" target="_blank"><img src="img/icc2026-presentation.jpg" width="619" height="1100" loading="lazy" decoding="async" alt="Abid Afridi presenting the paper on load balancing in non-terrestrial networks with free-space optical inter-satellite links at IEEE ICC 2026"></a>
+              <figcaption>Paper presentation</figcaption>
+            </figure>
+            <figure style="--ar:1">
+              <a href="img/icc2026-stage.jpg" target="_blank"><img src="img/icc2026-stage.jpg" width="1100" height="1100" loading="lazy" decoding="async" alt="Abid Afridi on the Welcome to ICC 2026 stage in Glasgow"></a>
+              <figcaption>Welcome to ICC 2026, Glasgow</figcaption>
+            </figure>
+            <figure style="--ar:0.56">
+              <a href="img/icc2026-banner.jpg" target="_blank"><img src="img/icc2026-banner.jpg" width="619" height="1100" loading="lazy" decoding="async" alt="Abid Afridi in front of the IEEE ICC 2026 conference banner"></a>
+              <figcaption>IEEE ICC 2026</figcaption>
+            </figure>
+          </div>
         </div>
       </article>
     </div>
