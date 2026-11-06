@@ -1617,12 +1617,12 @@
     .profile .role { font-size: 0.95rem; }
     .profile .dept { font-size: 0.86rem; }
     .profile .loc { font-size: 0.84rem; }
-    .p-affils { flex-direction: column; align-items: stretch; gap: 0.45rem; margin: 1.1rem 0 0.4rem; }
-    .p-affil { gap: 0.6rem; padding: 0.45rem 0.7rem 0.45rem 0.45rem; border-radius: 10px; font-size: 0.82rem; text-align: left; white-space: normal; }
-    .p-affil img { width: 32px; height: 32px; border-radius: 6px; }
-    .p-affil img.flag { width: 36px; height: 24px; border-radius: 3px; }
+    .p-affils { flex-wrap: nowrap; justify-content: center; gap: 0.22rem; margin: 1.1rem 0 0.3rem; }   /* one row */
+    .p-affil { gap: 0.3rem; padding: 0.25rem 0.5rem 0.25rem 0.25rem; border-radius: 9px; font-size: 0.74rem; }
+    .p-affil img { width: 24px; height: 24px; border-radius: 5px; }
+    .p-affil img.flag { width: 30px; height: 20px; border-radius: 2px; }
     @media (min-width: 621px) and (max-width: 1099px) {
-      .p-affils { max-width: 360px; }
+      .p-affils { justify-content: flex-start; }
     }
 
     /* awards */
@@ -1687,37 +1687,23 @@
     .cta-main:hover { text-decoration: none; transform: translateY(-1px); box-shadow: 0 8px 22px rgba(30,78,216,0.4); }
     .cta-mail { font-family: var(--mono-font); font-size: 0.82rem; color: var(--text-muted); }
     .contact-hero .contact-art { width: 190px; height: 190px; }
-    .ci-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.8rem; }
-    .ci { display: flex; align-items: flex-start; gap: 0.8rem; padding: 0.95rem 1rem; border: 1px solid var(--border); border-radius: 14px; background: var(--bg-subtle); }
+    .contact-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 1.8rem; }
+    .ci-list { list-style: none; display: flex; flex-direction: column; gap: 0.7rem; }
+    .ci { display: flex; align-items: flex-start; gap: 0.8rem; padding: 0.85rem 1rem; border: 1px solid var(--border); border-radius: 14px; background: var(--bg-subtle); }
+    .map-embed { border: 1px solid var(--border); border-radius: 14px; overflow: hidden; background: var(--bg-subtle); box-shadow: var(--shadow-sm); }
+    .map-embed iframe { display: block; width: 100%; height: 330px; border: 0; }
+    .map-caption { font-size: 0.8rem; color: var(--text-muted); margin-top: 0.6rem; line-height: 1.5; }
+    .map-caption b { color: var(--text); font-weight: 600; }
+    @media (min-width: 900px) {
+      .contact-grid { grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); align-items: start; }
+    }
     .ci-icon { flex-shrink: 0; width: 40px; height: 40px; border-radius: 11px; display: flex; align-items: center; justify-content: center; color: var(--accent); background: var(--accent-soft); }
     .ci-icon svg { width: 20px; height: 20px; }
     .ci-label { font-size: 0.66rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-light); margin-bottom: 0.15rem; }
     .ci-value { font-size: 0.86rem; font-weight: 600; line-height: 1.45; color: var(--text); }
     a.ci-value { color: var(--accent); }
-    .prof-tiles { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.75rem; }
-    .prof-tile {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      padding: 0.8rem 0.95rem;
-      border: 1px solid color-mix(in srgb, var(--pc) 30%, var(--border));
-      border-radius: 14px;
-      background: color-mix(in srgb, var(--pc) 6%, var(--surface));
-      color: var(--text);
-      transition: transform 0.15s, box-shadow 0.15s;
-    }
-    .prof-tile:hover { text-decoration: none; transform: translateY(-2px); box-shadow: 0 8px 20px color-mix(in srgb, var(--pc) 25%, transparent); }
-    .pt-icon { flex-shrink: 0; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; background: var(--pc); }
-    .pt-icon svg { width: 19px; height: 19px; }
-    .pt-name { display: block; font-size: 0.9rem; font-weight: 700; }
-    .pt-sub { display: block; font-size: 0.74rem; color: var(--text-muted); }
-    @media (min-width: 1250px) {
-      .prof-tiles { grid-template-columns: repeat(5, minmax(0, 1fr)); }
-      .ci-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
-    }
     @media (max-width: 620px) {
       .contact-hero .contact-title { font-size: 1.35rem; }
-      .prof-tiles, .ci-grid { grid-template-columns: minmax(0, 1fr); }
     }
   </style>
 </head>
@@ -1979,9 +1965,9 @@
       <p class="dept">Wireless Signal Processing Group<br>Aalto University</p>
       <p class="loc"><svg aria-hidden="true"><use href="#i-pin"/></svg>Espoo, Finland</p>
       <div class="p-affils">
-        <span class="p-affil"><img src="img/logos/aalto.png" width="96" height="96" alt="">Aalto University</span>
-        <span class="p-affil"><img class="flag" src="img/logos/eu-flag.png" width="96" height="64" alt="">Marie Sk&#322;odowska-Curie Actions</span>
-        <span class="p-affil"><img src="img/logos/focal-icon.png" width="128" height="128" alt="">FOCAL Doctoral Network</span>
+        <span class="p-affil" title="Aalto University"><img src="img/logos/aalto.png" width="96" height="96" alt="">Aalto</span>
+        <span class="p-affil" title="Marie Sk&#322;odowska-Curie Actions"><img class="flag" src="img/logos/eu-flag.png" width="96" height="64" alt="">MSCA</span>
+        <span class="p-affil" title="FOCAL Doctoral Network"><img src="img/logos/focal-icon.png" width="128" height="128" alt="">FOCAL</span>
       </div>
       <div class="p-links">
         <a class="p-link p-mail" href="mailto:abid.afridi@aalto.fi" title="Email" aria-label="Email"><svg><use href="#i-mail"/></svg></a>
@@ -2902,20 +2888,23 @@
   </section>
 
   <section class="section reveal">
-    <h2 class="section-label">Contact Information</h2>
-    <div class="ci-grid">
-      <div class="ci"><span class="ci-icon"><svg><use href="#i-mail"/></svg></span><div><p class="ci-label">Email</p><a class="ci-value" href="mailto:abid.afridi@aalto.fi">abid.afridi@aalto.fi</a></div></div>
-      <div class="ci"><span class="ci-icon"><svg><use href="#i-building"/></svg></span><div><p class="ci-label">Affiliation</p><p class="ci-value">Department of Information and Communications Engineering, Aalto University</p></div></div>
-      <div class="ci"><span class="ci-icon"><svg><use href="#i-pin"/></svg></span><div><p class="ci-label">Location</p><p class="ci-value">Otaniemi campus, Espoo, Finland</p></div></div>
-      <div class="ci"><span class="ci-icon"><svg><use href="#i-globe"/></svg></span><div><p class="ci-label">Doctoral network</p><a class="ci-value" href="https://focal-dn.eu/" target="_blank">FOCAL Doctoral Network (MSCA)</a></div></div>
-    </div>
-    <h3 class="sub-head">Research profiles</h3>
-    <div class="prof-tiles">
-      <a class="prof-tile p-scholar" href="https://scholar.google.com/citations?user=SswFXHwAAAAJ&hl=en" target="_blank"><span class="pt-icon"><svg><use href="#i-scholar"/></svg></span><span><span class="pt-name">Google Scholar</span><span class="pt-sub">Publications and citations</span></span></a>
-      <a class="prof-tile p-rg" href="https://www.researchgate.net/profile/Abid-Afridi" target="_blank"><span class="pt-icon"><svg><use href="#i-rg"/></svg></span><span><span class="pt-name">ResearchGate</span><span class="pt-sub">Papers and updates</span></span></a>
-      <a class="prof-tile p-orcid" href="https://orcid.org/0009-0003-0329-4630" target="_blank"><span class="pt-icon"><svg><use href="#i-orcid"/></svg></span><span><span class="pt-name">ORCID</span><span class="pt-sub">0009-0003-0329-4630</span></span></a>
-      <a class="prof-tile p-linkedin" href="https://linkedin.com/in/abid-afridi" target="_blank"><span class="pt-icon"><svg><use href="#i-linkedin"/></svg></span><span><span class="pt-name">LinkedIn</span><span class="pt-sub">in/abid-afridi</span></span></a>
-      <a class="prof-tile p-wos" href="https://www.webofscience.com/wos/author/record/NWH-7426-2025" target="_blank"><span class="pt-icon"><svg><use href="#i-wos"/></svg></span><span><span class="pt-name">Web of Science</span><span class="pt-sub">NWH-7426-2025</span></span></a>
+    <div class="contact-grid">
+      <div>
+        <h2 class="section-label">Contact Information</h2>
+        <ul class="ci-list">
+          <li class="ci"><span class="ci-icon"><svg><use href="#i-mail"/></svg></span><div><p class="ci-label">Email</p><a class="ci-value" href="mailto:abid.afridi@aalto.fi">abid.afridi@aalto.fi</a></div></li>
+          <li class="ci"><span class="ci-icon"><svg><use href="#i-building"/></svg></span><div><p class="ci-label">Affiliation</p><p class="ci-value">Department of Information and Communications Engineering, Aalto University</p></div></li>
+          <li class="ci"><span class="ci-icon"><svg><use href="#i-pin"/></svg></span><div><p class="ci-label">Address</p><p class="ci-value">KIDE, Konemiehentie 1<br>02150 Espoo, Finland</p></div></li>
+          <li class="ci"><span class="ci-icon"><svg><use href="#i-globe"/></svg></span><div><p class="ci-label">Doctoral network</p><a class="ci-value" href="https://focal-dn.eu/" target="_blank">FOCAL Doctoral Network (MSCA)</a></div></li>
+        </ul>
+      </div>
+      <div>
+        <h2 class="section-label">Location</h2>
+        <div class="map-embed">
+          <iframe src="https://maps.google.com/maps?q=Kide%2C%20Aalto%20University%2C%20Konemiehentie%201%2C%2002150%20Espoo&amp;z=16&amp;output=embed" title="Map: KIDE, Konemiehentie 1, Espoo" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+        </div>
+        <p class="map-caption"><b>KIDE, Aalto University</b> &middot; Konemiehentie 1, 02150 Espoo &middot; <a href="https://www.google.com/maps/search/?api=1&amp;query=Kide+Aalto+University+Konemiehentie+1+Espoo" target="_blank">Open in Google Maps</a></p>
+      </div>
     </div>
   </section>
   </div>
