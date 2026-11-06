@@ -1529,7 +1529,7 @@
     .banner-credit { position: absolute; z-index: 1; right: 1rem; bottom: 0.55rem; font-size: 0.62rem; color: rgba(255,255,255,0.72); }
     .banner-credit:hover { color: #fff; }
 
-    /* education photos, conference tile, award cards */
+    /* education photos and conference tile */
     .cv-card.has-photo { grid-template-columns: 104px minmax(0, 1fr) 230px; }
     .cv-photo a { display: block; border-radius: 10px; overflow: hidden; border: 1px solid var(--border); }
     .cv-photo img { display: block; width: 100%; height: 140px; object-fit: cover; transition: transform 0.3s; }
@@ -1538,24 +1538,6 @@
     .cv-logo.conf { flex-direction: column; background: linear-gradient(135deg, #00629b, #0ea5e9); font-size: 1.3rem; line-height: 1.05; text-align: center; }
     .cv-logo.conf small { font-size: 0.72rem; font-weight: 600; opacity: 0.9; }
     .ach-block { margin-top: 2rem; }
-    .ach-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 0.9rem; }
-    .ach-card {
-      position: relative;
-      padding: 1.05rem 1.1rem 1rem;
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      background: linear-gradient(160deg, color-mix(in srgb, var(--ac) 9%, var(--surface)) 0%, var(--surface) 60%);
-      box-shadow: var(--shadow-sm);
-    }
-    .ach-icon { width: 40px; height: 40px; border-radius: 11px; display: flex; align-items: center; justify-content: center; margin-bottom: 0.7rem; color: var(--ac); background: color-mix(in srgb, var(--ac) 14%, transparent); }
-    .ach-icon svg { width: 21px; height: 21px; }
-    .ach-card:has(.a-green) { --ac: var(--green-fg); }
-    .ach-card:has(.a-blue) { --ac: var(--accent); }
-    .ach-card:has(.a-amber) { --ac: var(--amber-fg); }
-    .a-green { --ac: var(--green-fg); } .a-blue { --ac: var(--accent); } .a-amber { --ac: var(--amber-fg); }
-    .ach-title { font-size: 0.9rem; font-weight: 650; line-height: 1.4; margin-bottom: 0.3rem; }
-    .ach-desc { font-size: 0.8rem; color: var(--text-muted); line-height: 1.55; }
-    .ach-more { margin-top: 1rem; }
 
     @media (min-width: 621px) {
       .page-banner { margin: 0 calc(50% - 50vw); border-radius: 0; height: clamp(190px, 15vw, 290px); }
@@ -1578,7 +1560,6 @@
     @media (max-width: 620px) {
       .cv-card.has-photo { grid-template-columns: 56px minmax(0, 1fr); }
       .cv-logo.conf { font-size: 0.82rem; }
-      .bc-place { display: none; }                   /* phones: the credit keeps only the photographer and licence */
       .page-banner { height: 150px; }
       .cv-logo.conf small { font-size: 0.56rem; }
     }
@@ -1638,7 +1619,6 @@
   <symbol id="i-book" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4.5A1.5 1.5 0 0 1 5.5 3H20v15H5.5A1.5 1.5 0 0 0 4 19.5z"/><path d="M4 19.5A1.5 1.5 0 0 0 5.5 21H20v-3M8 7h8"/></symbol>
   <symbol id="i-pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.3"/></symbol>
   <symbol id="i-mic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21M8.5 21h7"/></symbol>
-  <symbol id="i-laptop" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="5" width="16" height="11" rx="1.5"/><path d="M2 19h20"/></symbol>
   <symbol id="i-home" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/><path d="M10 20v-5h4v5"/></symbol>
   <symbol id="i-brief" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M3 12.5h18"/></symbol>
   <symbol id="i-flag" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 21V4"/><path d="M5 4h11l-1.8 4L16 12H5"/></symbol>
@@ -1799,31 +1779,31 @@
   <!-- Page banners for the tabs other than Home (photos from Wikimedia Commons) -->
   <div class="page-banner" data-for="education" style="--banner:url('img/banners/education.jpg')">
     <p class="banner-title" role="heading" aria-level="1">Education</p>
-    <a class="banner-credit" href="https://commons.wikimedia.org/wiki/File:Helsinki_University_of_Technology_Main_Building,_Otaniemi,_Espoo_(October_2018).jpg" target="_blank"><span class="bc-place">Helsinki University of Technology main building, Otaniemi &middot; </span>Photo: Markus S&auml;ynevirta, CC BY-SA 4.0</a>
+    <a class="banner-credit" href="https://commons.wikimedia.org/wiki/File:Helsinki_University_of_Technology_Main_Building,_Otaniemi,_Espoo_(October_2018).jpg" target="_blank" title="Photo: Markus S&auml;ynevirta, CC BY-SA 4.0, via Wikimedia Commons">Aalto University, Otaniemi</a>
   </div>
   <div class="page-banner" data-for="experience" style="--banner:url('img/banners/experience.jpg')">
     <p class="banner-title" role="heading" aria-level="1">Experience</p>
-    <a class="banner-credit" href="https://commons.wikimedia.org/wiki/File:Aalto_yliopisto_Otaniemi_2018.jpg" target="_blank"><span class="bc-place">Otaniemi campus, Espoo &middot; </span>Photo: Aatu Dorochenko, CC BY-SA 4.0</a>
+    <a class="banner-credit" href="https://commons.wikimedia.org/wiki/File:Aalto_yliopisto_Otaniemi_2018.jpg" target="_blank" title="Photo: Aatu Dorochenko, CC BY-SA 4.0, via Wikimedia Commons">Otaniemi, Espoo</a>
   </div>
   <div class="page-banner" data-for="publications" style="--banner:url('img/banners/publications.jpg')">
     <p class="banner-title" role="heading" aria-level="1">Publications</p>
-    <a class="banner-credit" href="https://commons.wikimedia.org/wiki/File:Mets%C3%A4hovi_buildings.jpg" target="_blank"><span class="bc-place">Mets&auml;hovi Radio Observatory &middot; </span>Photo: Taavi V&auml;&auml;n&auml;nen, CC BY-SA 4.0</a>
+    <a class="banner-credit" href="https://commons.wikimedia.org/wiki/File:Mets%C3%A4hovi_buildings.jpg" target="_blank" title="Photo: Taavi V&auml;&auml;n&auml;nen, CC BY-SA 4.0, via Wikimedia Commons">Mets&auml;hovi Radio Observatory</a>
   </div>
   <div class="page-banner" data-for="training" style="--banner:url('img/banners/training.jpg')">
     <p class="banner-title" role="heading" aria-level="1">Training &amp; Mobility</p>
-    <a class="banner-credit" href="https://commons.wikimedia.org/wiki/File:Dipoli_September_2025.jpg" target="_blank"><span class="bc-place">Dipoli, Otaniemi &middot; </span>Photo: Ypsilon from Finland, CC0</a>
+    <a class="banner-credit" href="https://commons.wikimedia.org/wiki/File:Dipoli_September_2025.jpg" target="_blank" title="Photo: Ypsilon from Finland, CC0, via Wikimedia Commons">Dipoli, Otaniemi</a>
   </div>
   <div class="page-banner" data-for="awards" style="--banner:url('img/banners/awards.jpg')">
     <p class="banner-title" role="heading" aria-level="1">Awards &amp; Achievements</p>
-    <a class="banner-credit" href="https://commons.wikimedia.org/wiki/File:Aalto_University_undergraduate_centre_on_a_sunny_afternoon_in_June_2023.jpg" target="_blank"><span class="bc-place">Aalto University Undergraduate Centre &middot; </span>Photo: JIP, CC BY-SA 4.0</a>
+    <a class="banner-credit" href="https://commons.wikimedia.org/wiki/File:Aalto_University_undergraduate_centre_on_a_sunny_afternoon_in_June_2023.jpg" target="_blank" title="Photo: JIP, CC BY-SA 4.0, via Wikimedia Commons">Aalto University, Otaniemi</a>
   </div>
   <div class="page-banner" data-for="skills" style="--banner:url('img/banners/skills.jpg')">
     <p class="banner-title" role="heading" aria-level="1">Skills &amp; Interests</p>
-    <a class="banner-credit" href="https://commons.wikimedia.org/wiki/File:Mets%C3%A4hovi_14-metre_telescope_close-up.jpg" target="_blank"><span class="bc-place">Mets&auml;hovi 14-metre radio telescope &middot; </span>Photo: Taavi V&auml;&auml;n&auml;nen, CC BY-SA 4.0</a>
+    <a class="banner-credit" href="https://commons.wikimedia.org/wiki/File:Mets%C3%A4hovi_14-metre_telescope_close-up.jpg" target="_blank" title="Photo: Taavi V&auml;&auml;n&auml;nen, CC BY-SA 4.0, via Wikimedia Commons">Mets&auml;hovi Radio Observatory</a>
   </div>
   <div class="page-banner" data-for="contact" style="--banner:url('img/banners/contact.jpg')">
     <p class="banner-title" role="heading" aria-level="1">Contact</p>
-    <a class="banner-credit" href="https://commons.wikimedia.org/wiki/File:Otaniemi,Espoo,_Aalto_University.jpg" target="_blank"><span class="bc-place">Otaniemi, Espoo &middot; </span>Photo: Ranerana, CC BY-SA 4.0</a>
+    <a class="banner-credit" href="https://commons.wikimedia.org/wiki/File:Otaniemi,Espoo,_Aalto_University.jpg" target="_blank" title="Photo: Ranerana, CC BY-SA 4.0, via Wikimedia Commons">Otaniemi, Espoo</a>
   </div>
 
   <main id="main">
@@ -2078,8 +2058,8 @@
           </ul>
         </div>
         <figure class="cv-photo">
-          <a href="https://commons.wikimedia.org/wiki/File:Aalto_University_Undergraduate_Centre,_Otaniemi,_Espoo_(January_2017).jpg" target="_blank"><img src="img/campus/aalto.jpg" width="720" height="405" loading="lazy" decoding="async" alt="Aalto University Undergraduate Centre, Otaniemi, Espoo"></a>
-          <figcaption>Photo: Markus S&auml;ynevirta, CC BY-SA 4.0</figcaption>
+          <a href="img/campus/aalto.jpg" target="_blank"><img src="img/campus/aalto.jpg" width="900" height="601" loading="lazy" decoding="async" alt="Main building of Aalto University, Otaniemi, Espoo"></a>
+          <figcaption>Aalto University, Otaniemi</figcaption>
         </figure>
       </article>
       <article class="cv-card has-photo">
@@ -2096,11 +2076,11 @@
           </ul>
         </div>
         <figure class="cv-photo">
-          <a href="https://commons.wikimedia.org/wiki/File:UOU_main_hall.png" target="_blank"><img src="img/campus/ulsan.jpg" width="727" height="367" loading="lazy" decoding="async" alt="Main hall of the University of Ulsan"></a>
-          <figcaption>Photo: Hansel Mar, CC BY-SA 3.0</figcaption>
+          <a href="img/campus/ulsan.jpg" target="_blank"><img src="img/campus/ulsan.jpg" width="677" height="453" loading="lazy" decoding="async" alt="Main building of the University of Ulsan"></a>
+          <figcaption>University of Ulsan, South Korea</figcaption>
         </figure>
       </article>
-      <article class="cv-card">
+      <article class="cv-card has-photo">
         <div class="cv-logo"><img src="img/logos/ust-bannu.png" width="96" height="96" alt="University of Science and Technology Bannu logo"></div>
         <div class="cv-main">
           <h3 class="cv-title">B.E. in Electrical Engineering (Telecom)</h3>
@@ -2111,6 +2091,10 @@
             <li><b>Scholarship:</b> HEC fully funded scholarship</li>
           </ul>
         </div>
+        <figure class="cv-photo">
+          <a href="img/campus/bannu.jpg" target="_blank"><img src="img/campus/bannu.jpg" width="700" height="400" loading="lazy" decoding="async" alt="Campus of the University of Science and Technology Bannu"></a>
+          <figcaption>UST Bannu, Pakistan</figcaption>
+        </figure>
       </article>
     </div>
   </section>
@@ -2633,24 +2617,10 @@
 
     <div class="ach-block">
       <p class="group-title">Additional Achievements</p>
-      <div class="ach-cards">
-        <div class="ach-card">
-          <span class="ach-icon a-green"><svg><use href="#i-bulb"/></svg></span>
-          <p class="ach-title">Final-year project funded by the National Grassroots ICT Research Initiative (NGIRI)</p>
-          <p class="ach-desc">Research funding for the B.E. final-year project, an intelligent IoT-based power theft detection system at UST Bannu.</p>
-        </div>
-        <div class="ach-card">
-          <span class="ach-icon a-blue"><svg><use href="#i-laptop"/></svg></span>
-          <p class="ach-title">Prime Minister merit-based laptop award</p>
-          <p class="ach-desc">Merit-based award received during the B.E. in Electrical Engineering (Telecom) at UST Bannu.</p>
-        </div>
-        <div class="ach-card">
-          <span class="ach-icon a-amber"><svg><use href="#i-medal"/></svg></span>
-          <p class="ach-title">Certificate of Appreciation, Embassy of Pakistan, Seoul</p>
-          <p class="ach-desc">For distinguished service to the Pakistani students and scholars community in the Republic of Korea, June 2026.</p>
-        </div>
-      </div>
-      <ul class="ach-list ach-more">
+      <ul class="ach-list">
+        <li><strong>Final-year project funded by the National Grassroots ICT Research Initiative (NGIRI)</strong>, for the intelligent IoT-based power theft detection system at UST Bannu</li>
+        <li><strong>Prime Minister merit-based laptop award</strong>, received during the B.E. at UST Bannu</li>
+        <li><strong>Certificate of Appreciation, Embassy of Pakistan, Seoul</strong>, for distinguished service to the Pakistani students &amp; scholars community in the Republic of Korea (June 2026)</li>
         <li>Best Event Management &amp; Organizing &mdash; UST Bannu</li>
         <li>Best Attendance certificate (HSSC)</li>
       </ul>
