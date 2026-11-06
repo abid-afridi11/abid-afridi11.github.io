@@ -1618,7 +1618,7 @@
     .profile .dept { font-size: 0.86rem; }
     .profile .loc { font-size: 0.84rem; }
     .p-affils { flex-wrap: nowrap; justify-content: center; gap: 0.22rem; margin: 1.1rem 0 0.3rem; }   /* one row */
-    .p-affil { gap: 0.3rem; padding: 0.25rem 0.5rem 0.25rem 0.25rem; border-radius: 9px; font-size: 0.74rem; }
+    .p-affil { flex: 1 1 0; justify-content: center; gap: 0.3rem; padding: 0.3rem 0.4rem; border-radius: 9px; font-size: 0.74rem; }
     .p-affil img { width: 24px; height: 24px; border-radius: 5px; }
     .p-affil img.flag { width: 30px; height: 20px; border-radius: 2px; }
     @media (min-width: 621px) and (max-width: 1099px) {
@@ -1702,6 +1702,8 @@
     .oc-btn:hover { text-decoration: none; filter: brightness(1.08); }
     .ci { display: flex; align-items: flex-start; gap: 0.8rem; padding: 0.85rem 1rem; border: 1px solid var(--border); border-radius: 14px; background: var(--bg-subtle); }
     .map-embed { border: 1px solid var(--border); border-radius: 14px; overflow: hidden; background: var(--bg-subtle); box-shadow: var(--shadow-sm); }
+    .map-embed { position: relative; }
+    .map-ring { position: absolute; left: 50%; top: 50%; width: 150px; height: 150px; margin: -82px 0 0 -75px; border: 3px solid #2f8fdc; border-radius: 50%; background: rgba(47,143,220,0.16); pointer-events: none; z-index: 1; }
     .map-embed iframe { display: block; width: 100%; height: 100%; min-height: 360px; border: 0; }
     @media (min-width: 900px) {
       .loc-grid { grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); }
@@ -2826,13 +2828,13 @@
   <section class="section reveal contact-hero">
     <div class="contact-card">
       <div>
-        <h3 class="contact-title">Get in touch</h3>
+        <h3 class="contact-title">Contact Information</h3>
         <p class="contact-intro">
           I am always happy to discuss research collaborations, questions about 6G NTN or
           wireless communications, or potential opportunities. Feel free to reach out by email.
         </p>
         <div class="contact-cta">
-          <a class="cta-main" href="mailto:abid.afridi@aalto.fi"><svg aria-hidden="true"><use href="#i-mail"/></svg>Get in touch</a>
+          <a class="cta-main" href="mailto:abid.afridi@aalto.fi"><svg aria-hidden="true"><use href="#i-mail"/></svg>Send an email</a>
           <span class="cta-mail">abid.afridi@aalto.fi</span>
         </div>
       </div>
@@ -2896,10 +2898,10 @@
   </section>
 
   <section class="section reveal">
-    <h2 class="section-label">Contact Information</h2>
+    <h2 class="section-label">Academic Email</h2>
     <div class="ci-card">
       <span class="ci-icon"><svg><use href="#i-mail"/></svg></span>
-      <div><p class="ci-label">Academic email</p><a class="ci-mail" href="mailto:abid.afridi@aalto.fi">abid.afridi@aalto.fi</a><p class="ci-sub">Aalto University</p></div>
+      <div><p class="ci-label">Email</p><a class="ci-mail" href="mailto:abid.afridi@aalto.fi">abid.afridi@aalto.fi</a><p class="ci-sub">Aalto University</p></div>
     </div>
   </section>
 
@@ -2907,6 +2909,7 @@
     <h2 class="section-label">Location</h2>
     <div class="loc-grid">
       <div class="map-embed">
+        <span class="map-ring" aria-hidden="true"></span>
         <iframe src="https://maps.google.com/maps?q=Kide%2C%20Aalto%20University%2C%20Konemiehentie%201%2C%2002150%20Espoo&amp;z=17&amp;output=embed" title="Map: Kide, Konemiehentie 1, Espoo" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
       </div>
       <div class="office-card">
