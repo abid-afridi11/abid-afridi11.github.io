@@ -42,7 +42,7 @@
       try { var t = localStorage.getItem('aa-theme'); if (t) r.setAttribute('data-theme', t); } catch (e) {}
       // tab shown on load; the router at the end of the page keeps it in step with the URL hash
       var tabs = ['home', 'education', 'experience', 'publications', 'training', 'awards', 'skills', 'contact'];
-      var alias = { about: 'home', research: 'home', highlights: 'home', news: 'home', profile: 'home', cv: 'education', workshops: 'training', conferences: 'training', travel: 'training', hobbies: 'skills' };
+      var alias = { about: 'home', research: 'home', highlights: 'home', news: 'home', profile: 'home', cv: 'education', workshops: 'training', travel: 'training', hobbies: 'skills' };
       var h = location.hash.slice(1);
       r.setAttribute('data-tab', tabs.indexOf(h) >= 0 ? h : (alias[h] || 'home'));
     })();
@@ -1029,7 +1029,7 @@
     }
     @media (max-width: 520px) {
       .tl-photos { flex-direction: column; }
-      .tl-photos-3 { flex-direction: row; }           /* the three ICC photos stay side by side */
+      .tl-photos-2p { flex-direction: row; }          /* the two ICC portraits stay side by side */
       .pub-row { grid-template-columns: 64px 1fr; gap: 0.75rem; }
       .thumb { width: 64px; height: 46px; }
     }
@@ -1465,11 +1465,11 @@
       .pub-layout { grid-template-columns: 250px minmax(0, 1fr); align-items: start; }
       .pub-side { position: sticky; top: 70px; }
     }
-    @media (min-width: 1100px) {
+    @media (min-width: 621px) {
       .social-bar { display: flex; }
       .p-links { display: none; }                    /* the side bar carries the profile links */
     }
-    @media (min-width: 1100px) and (max-width: 1379px) {
+    @media (min-width: 621px) and (max-width: 1379px) {
       #main { padding-right: 52px; }                 /* keeps cards clear of the side bar */
     }
     @media (max-width: 620px) {
@@ -1530,14 +1530,9 @@
     .banner-credit { position: absolute; z-index: 1; right: 1rem; bottom: 0.55rem; font-size: 0.62rem; color: rgba(255,255,255,0.72); }
     .banner-credit:hover { color: #fff; }
 
-    /* education photos and conference tile */
-    .cv-card.has-photo { grid-template-columns: 104px minmax(0, 1fr) 230px; }
-    .cv-photo a { display: block; border-radius: 10px; overflow: hidden; border: 1px solid var(--border); }
-    .cv-photo img { display: block; width: 100%; height: 140px; object-fit: cover; transition: transform 0.3s; }
-    .cv-photo a:hover img { transform: scale(1.04); }
-    .cv-photo figcaption { font-size: 0.64rem; color: var(--text-light); margin-top: 0.3rem; line-height: 1.35; }
+    /* conference tile */
     .cv-logo.conf { flex-direction: column; background: linear-gradient(135deg, #00629b, #0ea5e9); font-size: 1.3rem; line-height: 1.05; text-align: center; }
-    .tl-photos-3 { max-width: 660px; }               /* three photos in one row stay about 310 px tall */
+    .tl-photos-2p { max-width: 400px; }              /* two portrait photos stay about 350 px tall */
     .cv-logo.conf small { font-size: 0.72rem; font-weight: 600; opacity: 0.9; }
     .ach-block { margin-top: 2rem; }
 
@@ -1555,16 +1550,78 @@
       .profile { margin-top: -64px; }
     }
     @media (max-width: 760px) {
-      .cv-card.has-photo { grid-template-columns: 104px minmax(0, 1fr); }
-      .cv-photo { grid-column: 1 / -1; }
-      .cv-photo img { height: 170px; }
     }
     @media (max-width: 620px) {
-      .cv-card.has-photo { grid-template-columns: 56px minmax(0, 1fr); }
       .cv-logo.conf { font-size: 0.82rem; }
       .page-banner { height: 150px; }
       .cv-logo.conf small { font-size: 0.56rem; }
     }
+
+    /* larger organisation logos, as on the reference site */
+    .cv-card { grid-template-columns: 140px minmax(0, 1fr); gap: 1.5rem; padding: 1.25rem 1.4rem; }
+    .cv-logo { width: 140px; height: 140px; padding: 14px; border-radius: 14px; }
+    .cv-logo.conf { font-size: 1.75rem; }
+    .cv-logo.conf small { font-size: 0.9rem; }
+    .cv-card::before { top: 2.1rem; }
+    @media (max-width: 760px) {
+      .cv-card { grid-template-columns: 104px minmax(0, 1fr); gap: 1.1rem; }
+      .cv-logo { width: 104px; height: 104px; padding: 10px; }
+    }
+
+    /* featured paper, compact inside the publication list */
+    .pub-main .featured { grid-template-columns: minmax(0, 0.82fr) minmax(0, 1fr); box-shadow: var(--shadow-sm); }
+    .pub-main .featured-fig { min-height: 0; }
+    .pub-main .featured-body { padding: 0.95rem 1.1rem 0.9rem; }
+    .pub-main .feat-title { font-size: 0.92rem; }
+    .pub-main .feat-meta { font-size: 0.72rem; margin-bottom: 0.45rem; }
+    .pub-main .feat-summary { font-size: 0.77rem; line-height: 1.55; margin-bottom: 0.55rem; }
+    .pub-main .bar-caption { font-size: 0.6rem; margin-bottom: 0.3rem; }
+    .pub-main .bars { gap: 0.2rem; margin-bottom: 0.6rem; }
+    .pub-main .bar-row { font-size: 0.66rem; grid-template-columns: 62px 1fr 26px; }
+    .pub-main .bar-track { height: 6px; }
+
+    /* skills tab */
+    .skill-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 0.85rem; }
+    .skill-tile {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      padding: 0.9rem 1rem;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: linear-gradient(150deg, color-mix(in srgb, var(--sc) 7%, var(--surface)) 0%, var(--surface) 55%);
+      box-shadow: var(--shadow-sm);
+      transition: transform 0.15s, box-shadow 0.15s, border-color 0.15s;
+    }
+    .skill-tile:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); border-color: color-mix(in srgb, var(--sc) 40%, var(--border)); }
+    .sk-mark {
+      flex-shrink: 0;
+      width: 46px;
+      height: 46px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.82rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: #fff;
+      background: var(--sc);
+      box-shadow: 0 4px 12px color-mix(in srgb, var(--sc) 35%, transparent);
+    }
+    .sk-name { font-size: 0.95rem; font-weight: 700; }
+    .sk-use { font-size: 0.75rem; line-height: 1.4; color: var(--text-muted); }
+    .cert-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); gap: 0.75rem; }
+    .cert { display: flex; align-items: flex-start; gap: 0.75rem; padding: 0.85rem 0.95rem; border: 1px solid var(--border); border-radius: 12px; background: var(--bg-subtle); }
+    .cert-icon { flex-shrink: 0; width: 34px; height: 34px; border-radius: 10px; display: flex; align-items: center; justify-content: center; color: var(--accent); background: var(--accent-soft); }
+    .cert-icon svg { width: 18px; height: 18px; }
+    .cert-name { font-size: 0.84rem; font-weight: 600; line-height: 1.4; }
+    .cert-org { font-size: 0.74rem; color: var(--text-muted); margin-top: 0.15rem; }
+    .lang-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 0.75rem; }
+    .lang { position: relative; overflow: hidden; padding: 0.95rem 1rem 1rem 1.15rem; border: 1px solid var(--border); border-radius: 12px; background: var(--surface); box-shadow: var(--shadow-sm); }
+    .lang::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 4px; background: var(--lc); }
+    .lang-name { font-family: var(--serif); font-size: 1.15rem; font-weight: 600; margin-bottom: 0.35rem; }
+    .lang-level { display: inline-block; font-size: 0.72rem; font-weight: 600; color: var(--lc); background: color-mix(in srgb, var(--lc) 12%, transparent); border-radius: 999px; padding: 0.12rem 0.6rem; }
   </style>
 </head>
 <body id="top">
@@ -2047,7 +2104,7 @@
   <div class="tab-page" id="education" data-title="Education">
   <section class="section reveal">
     <div class="cv-cards">
-      <article class="cv-card has-photo">
+      <article class="cv-card">
         <div class="cv-logo"><img src="img/logos/aalto.png" width="96" height="96" alt="Aalto University logo"></div>
         <div class="cv-main">
           <h3 class="cv-title">D.Sc. (Tech.) in Electrical Engineering</h3>
@@ -2059,12 +2116,8 @@
             <li><b>Funding:</b> Marie Sk&#322;odowska-Curie Doctoral Fellowship, FOCAL Doctoral Network</li>
           </ul>
         </div>
-        <figure class="cv-photo">
-          <a href="img/campus/aalto.jpg" target="_blank"><img src="img/campus/aalto.jpg" width="900" height="601" loading="lazy" decoding="async" alt="Main building of Aalto University, Otaniemi, Espoo"></a>
-          <figcaption>Aalto University, Otaniemi</figcaption>
-        </figure>
       </article>
-      <article class="cv-card has-photo">
+      <article class="cv-card">
         <div class="cv-logo"><img src="img/logos/ulsan.png" width="96" height="96" alt="University of Ulsan logo"></div>
         <div class="cv-main">
           <h3 class="cv-title">M.Sc. in Electrical Engineering</h3>
@@ -2077,12 +2130,8 @@
             <li><b>Scholarship:</b> BK21+ scholarship</li>
           </ul>
         </div>
-        <figure class="cv-photo">
-          <a href="img/campus/ulsan.jpg" target="_blank"><img src="img/campus/ulsan.jpg" width="677" height="453" loading="lazy" decoding="async" alt="Main building of the University of Ulsan"></a>
-          <figcaption>University of Ulsan, South Korea</figcaption>
-        </figure>
       </article>
-      <article class="cv-card has-photo">
+      <article class="cv-card">
         <div class="cv-logo"><img src="img/logos/ust-bannu.png" width="96" height="96" alt="University of Science and Technology Bannu logo"></div>
         <div class="cv-main">
           <h3 class="cv-title">B.E. in Electrical Engineering (Telecom)</h3>
@@ -2093,10 +2142,6 @@
             <li><b>Scholarship:</b> HEC fully funded scholarship</li>
           </ul>
         </div>
-        <figure class="cv-photo">
-          <a href="img/campus/bannu.jpg" target="_blank"><img src="img/campus/bannu.jpg" width="700" height="400" loading="lazy" decoding="async" alt="Campus of the University of Science and Technology Bannu"></a>
-          <figcaption>UST Bannu, Pakistan</figcaption>
-        </figure>
       </article>
     </div>
   </section>
@@ -2485,7 +2530,7 @@
   <!-- ═══════════════════════════ TRAVEL & TALKS ════════════════════════════ -->
   <div class="tab-page" id="training" data-title="Training &amp; Mobility">
   <section class="section reveal" id="workshops">
-    <h2 class="section-label">Workshops &amp; Training Schools</h2>
+    <h2 class="section-label">Workshops, Training Schools &amp; Conferences</h2>
     <div class="cv-cards">
       <article class="cv-card">
         <div class="cv-logo"><img src="img/logos/focal-icon.png" width="128" height="128" alt="FOCAL Doctoral Network logo"></div>
@@ -2502,6 +2547,25 @@
             <figure style="--ar:1.78">
               <a href="img/focal-ws1-aalto-group.jpg" target="_blank"><img src="img/focal-ws1-aalto-group.jpg" width="1100" height="618" loading="lazy" decoding="async" alt="Doctoral candidates, supervisors and invited guests of the FOCAL Doctoral Network at the 1st FOCAL Workshop, Aalto University"></a>
               <figcaption>Workshop participants at Aalto University</figcaption>
+            </figure>
+          </div>
+        </div>
+      </article>
+      <article class="cv-card">
+        <div class="cv-logo letters conf">ICC<br><small>2026</small></div>
+        <div class="cv-main">
+          <h3 class="cv-title">IEEE International Conference on Communications (ICC 2026)</h3>
+          <p class="cv-org">Glasgow, United Kingdom</p>
+          <p class="cv-date">24&ndash;28 May 2026</p>
+          <p class="role-desc">Presented our paper <em>"Load Balancing in Non-Terrestrial Networks Using Free Space Optical Inter-satellite Links"</em> with A. A. Dowhuszko, J. Krivochiza, R. Wichman and J. H&auml;m&auml;l&auml;inen. The paper treats load balancing across the satellite constellation as an anycast multi-commodity flow problem and is published in <a href="https://ieeexplore.ieee.org/document/11588143" target="_blank">IEEE Xplore</a>.</p>
+          <div class="tl-photos tl-photos-2p">
+            <figure style="--ar:0.56">
+              <a href="img/icc2026-presentation.jpg" target="_blank"><img src="img/icc2026-presentation.jpg" width="619" height="1100" loading="lazy" decoding="async" alt="Abid Afridi presenting the paper on load balancing in non-terrestrial networks with free-space optical inter-satellite links at IEEE ICC 2026"></a>
+              <figcaption>Paper presentation</figcaption>
+            </figure>
+            <figure style="--ar:0.56">
+              <a href="img/icc2026-banner.jpg" target="_blank"><img src="img/icc2026-banner.jpg" width="619" height="1100" loading="lazy" decoding="async" alt="Abid Afridi in front of the IEEE ICC 2026 conference banner"></a>
+              <figcaption>IEEE ICC 2026</figcaption>
             </figure>
           </div>
         </div>
@@ -2548,34 +2612,6 @@
     </div>
   </section>
 
-  <section class="section reveal" id="conferences">
-    <h2 class="section-label">Conferences</h2>
-    <div class="cv-cards">
-      <article class="cv-card">
-        <div class="cv-logo letters conf">ICC<br><small>2026</small></div>
-        <div class="cv-main">
-          <h3 class="cv-title">IEEE International Conference on Communications (ICC 2026)</h3>
-          <p class="cv-org">Glasgow, United Kingdom</p>
-          <p class="cv-date">24&ndash;28 May 2026</p>
-          <p class="role-desc">Presented our paper <em>"Load Balancing in Non-Terrestrial Networks Using Free Space Optical Inter-satellite Links"</em> with A. A. Dowhuszko, J. Krivochiza, R. Wichman and J. H&auml;m&auml;l&auml;inen. The paper treats load balancing across the satellite constellation as an anycast multi-commodity flow problem and is published in <a href="https://ieeexplore.ieee.org/document/11588143" target="_blank">IEEE Xplore</a>.</p>
-          <div class="tl-photos tl-photos-3">
-            <figure style="--ar:0.56">
-              <a href="img/icc2026-presentation.jpg" target="_blank"><img src="img/icc2026-presentation.jpg" width="619" height="1100" loading="lazy" decoding="async" alt="Abid Afridi presenting the paper on load balancing in non-terrestrial networks with free-space optical inter-satellite links at IEEE ICC 2026"></a>
-              <figcaption>Paper presentation</figcaption>
-            </figure>
-            <figure style="--ar:1">
-              <a href="img/icc2026-stage.jpg" target="_blank"><img src="img/icc2026-stage.jpg" width="1100" height="1100" loading="lazy" decoding="async" alt="Abid Afridi on the Welcome to ICC 2026 stage in Glasgow"></a>
-              <figcaption>Welcome to ICC 2026, Glasgow</figcaption>
-            </figure>
-            <figure style="--ar:0.56">
-              <a href="img/icc2026-banner.jpg" target="_blank"><img src="img/icc2026-banner.jpg" width="619" height="1100" loading="lazy" decoding="async" alt="Abid Afridi in front of the IEEE ICC 2026 conference banner"></a>
-              <figcaption>IEEE ICC 2026</figcaption>
-            </figure>
-          </div>
-        </div>
-      </article>
-    </div>
-  </section>
 
   <section class="section reveal" id="travel">
     <h2 class="section-label">Travel &amp; Talks</h2>
@@ -2647,35 +2683,39 @@
   <!-- ════════════════════ SKILLS, TOOLS & INTERESTS ════════════════════════ -->
   <div class="tab-page" id="skills" data-title="Skills">
   <section class="section reveal">
-    <div class="skill-group">
-      <p class="group-title">Technical Skills</p>
-      <div class="tags">
-        <span class="tag">MATLAB</span><span class="tag">Python</span><span class="tag">LaTeX</span>
-        <span class="tag">CVX</span><span class="tag">Simulink</span><span class="tag">Proteus</span>
-      </div>
+    <h2 class="section-label">Technical Skills</h2>
+    <div class="skill-grid">
+      <div class="skill-tile" style="--sc:#e16737"><span class="sk-mark">M</span><div><p class="sk-name">MATLAB</p><p class="sk-use">Numerical computing and simulation</p></div></div>
+      <div class="skill-tile" style="--sc:#3776ab"><span class="sk-mark">Py</span><div><p class="sk-name">Python</p><p class="sk-use">Scripting, data analysis and ML</p></div></div>
+      <div class="skill-tile" style="--sc:#0f766e"><span class="sk-mark">TeX</span><div><p class="sk-name">LaTeX</p><p class="sk-use">Papers, reports and slides</p></div></div>
+      <div class="skill-tile" style="--sc:#6d28d9"><span class="sk-mark">CVX</span><div><p class="sk-name">CVX</p><p class="sk-use">Convex optimization modelling</p></div></div>
+      <div class="skill-tile" style="--sc:#0b6fb5"><span class="sk-mark">Sim</span><div><p class="sk-name">Simulink</p><p class="sk-use">System-level modelling</p></div></div>
+      <div class="skill-tile" style="--sc:#b45309"><span class="sk-mark">Pr</span><div><p class="sk-name">Proteus</p><p class="sk-use">Circuit design and simulation</p></div></div>
     </div>
-    <div class="skill-group">
-      <p class="group-title">Certifications</p>
-      <div class="cred-list">
-        <div class="cred-item"><strong>Non-Terrestrial Network (Satellite) and 5G: Overview, Architecture, Multi-Connectivity</strong> &middot; <span class="cred-org">LinkedIn Learning, 2026</span></div>
-        <div class="cred-item"><strong>Mastering Tech Standardisation &mdash; The Basics</strong> &middot; <span class="cred-org">ETSI, 2026</span></div>
-        <div class="cred-item"><strong>5G and Beyond Technologies</strong> &middot; <span class="cred-org">Universitat Polit&egrave;cnica de Val&egrave;ncia, Spain</span></div>
-        <div class="cred-item"><strong>Wireless Communication for Everybody</strong> &middot; <span class="cred-org">Yonsei University, South Korea</span></div>
-        <div class="cred-item"><strong>Wireless Networking &mdash; one-month training</strong> &middot; <span class="cred-org">NETHOME, Peshawar</span></div>
-        <div class="cred-item"><strong>Introduction to Data Science</strong> &middot; <span class="cred-org">Cisco Networking Academy</span></div>
-        <div class="cred-item"><strong>Deep Learning for Beginners</strong> &middot; <span class="cred-org">SkillUp</span></div>
-        <div class="cred-item"><strong>Research Ethics Education</strong> &middot; <span class="cred-org">University of Ulsan, South Korea</span></div>
-        <div class="cred-item"><strong>Six Webinars</strong> &middot; <span class="cred-org">Pakistan Engineering Council (PEC)</span></div>
-      </div>
+  </section>
+
+  <section class="section reveal">
+    <h2 class="section-label">Certifications</h2>
+    <div class="cert-grid">
+      <div class="cert"><span class="cert-icon"><svg><use href="#i-medal"/></svg></span><div><p class="cert-name">Non-Terrestrial Network (Satellite) and 5G: Overview, Architecture, Multi-Connectivity</p><p class="cert-org">LinkedIn Learning, 2026</p></div></div>
+      <div class="cert"><span class="cert-icon"><svg><use href="#i-medal"/></svg></span><div><p class="cert-name">Mastering Tech Standardisation &mdash; The Basics</p><p class="cert-org">ETSI, 2026</p></div></div>
+      <div class="cert"><span class="cert-icon"><svg><use href="#i-medal"/></svg></span><div><p class="cert-name">5G and Beyond Technologies</p><p class="cert-org">Universitat Polit&egrave;cnica de Val&egrave;ncia, Spain</p></div></div>
+      <div class="cert"><span class="cert-icon"><svg><use href="#i-medal"/></svg></span><div><p class="cert-name">Wireless Communication for Everybody</p><p class="cert-org">Yonsei University, South Korea</p></div></div>
+      <div class="cert"><span class="cert-icon"><svg><use href="#i-medal"/></svg></span><div><p class="cert-name">Wireless Networking &mdash; one-month training</p><p class="cert-org">NETHOME, Peshawar</p></div></div>
+      <div class="cert"><span class="cert-icon"><svg><use href="#i-medal"/></svg></span><div><p class="cert-name">Introduction to Data Science</p><p class="cert-org">Cisco Networking Academy</p></div></div>
+      <div class="cert"><span class="cert-icon"><svg><use href="#i-medal"/></svg></span><div><p class="cert-name">Deep Learning for Beginners</p><p class="cert-org">SkillUp</p></div></div>
+      <div class="cert"><span class="cert-icon"><svg><use href="#i-medal"/></svg></span><div><p class="cert-name">Research Ethics Education</p><p class="cert-org">University of Ulsan, South Korea</p></div></div>
+      <div class="cert"><span class="cert-icon"><svg><use href="#i-medal"/></svg></span><div><p class="cert-name">Six Webinars</p><p class="cert-org">Pakistan Engineering Council (PEC)</p></div></div>
     </div>
-    <div class="skill-group">
-      <p class="group-title">Languages</p>
-      <div class="cred-list">
-        <div class="cred-item"><strong>English</strong> &middot; <span class="cred-org">IELTS Overall 7.0 (July 2024)</span></div>
-        <div class="cred-item"><strong>Korean</strong> &middot; <span class="cred-org">Basic</span></div>
-        <div class="cred-item"><strong>Urdu</strong> &middot; <span class="cred-org">National language</span></div>
-        <div class="cred-item"><strong>Pashto</strong> &middot; <span class="cred-org">Mother tongue</span></div>
-      </div>
+  </section>
+
+  <section class="section reveal">
+    <h2 class="section-label">Languages</h2>
+    <div class="lang-grid">
+      <div class="lang" style="--lc:var(--accent)"><p class="lang-name">English</p><span class="lang-level">IELTS Overall 7.0 (July 2024)</span></div>
+      <div class="lang" style="--lc:var(--violet-fg)"><p class="lang-name">Korean</p><span class="lang-level">Basic</span></div>
+      <div class="lang" style="--lc:var(--green-fg)"><p class="lang-name">Urdu</p><span class="lang-level">National language</span></div>
+      <div class="lang" style="--lc:var(--amber-fg)"><p class="lang-name">Pashto</p><span class="lang-level">Mother tongue</span></div>
     </div>
   </section>
 
