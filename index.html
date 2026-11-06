@@ -1618,11 +1618,15 @@
     .profile .dept { font-size: 0.86rem; }
     .profile .loc { font-size: 0.84rem; }
     .p-affils { flex-wrap: nowrap; justify-content: center; gap: 0.22rem; margin: 1.1rem 0 0.3rem; }   /* one row */
-    .p-affil { flex: 1 1 0; justify-content: center; gap: 0.3rem; padding: 0.3rem 0.4rem; border-radius: 9px; font-size: 0.74rem; }
+    .p-affil { flex: 1 1 0; min-width: 0; justify-content: center; gap: 0.3rem; padding: 0.3rem 0.4rem; border-radius: 9px; font-size: 0.74rem; }
     .p-affil img { width: 24px; height: 24px; border-radius: 5px; }
     .p-affil img.flag { width: 30px; height: 20px; border-radius: 2px; }
     @media (min-width: 621px) and (max-width: 1099px) {
-      .p-affils { justify-content: flex-start; }
+      /* wide card: badges keep a compact, equal size instead of stretching across the row */
+      .p-affils { justify-content: flex-start; gap: 0.5rem; }
+      .p-affil { flex: 0 0 9.5rem; gap: 0.5rem; padding: 0.45rem 0.75rem; font-size: 0.82rem; border-radius: 10px; }
+      .p-affil img { width: 28px; height: 28px; }
+      .p-affil img.flag { width: 36px; height: 24px; }
     }
 
     /* awards */
