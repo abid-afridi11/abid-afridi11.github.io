@@ -1667,7 +1667,6 @@
 
     /* contact */
     .contact-hero { background: radial-gradient(ellipse at 85% 30%, color-mix(in srgb, var(--accent) 12%, transparent) 0%, transparent 60%), var(--surface); }
-    .ch-eyebrow { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.4rem; }
     .contact-hero .contact-title { font-family: var(--serif); font-size: 1.6rem; font-weight: 600; margin-bottom: 0.6rem; }
     .contact-cta { display: flex; flex-wrap: wrap; align-items: center; gap: 0.6rem 1rem; }
     .cta-main {
@@ -1687,15 +1686,25 @@
     .cta-main:hover { text-decoration: none; transform: translateY(-1px); box-shadow: 0 8px 22px rgba(30,78,216,0.4); }
     .cta-mail { font-family: var(--mono-font); font-size: 0.82rem; color: var(--text-muted); }
     .contact-hero .contact-art { width: 190px; height: 190px; }
-    .contact-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 1.8rem; }
-    .ci-list { list-style: none; display: flex; flex-direction: column; gap: 0.7rem; }
+    .ci-card { display: flex; align-items: flex-start; gap: 1rem; padding: 1.2rem 1.3rem; border: 1px solid var(--border); border-radius: 14px; background: var(--surface); box-shadow: var(--shadow-sm); }
+    .ci-mail { display: block; font-family: var(--mono-font); font-size: 1rem; color: var(--text); margin: 0.2rem 0; }
+    .ci-sub { font-size: 0.82rem; color: var(--text-muted); }
+    .loc-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 1.1rem; }
+    .office-card { display: flex; flex-direction: column; padding: 1.4rem 1.5rem; border: 1px solid var(--border); border-radius: 14px; background: var(--surface); box-shadow: var(--shadow-sm); }
+    .oc-eyebrow { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.5rem; }
+    .oc-title { font-family: var(--serif); font-size: 1.5rem; font-weight: 600; margin-bottom: 0.25rem; }
+    .oc-sub { font-size: 0.88rem; color: var(--text-muted); padding-bottom: 1rem; border-bottom: 1px solid var(--border); margin-bottom: 1rem; }
+    .oc-addr { font-size: 0.9rem; line-height: 1.75; color: var(--text-2); flex: 1; }
+    .oc-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; margin-top: 1.2rem; }
+    .oc-btn { display: inline-flex; align-items: center; justify-content: center; gap: 0.45rem; padding: 0.7rem 0.8rem; border: 1px solid var(--border); border-radius: 10px; background: var(--bg-subtle); color: var(--text); font: inherit; font-size: 0.85rem; font-weight: 600; cursor: pointer; }
+    .oc-btn svg { width: 16px; height: 16px; }
+    .oc-btn.primary { background: #00214d; border-color: #00214d; color: #fff; }
+    .oc-btn:hover { text-decoration: none; filter: brightness(1.08); }
     .ci { display: flex; align-items: flex-start; gap: 0.8rem; padding: 0.85rem 1rem; border: 1px solid var(--border); border-radius: 14px; background: var(--bg-subtle); }
     .map-embed { border: 1px solid var(--border); border-radius: 14px; overflow: hidden; background: var(--bg-subtle); box-shadow: var(--shadow-sm); }
-    .map-embed iframe { display: block; width: 100%; height: 330px; border: 0; }
-    .map-caption { font-size: 0.8rem; color: var(--text-muted); margin-top: 0.6rem; line-height: 1.5; }
-    .map-caption b { color: var(--text); font-weight: 600; }
+    .map-embed iframe { display: block; width: 100%; height: 100%; min-height: 360px; border: 0; }
     @media (min-width: 900px) {
-      .contact-grid { grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); align-items: start; }
+      .loc-grid { grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); }
     }
     .ci-icon { flex-shrink: 0; width: 40px; height: 40px; border-radius: 11px; display: flex; align-items: center; justify-content: center; color: var(--accent); background: var(--accent-soft); }
     .ci-icon svg { width: 20px; height: 20px; }
@@ -2817,8 +2826,7 @@
   <section class="section reveal contact-hero">
     <div class="contact-card">
       <div>
-        <p class="ch-eyebrow">Get in touch</p>
-        <h3 class="contact-title">Research collaborations and opportunities</h3>
+        <h3 class="contact-title">Get in touch</h3>
         <p class="contact-intro">
           I am always happy to discuss research collaborations, questions about 6G NTN or
           wireless communications, or potential opportunities. Feel free to reach out by email.
@@ -2888,22 +2896,28 @@
   </section>
 
   <section class="section reveal">
-    <div class="contact-grid">
-      <div>
-        <h2 class="section-label">Contact Information</h2>
-        <ul class="ci-list">
-          <li class="ci"><span class="ci-icon"><svg><use href="#i-mail"/></svg></span><div><p class="ci-label">Email</p><a class="ci-value" href="mailto:abid.afridi@aalto.fi">abid.afridi@aalto.fi</a></div></li>
-          <li class="ci"><span class="ci-icon"><svg><use href="#i-building"/></svg></span><div><p class="ci-label">Affiliation</p><p class="ci-value">Department of Information and Communications Engineering, Aalto University</p></div></li>
-          <li class="ci"><span class="ci-icon"><svg><use href="#i-pin"/></svg></span><div><p class="ci-label">Address</p><p class="ci-value">KIDE, Konemiehentie 1<br>02150 Espoo, Finland</p></div></li>
-          <li class="ci"><span class="ci-icon"><svg><use href="#i-globe"/></svg></span><div><p class="ci-label">Doctoral network</p><a class="ci-value" href="https://focal-dn.eu/" target="_blank">FOCAL Doctoral Network (MSCA)</a></div></li>
-        </ul>
+    <h2 class="section-label">Contact Information</h2>
+    <div class="ci-card">
+      <span class="ci-icon"><svg><use href="#i-mail"/></svg></span>
+      <div><p class="ci-label">Academic email</p><a class="ci-mail" href="mailto:abid.afridi@aalto.fi">abid.afridi@aalto.fi</a><p class="ci-sub">Aalto University</p></div>
+    </div>
+  </section>
+
+  <section class="section reveal">
+    <h2 class="section-label">Location</h2>
+    <div class="loc-grid">
+      <div class="map-embed">
+        <iframe src="https://maps.google.com/maps?q=Kide%2C%20Aalto%20University%2C%20Konemiehentie%201%2C%2002150%20Espoo&amp;z=17&amp;output=embed" title="Map: Kide, Konemiehentie 1, Espoo" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
       </div>
-      <div>
-        <h2 class="section-label">Location</h2>
-        <div class="map-embed">
-          <iframe src="https://maps.google.com/maps?q=Kide%2C%20Aalto%20University%2C%20Konemiehentie%201%2C%2002150%20Espoo&amp;z=16&amp;output=embed" title="Map: KIDE, Konemiehentie 1, Espoo" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+      <div class="office-card">
+        <p class="oc-eyebrow">Office</p>
+        <h3 class="oc-title">Aalto University</h3>
+        <p class="oc-sub">Otaniemi campus &middot; Kide building</p>
+        <p class="oc-addr" id="officeAddr">Kide, Konemiehentie 1<br>Otaniemi campus, Aalto University<br>02150 Espoo, Finland</p>
+        <div class="oc-actions">
+          <a class="oc-btn primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=Kide+Aalto+University+Konemiehentie+1+Espoo" target="_blank"><svg><use href="#i-plane"/></svg>Get Directions</a>
+          <button class="oc-btn" type="button" id="copyAddr"><svg><use href="#i-doc"/></svg>Copy Address</button>
         </div>
-        <p class="map-caption"><b>KIDE, Aalto University</b> &middot; Konemiehentie 1, 02150 Espoo &middot; <a href="https://www.google.com/maps/search/?api=1&amp;query=Kide+Aalto+University+Konemiehentie+1+Espoo" target="_blank">Open in Google Maps</a></p>
       </div>
     </div>
   </section>
@@ -3004,7 +3018,7 @@
   /* ── Visitor flag counter (flagcounter.com) ─────────────────── */
   // Paste the image address of the counter, for example 'https://s05.flagcounter.com/count2/XXXX/bg_FFFFFF/...'.
   // While it is empty the flag button stays hidden.
-  var FLAG_COUNTER = '';
+  var FLAG_COUNTER = 'https://s05.flagcounter.com/count2/xxz4/bg_FFFFFF/txt_000000/border_CCCCCC/columns_3/maxflags_12/viewers_0/labels_1/pageviews_0/flags_0/percent_0/';
   if (FLAG_COUNTER) {
     var flagWrap = document.getElementById('flagWrap'), flagBtn = document.getElementById('flagBtn'), flagPop = document.getElementById('flagPop');
     document.getElementById('flagImg').src = FLAG_COUNTER;          // loads with the page, so every visit is counted
@@ -3015,6 +3029,13 @@
     document.getElementById('flagClose').addEventListener('click', function () { setFlag(false); });
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape') setFlag(false); });
   }
+
+  /* ── Contact: copy the office address ───────────────────────── */
+  document.getElementById('copyAddr').addEventListener('click', function () {
+    var text = document.getElementById('officeAddr').innerText.split(String.fromCharCode(10)).join(', ');
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(function () { toast('Address copied'); }, function () { toast('Copy blocked by the browser'); });
+    else toast('Copy not supported here');
+  });
 
   /* ── Back-to-top button ───────────────────────────────────── */
   var toTop = document.getElementById('toTop');
