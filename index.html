@@ -40,6 +40,11 @@
       var r = document.documentElement;
       r.classList.add('js');
       try { var t = localStorage.getItem('aa-theme'); if (t) r.setAttribute('data-theme', t); } catch (e) {}
+      // tab shown on load; the router at the end of the page keeps it in step with the URL hash
+      var tabs = ['home', 'education', 'experience', 'publications', 'travel', 'awards', 'skills', 'contact'];
+      var alias = { about: 'home', research: 'home', highlights: 'home', news: 'home', profile: 'home', cv: 'education', training: 'experience', hobbies: 'skills' };
+      var h = location.hash.slice(1);
+      r.setAttribute('data-tab', tabs.indexOf(h) >= 0 ? h : (alias[h] || 'home'));
     })();
   </script>
   <style>
@@ -74,7 +79,7 @@
       /* profile links: brand colour (icon, tint) and readable text shade */
       --mail: #ea4335; --mail-fg: #c5221f; --scholar: #4285f4; --scholar-fg: #1a5fd0;
       --orcid: #a6ce39; --orcid-fg: #4d7c0f; --linkedin: #0a66c2; --linkedin-fg: #0a66c2;
-      --wos: #5e33bf; --wos-fg: #5e33bf;
+      --wos: #5e33bf; --wos-fg: #5e33bf; --rg: #00b3a4; --rg-fg: #00796b;
       --page-bg: #f3f5f9; --grid-line: rgba(15,23,42,0.045);
       --serif: 'Source Serif 4', Georgia, 'Times New Roman', serif;
       --mono-font: 'JetBrains Mono', ui-monospace, Consolas, monospace;
@@ -93,7 +98,7 @@
       --c-bg: rgba(245,158,11,0.16); --c-fg: #fcd34d;
       --t-bg: rgba(139,92,246,0.18); --t-fg: #c4b5fd;
       --amber-fg: #fbbf24; --cyan-fg: #38bdf8; --violet-fg: #a78bfa; --green-fg: #34d399;
-      --mail-fg: #f28b82; --scholar-fg: #8ab4f8; --orcid-fg: #b8dd5a; --linkedin-fg: #70b5f9; --wos-fg: #b39dff;
+      --mail-fg: #f28b82; --scholar-fg: #8ab4f8; --orcid-fg: #b8dd5a; --linkedin-fg: #70b5f9; --wos-fg: #b39dff; --rg-fg: #4fd1c5;
       --page-bg: #070d19; --grid-line: rgba(148,163,184,0.055);
       color-scheme: dark;
     }
@@ -111,7 +116,7 @@
         --c-bg: rgba(245,158,11,0.16); --c-fg: #fcd34d;
         --t-bg: rgba(139,92,246,0.18); --t-fg: #c4b5fd;
         --amber-fg: #fbbf24; --cyan-fg: #38bdf8; --violet-fg: #a78bfa; --green-fg: #34d399;
-        --mail-fg: #f28b82; --scholar-fg: #8ab4f8; --orcid-fg: #b8dd5a; --linkedin-fg: #70b5f9; --wos-fg: #b39dff;
+        --mail-fg: #f28b82; --scholar-fg: #8ab4f8; --orcid-fg: #b8dd5a; --linkedin-fg: #70b5f9; --wos-fg: #b39dff; --rg-fg: #4fd1c5;
         --page-bg: #070d19; --grid-line: rgba(148,163,184,0.055);
         color-scheme: dark;
       }
@@ -980,7 +985,7 @@
     }
 
     /* ── Responsive ──────────────────────────────────────────────── */
-    @media (max-width: 900px) {
+    @media (max-width: 1000px) {
       nav ul { display: none; }
       .hamburger { display: inline-flex; }
       nav ul.open {
@@ -1258,7 +1263,7 @@
     @media (min-width: 1200px) {
       .nav-i { display: inline-block; }
     }
-    @media (max-width: 900px) {
+    @media (max-width: 1000px) {
       nav ul.open .nav-i { display: inline-block; }
     }
     @media (max-width: 620px) {
@@ -1275,6 +1280,215 @@
       .pub-search { margin-left: 0; width: 100%; }
       .eu-ack { flex-direction: column; text-align: center; }
       .to-top { right: 14px; bottom: 14px; }
+    }
+
+    /* ── Tabs (Nov 2026): one page per menu item ─────────────────── */
+    .js .tab-page { display: none; }
+    .js[data-tab="home"] #home, .js[data-tab="education"] #education, .js[data-tab="experience"] #experience,
+    .js[data-tab="publications"] #publications, .js[data-tab="travel"] #travel, .js[data-tab="awards"] #awards,
+    .js[data-tab="skills"] #skills, .js[data-tab="contact"] #contact { display: block; }
+    .tab-page { padding: 1.5rem 0 2.5rem; }
+    .layout { margin-top: 0; padding-bottom: 0; }
+    .sec-sub { font-size: 0.82rem; color: var(--text-muted); margin: -0.9rem 0 1.2rem; }
+    .intro-card .about-text p:last-child { margin-bottom: 0; }
+
+    /* profile card extras */
+    .p-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      margin-bottom: 0.9rem;
+      padding: 0.45rem 1.1rem;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--aalto) 0%, #1e4ed8 70%);
+      color: #fff;
+      font-size: 0.8rem;
+      font-weight: 600;
+      box-shadow: 0 4px 14px rgba(30,78,216,0.28);
+    }
+    .p-cta svg { width: 14px; height: 14px; }
+    .p-cta:hover { text-decoration: none; filter: brightness(1.08); }
+    .p-rg { --pc: var(--rg); --pt: var(--rg-fg); }
+
+    /* social bar on the right */
+    .social-bar { position: fixed; right: 16px; top: 50%; transform: translateY(-50%); z-index: 55; display: none; flex-direction: column; gap: 0.55rem; }
+    .sb-link {
+      width: 40px;
+      height: 40px;
+      border: none;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      background: var(--pc);
+      box-shadow: 0 4px 12px color-mix(in srgb, var(--pc) 40%, transparent);
+      cursor: pointer;
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+    .sb-link svg { width: 18px; height: 18px; }
+    .sb-link:hover { transform: translateX(-3px) scale(1.06); text-decoration: none; }
+    .p-flag { --pc: #2f855a; }
+    .sb-flag { position: relative; }
+    .flag-pop {
+      position: absolute;
+      right: 52px;
+      bottom: -8px;
+      width: 250px;
+      padding: 0.75rem 0.8rem 0.7rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      box-shadow: var(--shadow-md);
+    }
+    .flag-pop[hidden] { display: none; }
+    .flag-title { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.5rem; }
+    .flag-pop img { display: block; width: 100%; height: auto; border-radius: 6px; background: #fff; }
+    .flag-pop a { display: inline-block; margin-top: 0.5rem; font-size: 0.76rem; font-weight: 600; }
+    .flag-close { position: absolute; top: 0.35rem; right: 0.5rem; border: none; background: none; font-size: 1.2rem; line-height: 1; color: var(--text-muted); cursor: pointer; }
+
+    /* education and experience cards */
+    .cv-cards { position: relative; display: flex; flex-direction: column; gap: 1.1rem; padding-left: 1.7rem; }
+    .cv-cards::before {
+      content: "";
+      position: absolute;
+      left: 0.45rem; top: 0.6rem; bottom: 0.6rem;
+      width: 2px;
+      border-radius: 2px;
+      background: linear-gradient(var(--accent), var(--cyan) 70%, transparent);
+      opacity: 0.35;
+    }
+    .cv-card {
+      position: relative;
+      display: grid;
+      grid-template-columns: 104px minmax(0, 1fr);
+      gap: 1.3rem;
+      padding: 1.15rem 1.3rem;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: var(--surface);
+      box-shadow: var(--shadow-sm);
+      transition: box-shadow 0.2s, border-color 0.2s;
+    }
+    .cv-card:hover { box-shadow: var(--shadow-md); border-color: color-mix(in srgb, var(--accent) 30%, var(--border)); }
+    .cv-card::before {
+      content: "";
+      position: absolute;
+      left: calc(-1.7rem + 0.45rem - 5px);
+      top: 1.7rem;
+      width: 12px; height: 12px;
+      border-radius: 50%;
+      background: var(--surface);
+      border: 2px solid var(--accent);
+    }
+    .cv-logo {
+      width: 104px;
+      height: 104px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: #fff;
+    }
+    .cv-logo img { max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; }
+    .cv-logo.letters { background: linear-gradient(135deg, #475569, #94a3b8); color: #fff; font-size: 1.5rem; font-weight: 800; border: none; }
+    .cv-title { font-size: 1.02rem; font-weight: 700; line-height: 1.35; letter-spacing: -0.01em; }
+    .cv-title a { color: var(--text); }
+    .cv-title a:hover { color: var(--accent); text-decoration: none; }
+    .cv-org { font-size: 0.86rem; font-weight: 600; color: var(--accent); margin-top: 0.15rem; }
+    .cv-org a { color: inherit; }
+    .cv-date { font-family: var(--mono-font); font-size: 0.76rem; color: var(--text-muted); margin: 0.3rem 0 0.55rem; }
+    .cv-facts { list-style: none; display: flex; flex-direction: column; gap: 0.3rem; font-size: 0.84rem; line-height: 1.55; color: var(--text-2); }
+    .cv-facts b, .role-desc b { font-weight: 600; color: var(--text); }
+    .roles { display: flex; flex-direction: column; gap: 0.9rem; margin-top: 0.55rem; }
+    .exp-role { padding-left: 0.9rem; border-left: 2px solid color-mix(in srgb, var(--accent) 30%, var(--border)); }
+    .role-title { font-size: 0.92rem; font-weight: 650; }
+    .exp-role .cv-date { margin: 0.15rem 0 0.2rem; }
+    .role-unit { font-size: 0.8rem; color: var(--text-muted); }
+    .role-desc { font-size: 0.84rem; color: var(--text-2); line-height: 1.6; margin-top: 0.3rem; text-align: justify; hyphens: auto; }
+
+    /* publications: overview, filters and numbered cards */
+    .pub-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 0.8rem; }
+    .pstat { padding: 1rem 0.8rem 0.9rem; text-align: center; border: 1px solid var(--border); border-radius: 12px; background: var(--bg-subtle); }
+    .pstat b { display: block; font-family: var(--serif); font-size: 2rem; font-weight: 700; line-height: 1.1; color: var(--text); }
+    .pstat span { font-size: 0.64rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); }
+    .pub-layout { display: grid; grid-template-columns: minmax(0, 1fr); gap: 1.5rem; }
+    .pub-side.section { padding: 1.15rem 1.15rem 1.25rem; margin-bottom: 0; }
+    .side-title { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.6rem; }
+    .type-list { display: flex; flex-direction: column; gap: 0.3rem; margin-bottom: 1.25rem; }
+    .type-list .chip { display: flex; align-items: center; justify-content: space-between; width: 100%; text-align: left; border-radius: 9px; padding: 0.5rem 0.75rem; font-size: 0.82rem; }
+    .type-list .chip .count { opacity: 1; font-size: 0.7rem; padding: 0 0.45rem; border-radius: 999px; background: var(--bg-subtle); color: var(--text-muted); }
+    .type-list .chip[aria-pressed="true"] .count { background: rgba(255,255,255,0.18); color: inherit; }
+    .pub-side .pub-search { width: 100%; min-width: 0; margin: 0 0 1rem; }
+    .side-sub { font-size: 0.66rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-light); margin: 0.3rem 0 0.4rem; }
+    .radio { display: flex; align-items: center; gap: 0.45rem; padding: 0.18rem 0; font-size: 0.82rem; cursor: pointer; }
+    .radio input { accent-color: var(--accent); }
+    .radio .count { margin-left: auto; font-size: 0.72rem; color: var(--text-muted); }
+    .pub-year { width: 100%; margin-top: 0.1rem; font: inherit; font-size: 0.82rem; color: var(--text); background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 0.4rem 0.6rem; }
+    .pub-main .featured { margin-bottom: 1.5rem; }
+    .pub-main .pub-group { margin-bottom: 1.6rem; }
+    .pub-group-title { display: flex; align-items: center; gap: 0.55rem; font-family: var(--serif); font-size: 1.25rem; font-weight: 600; margin-bottom: 0.8rem; }
+    .g-count { font-family: var(--mono-font); font-size: 0.72rem; font-weight: 500; color: var(--text-muted); background: var(--surface); border: 1px solid var(--border); border-radius: 999px; padding: 0.05rem 0.5rem; }
+    .pub-list { counter-reset: pub; gap: 0.75rem; }
+    .pub-row {
+      counter-increment: pub;
+      grid-template-columns: 32px minmax(0, 1fr);
+      margin: 0;
+      padding: 1rem 1.2rem 1rem 1rem;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: var(--surface);
+      box-shadow: var(--shadow-sm);
+      transition: box-shadow 0.2s, border-color 0.2s;
+    }
+    .pub-row::before {
+      content: counter(pub);
+      width: 30px; height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      background: var(--bg-subtle);
+      font-size: 0.76rem;
+      font-weight: 700;
+      color: var(--text-muted);
+    }
+    .pub-row:hover { background: var(--surface); box-shadow: var(--shadow-md); border-color: color-mix(in srgb, var(--accent) 30%, var(--border)); }
+    .pub-row .pub-title { font-family: var(--serif); font-size: 1.04rem; font-weight: 600; line-height: 1.4; }
+    .act.doi { font-family: var(--mono-font); font-weight: 500; color: var(--amber-fg); border-color: color-mix(in srgb, var(--amber-fg) 35%, var(--border)); background: color-mix(in srgb, var(--amber-fg) 7%, var(--surface)); }
+
+    @media (max-width: 999px) {
+      .type-list { flex-direction: row; flex-wrap: wrap; }    /* type buttons sit in one row above the list */
+      .type-list .chip { width: auto; gap: 0.5rem; }
+    }
+    @media (min-width: 1000px) {
+      .pub-layout { grid-template-columns: 250px minmax(0, 1fr); align-items: start; }
+      .pub-side { position: sticky; top: 70px; }
+    }
+    @media (min-width: 1100px) {
+      .social-bar { display: flex; }
+      .p-links { display: none; }                    /* the side bar carries the profile links */
+    }
+    @media (min-width: 1100px) and (max-width: 1379px) {
+      #main { padding-right: 52px; }                 /* keeps cards clear of the side bar */
+    }
+    @media (max-width: 620px) {
+      .tab-page { padding: 1rem 0 2rem; }
+      .cv-cards { padding-left: 1.1rem; }
+      .cv-cards::before { left: 0.25rem; }
+      .cv-card { grid-template-columns: 56px minmax(0, 1fr); gap: 0.85rem; padding: 0.95rem; }
+      .cv-card::before { left: calc(-1.1rem + 0.25rem - 5px); top: 1.4rem; }
+      .cv-logo { width: 56px; height: 56px; padding: 5px; border-radius: 10px; }
+      .cv-logo.letters { font-size: 1rem; }
+      .pub-row { grid-template-columns: 26px minmax(0, 1fr); gap: 0.65rem; padding: 0.85rem 0.9rem; }
+      .pub-row::before { width: 24px; height: 24px; font-size: 0.68rem; }
+      .pub-stats { grid-template-columns: repeat(3, 1fr); gap: 0.5rem; }
+      .pstat { padding: 0.7rem 0.4rem; }
+      .pstat b { font-size: 1.45rem; }
+      .pstat span { font-size: 0.56rem; letter-spacing: 0.04em; }
     }
   </style>
 </head>
@@ -1332,6 +1546,10 @@
   <symbol id="i-book" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4.5A1.5 1.5 0 0 1 5.5 3H20v15H5.5A1.5 1.5 0 0 0 4 19.5z"/><path d="M4 19.5A1.5 1.5 0 0 0 5.5 21H20v-3M8 7h8"/></symbol>
   <symbol id="i-pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.3"/></symbol>
   <symbol id="i-mic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21M8.5 21h7"/></symbol>
+  <symbol id="i-home" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/><path d="M10 20v-5h4v5"/></symbol>
+  <symbol id="i-brief" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M3 12.5h18"/></symbol>
+  <symbol id="i-flag" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 21V4"/><path d="M5 4h11l-1.8 4L16 12H5"/></symbol>
+  <symbol id="i-rg" viewBox="0 0 24 24"><text x="11.2" y="17" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="13" font-weight="700" fill="currentColor">R<tspan font-size="9" dy="-4.5">G</tspan></text></symbol>
   <symbol id="i-bulb" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3z"/></symbol>
   <symbol id="i-news" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h13v14H6a2 2 0 0 1-2-2z"/><path d="M17 9h3v8a2 2 0 0 1-2 2"/><path d="M8 9h5M8 13h5M8 16h3"/></symbol>
   <symbol id="i-cricket" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3.1 18.1l9-9 2.8 2.8-9 9z"/><path d="M13.5 10.5l5-5"/><circle cx="18" cy="17" r="2.5"/></symbol>
@@ -1443,16 +1661,17 @@
 <div class="topbar"></div>
 <header>
   <div class="nav-wrap">
-    <a class="nav-brand" href="#about"><span class="brand-mark">AA</span>Abid Afridi</a>
+    <a class="nav-brand" href="#home"><span class="brand-mark">AA</span>Abid Afridi</a>
     <div class="nav-right">
       <nav>
         <ul>
-          <li><a href="#research"><svg class="nav-i" aria-hidden="true"><use href="#i-bulb"/></svg>Research</a></li>
-          <li><a href="#news"><svg class="nav-i" aria-hidden="true"><use href="#i-news"/></svg>News</a></li>
+          <li><a href="#home"><svg class="nav-i" aria-hidden="true"><use href="#i-home"/></svg>Home</a></li>
+          <li><a href="#education"><svg class="nav-i" aria-hidden="true"><use href="#i-cap"/></svg>Education</a></li>
+          <li><a href="#experience"><svg class="nav-i" aria-hidden="true"><use href="#i-brief"/></svg>Experience</a></li>
           <li><a href="#publications"><svg class="nav-i" aria-hidden="true"><use href="#i-doc"/></svg>Publications</a></li>
-          <li><a href="#cv"><svg class="nav-i" aria-hidden="true"><use href="#i-cap"/></svg>CV</a></li>
           <li><a href="#travel"><svg class="nav-i" aria-hidden="true"><use href="#i-plane"/></svg>Travel</a></li>
           <li><a href="#awards"><svg class="nav-i" aria-hidden="true"><use href="#i-medal"/></svg>Awards</a></li>
+          <li><a href="#skills"><svg class="nav-i" aria-hidden="true"><use href="#i-code"/></svg>Skills</a></li>
           <li><a href="#contact"><svg class="nav-i" aria-hidden="true"><use href="#i-mail"/></svg>Contact</a></li>
         </ul>
       </nav>
@@ -1483,7 +1702,10 @@
     <div class="hero-tag">6G &middot; <span>Multi-layer Optical Non-Terrestrial Networks</span></div>
   </div>
 
-  <!-- ═══════════════════════════ PROFILE + CONTENT ═════════════════════════ -->
+  <main id="main">
+
+  <!-- ═══════════════════════════════ HOME ══════════════════════════════════ -->
+  <div class="tab-page" id="home" data-title="Home">
   <div class="layout">
 
   <aside class="profile" id="profile" aria-label="Profile">
@@ -1498,15 +1720,11 @@
         <span class="p-affil"><img class="flag" src="img/logos/eu-flag.png" width="96" height="64" alt="">MSCA</span>
         <span class="p-affil"><img src="img/logos/focal-icon.png" width="128" height="128" alt="">FOCAL</span>
       </div>
-      <div class="p-metrics">
-        <p class="m-head"><svg aria-hidden="true"><use href="#i-book"/></svg>Publications</p>
-        <div class="p-metric"><b data-count="journal">6</b><span>Journal</span></div>
-        <div class="p-metric"><b data-count="conf">4</b><span>Conference</span></div>
-        <div class="p-metric"><b data-count="all">11</b><span>Total</span></div>
-      </div>
+      <a class="p-cta" href="#contact"><svg aria-hidden="true"><use href="#i-mail"/></svg>Get in touch</a>
       <div class="p-links">
         <a class="p-link p-mail" href="mailto:abid.afridi@aalto.fi" title="Email" aria-label="Email"><svg><use href="#i-mail"/></svg></a>
         <a class="p-link p-scholar" href="https://scholar.google.com/citations?user=SswFXHwAAAAJ&hl=en" target="_blank" title="Google Scholar" aria-label="Google Scholar"><svg><use href="#i-scholar"/></svg></a>
+        <a class="p-link p-rg" href="https://www.researchgate.net/profile/Abid-Afridi" target="_blank" title="ResearchGate" aria-label="ResearchGate"><svg><use href="#i-rg"/></svg></a>
         <a class="p-link p-orcid" href="https://orcid.org/0009-0003-0329-4630" target="_blank" title="ORCID" aria-label="ORCID"><svg><use href="#i-orcid"/></svg></a>
         <a class="p-link p-linkedin" href="https://linkedin.com/in/abid-afridi" target="_blank" title="LinkedIn" aria-label="LinkedIn"><svg><use href="#i-linkedin"/></svg></a>
         <a class="p-link p-wos" href="https://www.webofscience.com/wos/author/record/NWH-7426-2025" target="_blank" title="Web of Science" aria-label="Web of Science"><svg><use href="#i-wos"/></svg></a>
@@ -1514,11 +1732,9 @@
     </div>
   </aside>
 
-  <main class="content">
+  <div class="content">
 
-  <!-- ═══════════════════════════ ABOUT ═════════════════════════════════════ -->
-  <section class="section reveal" id="about">
-    <h2 class="section-label">About Me</h2>
+  <section class="section reveal intro-card" aria-label="About">
     <div class="about-text">
       <p>
         I am a doctoral researcher at <strong>Aalto University</strong>, in the
@@ -1542,33 +1758,10 @@
       <div class="stat"><span class="stat-num">BK21+</span><span class="stat-label">Brain Korea scholarship, Master's</span></div>
       <div class="stat"><span class="stat-num">HEC</span><span class="stat-label">Fully funded scholarship, Bachelor's</span></div>
     </div>
-
-    <h3 class="sub-head">Highlights</h3>
-    <div class="hl-grid">
-      <a class="hl hl-j" href="#publications">
-        <span class="hl-top"><span class="hl-kind"><svg><use href="#i-doc"/></svg>Journal</span><span class="hl-date">Oct 2026</span></span>
-        <span class="hl-title">Spatial and Temporal Correlation of Interference in a Narrow Multibeam LEO Satellite Random Access Network</span>
-        <span class="hl-desc">Accepted in IEEE Access on 18 October 2026.</span>
-        <span class="hl-more">View publications &rarr;</span>
-      </a>
-      <a class="hl hl-c" href="#publications">
-        <span class="hl-top"><span class="hl-kind"><svg><use href="#i-mic"/></svg>Conference</span><span class="hl-date">May 2026</span></span>
-        <span class="hl-title">Load Balancing in Non-Terrestrial Networks Using Free Space Optical Inter-satellite Links</span>
-        <span class="hl-desc">Presented at IEEE ICC 2026 in Glasgow and published in IEEE Xplore.</span>
-        <span class="hl-more">View publications &rarr;</span>
-      </a>
-      <a class="hl hl-e" href="#cv">
-        <span class="hl-top"><span class="hl-kind"><svg><use href="#i-pin"/></svg>Event</span><span class="hl-date">Oct 2026</span></span>
-        <span class="hl-title">Poster at the 1st FOCAL Workshop</span>
-        <span class="hl-desc">Resource slicing for time-sensitive traffic in NTNs with FSO ISLs, Aalto University, 15&ndash;16 October 2026.</span>
-        <span class="hl-more">View training &amp; mobility &rarr;</span>
-      </a>
-    </div>
   </section>
 
-  <!-- ═══════════════════════════ RESEARCH ══════════════════════════════════ -->
   <section class="section reveal" id="research">
-    <h2 class="section-label">Research</h2>
+    <h2 class="section-label">Research Interests</h2>
     <div class="research-grid">
       <article class="r-card">
         <div class="r-icon"><svg><use href="#ri-ntn"/></svg></div>
@@ -1597,7 +1790,31 @@
     </div>
   </section>
 
-  <!-- ═══════════════════════════════ NEWS ══════════════════════════════════ -->
+  <section class="section reveal" id="highlights">
+    <h2 class="section-label">Highlights</h2>
+    <p class="sec-sub">Recent papers and events</p>
+    <div class="hl-grid">
+      <a class="hl hl-j" href="#publications">
+        <span class="hl-top"><span class="hl-kind"><svg><use href="#i-doc"/></svg>Journal</span><span class="hl-date">Oct 2026</span></span>
+        <span class="hl-title">Spatial and Temporal Correlation of Interference in a Narrow Multibeam LEO Satellite Random Access Network</span>
+        <span class="hl-desc">Accepted in IEEE Access on 18 October 2026.</span>
+        <span class="hl-more">View publications &rarr;</span>
+      </a>
+      <a class="hl hl-c" href="#publications">
+        <span class="hl-top"><span class="hl-kind"><svg><use href="#i-mic"/></svg>Conference</span><span class="hl-date">May 2026</span></span>
+        <span class="hl-title">Load Balancing in Non-Terrestrial Networks Using Free Space Optical Inter-satellite Links</span>
+        <span class="hl-desc">Presented at IEEE ICC 2026 in Glasgow and published in IEEE Xplore.</span>
+        <span class="hl-more">View publications &rarr;</span>
+      </a>
+      <a class="hl hl-e" href="#training">
+        <span class="hl-top"><span class="hl-kind"><svg><use href="#i-pin"/></svg>Event</span><span class="hl-date">Oct 2026</span></span>
+        <span class="hl-title">Poster at the 1st FOCAL Workshop</span>
+        <span class="hl-desc">Resource slicing for time-sensitive traffic in NTNs with FSO ISLs, Aalto University, 15&ndash;16 October 2026.</span>
+        <span class="hl-more">View training &amp; mobility &rarr;</span>
+      </a>
+    </div>
+  </section>
+
   <section class="section reveal" id="news">
     <h2 class="section-label">News</h2>
     <div class="news-list">
@@ -1716,11 +1933,250 @@
     <button class="text-btn" id="newsMore" type="button" aria-expanded="false"><span>Show all news</span><svg><use href="#i-chev"/></svg></button>
   </section>
 
-  <!-- ═══════════════════════════ PUBLICATIONS ══════════════════════════════ -->
-  <section class="section reveal" id="publications">
-    <h2 class="section-label">Publications</h2>
+  </div>
+  </div><!-- /.layout -->
+  </div>
 
-    <!-- Featured paper -->
+  <!-- ═════════════════════════════ EDUCATION ═══════════════════════════════ -->
+  <div class="tab-page" id="education" data-title="Education">
+  <section class="section reveal">
+    <h2 class="section-label">Education</h2>
+    <div class="cv-cards">
+      <article class="cv-card">
+        <div class="cv-logo"><img src="img/logos/aalto.png" width="96" height="96" alt="Aalto University logo"></div>
+        <div class="cv-main">
+          <h3 class="cv-title">D.Sc. (Tech.) in Electrical Engineering</h3>
+          <p class="cv-org"><a href="https://www.aalto.fi/en" target="_blank">Aalto University</a>, Espoo, Finland</p>
+          <p class="cv-date">2025 &ndash; present</p>
+          <ul class="cv-facts">
+            <li><b>Supervisor:</b> Dr. Alexis A. Dowhuszko</li>
+            <li><b>Research focus:</b> AI-based resource allocation and network slicing in multi-layer optical NTNs</li>
+            <li><b>Funding:</b> Marie Sk&#322;odowska-Curie Doctoral Fellowship, FOCAL Doctoral Network</li>
+          </ul>
+        </div>
+      </article>
+      <article class="cv-card">
+        <div class="cv-logo"><img src="img/logos/ulsan.png" width="96" height="96" alt="University of Ulsan logo"></div>
+        <div class="cv-main">
+          <h3 class="cv-title">M.Sc. in Electrical Engineering</h3>
+          <p class="cv-org"><a href="https://en.ulsan.ac.kr/" target="_blank">University of Ulsan</a>, Ulsan, South Korea</p>
+          <p class="cv-date">2022 &ndash; 2025</p>
+          <ul class="cv-facts">
+            <li><b>Supervisor:</b> Prof. Insoo Koo</li>
+            <li><b>Thesis:</b> <a href="https://oak.ulsan.ac.kr/handle/2021.oak/20147" target="_blank">Optimization of Resources Allocation and Security in Wireless Powered IoT Networks</a></li>
+            <li><b>Research lab:</b> Multimedia Communication and Systems Lab (MCSL)</li>
+            <li><b>Scholarship:</b> BK21+ scholarship</li>
+          </ul>
+        </div>
+      </article>
+      <article class="cv-card">
+        <div class="cv-logo"><img src="img/logos/ust-bannu.png" width="96" height="96" alt="University of Science and Technology Bannu logo"></div>
+        <div class="cv-main">
+          <h3 class="cv-title">B.E. in Electrical Engineering (Telecom)</h3>
+          <p class="cv-org"><a href="https://ustb.edu.pk/" target="_blank">University of Science &amp; Technology Bannu</a>, Bannu, Pakistan</p>
+          <p class="cv-date">2016 &ndash; 2020</p>
+          <ul class="cv-facts">
+            <li><b>Final year project:</b> Intelligent IoT-based power theft detection system</li>
+            <li><b>Scholarship:</b> HEC fully funded scholarship</li>
+          </ul>
+        </div>
+      </article>
+    </div>
+  </section>
+  </div>
+
+  <!-- ════════════════════════════ EXPERIENCE ═══════════════════════════════ -->
+  <div class="tab-page" id="experience" data-title="Experience">
+  <section class="section reveal">
+    <h2 class="section-label">Experience</h2>
+    <div class="cv-cards">
+      <article class="cv-card">
+        <div class="cv-logo"><img src="img/logos/aalto.png" width="96" height="96" alt="Aalto University logo"></div>
+        <div class="cv-main">
+          <h3 class="cv-title"><a href="https://www.aalto.fi/en" target="_blank">Aalto University</a></h3>
+          <p class="cv-org">Espoo, Finland</p>
+          <div class="roles">
+            <div class="exp-role">
+              <h4 class="role-title">MSCA Doctoral Fellow, FOCAL Doctoral Network</h4>
+              <p class="cv-date">2025 &ndash; present</p>
+              <p class="role-unit">Wireless Signal Processing Group, Department of Information and Communications Engineering</p>
+              <p class="role-desc"><b>Responsibilities:</b> Research on NTN load balancing via FSO inter-satellite links, network slicing, and interference analysis in narrow-beam LEO satellite constellations.</p>
+            </div>
+          </div>
+        </div>
+      </article>
+      <article class="cv-card">
+        <div class="cv-logo"><img src="img/logos/ulsan.png" width="96" height="96" alt="University of Ulsan logo"></div>
+        <div class="cv-main">
+          <h3 class="cv-title"><a href="https://en.ulsan.ac.kr/" target="_blank">University of Ulsan</a></h3>
+          <p class="cv-org">Ulsan, South Korea</p>
+          <div class="roles">
+            <div class="exp-role">
+              <h4 class="role-title">Graduate Research Assistant</h4>
+              <p class="cv-date">2022 &ndash; 2025</p>
+              <p class="role-unit">Multimedia Communication and Systems Lab (MCSL)</p>
+              <p class="role-desc"><b>Responsibilities:</b> Developed metaheuristic optimization frameworks (Quantum PSO, genetic algorithms) for throughput maximization and joint resource allocation in IRS-assisted, secured wireless-powered IoT networks, with a focus on physical layer security.</p>
+            </div>
+          </div>
+        </div>
+      </article>
+      <article class="cv-card">
+        <div class="cv-logo letters">BS</div>
+        <div class="cv-main">
+          <h3 class="cv-title">BioSafe Diagnostics</h3>
+          <p class="cv-org">Peshawar, Pakistan</p>
+          <div class="roles">
+            <div class="exp-role">
+              <h4 class="role-title">Sales and Service Engineer</h4>
+              <p class="cv-date">Jan &ndash; Dec 2021</p>
+              <p class="role-desc"><b>Responsibilities:</b> Troubleshooting and installation of medical machines and equipment; preventive maintenance and field modifications.</p>
+            </div>
+          </div>
+        </div>
+      </article>
+      <article class="cv-card">
+        <div class="cv-logo"><img src="img/logos/ptcl.png" width="96" height="96" alt="PTCL logo"></div>
+        <div class="cv-main">
+          <h3 class="cv-title">Pakistan Telecommunication Limited (PTCL)</h3>
+          <p class="cv-org">Peshawar, Pakistan</p>
+          <div class="roles">
+            <div class="exp-role">
+              <h4 class="role-title">Trainee Engineer</h4>
+              <p class="cv-date">Jul &ndash; Aug 2019</p>
+              <p class="role-desc"><b>Responsibilities:</b> Optical fiber-based systems and their operation; switching systems.</p>
+            </div>
+          </div>
+        </div>
+      </article>
+      <article class="cv-card">
+        <div class="cv-logo"><img src="img/logos/ptv.png" width="96" height="96" alt="Pakistan Television logo"></div>
+        <div class="cv-main">
+          <h3 class="cv-title">Pakistan Television (PTV)</h3>
+          <p class="cv-org">Peshawar, Pakistan</p>
+          <div class="roles">
+            <div class="exp-role">
+              <h4 class="role-title">Trainee Engineer</h4>
+              <p class="cv-date">Aug &ndash; Sep 2018</p>
+              <p class="role-desc"><b>Responsibilities:</b> Video distribution amplifiers (VDAs); satellite signal downlinking and integrated receiver decoders (IRDs).</p>
+            </div>
+          </div>
+        </div>
+      </article>
+      <article class="cv-card">
+        <div class="cv-logo"><img src="img/logos/tesco.png" width="96" height="96" alt="TESCO logo"></div>
+        <div class="cv-main">
+          <h3 class="cv-title">Tribal Areas Electricity Supply Company (TESCO)</h3>
+          <p class="cv-org">Peshawar, Pakistan</p>
+          <div class="roles">
+            <div class="exp-role">
+              <h4 class="role-title">Trainee Engineer</h4>
+              <p class="cv-date">May &ndash; Jul 2018</p>
+              <p class="role-desc"><b>Responsibilities:</b> Protection of power transformers and other grid equipment; electrical acceptance testing, including continuity and high-potential isolation tests.</p>
+            </div>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="section reveal" id="training">
+    <h2 class="section-label">Training &amp; Mobility</h2>
+    <div class="cv-cards">
+      <article class="cv-card">
+        <div class="cv-logo"><img src="img/logos/focal-icon.png" width="128" height="128" alt="FOCAL Doctoral Network logo"></div>
+        <div class="cv-main">
+          <h3 class="cv-title">1st FOCAL Workshop</h3>
+          <p class="cv-org">Aalto University &middot; Espoo, Finland</p>
+          <p class="cv-date">Oct 2026</p>
+          <p class="role-desc">Two-day workshop of the FOCAL Doctoral Network, hosted by Aalto University on 15&ndash;16 October 2026. I presented a poster on resource slicing for time-sensitive traffic in NTNs with FSO inter-satellite links. The programme combined poster sessions with peer review among the doctoral candidates, invited talks from McMaster University (Canada) and NICT (Japan), and group activities across work packages.</p>
+          <div class="tl-photos">
+            <figure style="--ar:1.78">
+              <a href="img/focal-ws1-aalto-poster.jpg" target="_blank"><img src="img/focal-ws1-aalto-poster.jpg" width="1100" height="619" loading="lazy" decoding="async" alt="Abid Afridi presenting a poster on resource slicing for time-sensitive traffic at the 1st FOCAL Workshop, Aalto University"></a>
+              <figcaption>Poster session</figcaption>
+            </figure>
+            <figure style="--ar:1.78">
+              <a href="img/focal-ws1-aalto-group.jpg" target="_blank"><img src="img/focal-ws1-aalto-group.jpg" width="1100" height="618" loading="lazy" decoding="async" alt="Doctoral candidates, supervisors and invited guests of the FOCAL Doctoral Network at the 1st FOCAL Workshop, Aalto University"></a>
+              <figcaption>Workshop participants at Aalto University</figcaption>
+            </figure>
+          </div>
+        </div>
+      </article>
+      <article class="cv-card">
+        <div class="cv-logo"><img src="img/logos/focal-icon.png" width="128" height="128" alt="FOCAL Doctoral Network logo"></div>
+        <div class="cv-main">
+          <h3 class="cv-title">2nd FOCAL Training School &amp; Midterm Check Meeting</h3>
+          <p class="cv-org">TNO, Delft &amp; Airbus, Leiden &middot; The Netherlands</p>
+          <p class="cv-date">Apr 2026</p>
+          <p class="role-desc">Presented my doctoral research at the network mid-term review. Technical sessions covered optical pointing, acquisition &amp; tracking, coherent long-range optical communication, spatial-mode-multiplexed FSO, QKD space links, and AI/ML for satellite communication networks, with hands-on visits to the optical-communications labs at TNO and Airbus.</p>
+          <div class="tl-photos">
+            <figure style="--ar:0.94">
+              <a href="img/focal-ts2-midterm-talk.jpg" target="_blank"><img src="img/focal-ts2-midterm-talk.jpg" width="1035" height="1100" loading="lazy" decoding="async" alt="Abid Afridi presenting doctoral research on network slicing and AI-based resource allocation for optical multi-layered NTNs at the FOCAL mid-term meeting"></a>
+              <figcaption>Mid-term research presentation</figcaption>
+            </figure>
+            <figure style="--ar:1.12">
+              <a href="img/focal-ts2-airbus-visit.jpg" target="_blank"><img src="img/focal-ts2-airbus-visit.jpg" width="1100" height="980" loading="lazy" decoding="async" alt="FOCAL training school participants in front of a telescope dome during the Airbus site visit"></a>
+              <figcaption>Airbus site visit, Leiden</figcaption>
+            </figure>
+          </div>
+        </div>
+      </article>
+      <article class="cv-card">
+        <div class="cv-logo"><img src="img/logos/focal-icon.png" width="128" height="128" alt="FOCAL Doctoral Network logo"></div>
+        <div class="cv-main">
+          <h3 class="cv-title">1st FOCAL Training School</h3>
+          <p class="cv-org">Fraunhofer HHI &middot; Berlin, Germany</p>
+          <p class="cv-date">Oct 2025</p>
+          <p class="role-desc">Three-day MSCA training school on free-space optical (FSO) communication, satellite-based quantum key distribution (QKD), satellite constellation design, and NTN standardization in 3GPP, including visits to HHI's QKD and optical-communications laboratories.</p>
+          <div class="tl-photos">
+            <figure style="--ar:1.44">
+              <a href="img/focal-ts1-hhi-group.jpg" target="_blank"><img src="img/focal-ts1-hhi-group.jpg" width="1100" height="764" loading="lazy" decoding="async" alt="Doctoral candidates and lecturers of the 1st FOCAL Training School at Fraunhofer HHI, Berlin"></a>
+              <figcaption>Participants at Fraunhofer HHI</figcaption>
+            </figure>
+            <figure style="--ar:0.91">
+              <a href="img/focal-ts1-hhi-qkd-lecture.jpg" target="_blank"><img src="img/focal-ts1-hhi-qkd-lecture.jpg" width="999" height="1100" loading="lazy" decoding="async" alt="Lecture on quantum key distribution by DLR at the 1st FOCAL Training School"></a>
+              <figcaption>QKD lecture by DLR</figcaption>
+            </figure>
+          </div>
+          <p class="tl-credit">Photos: FOCAL Project</p>
+        </div>
+      </article>
+    </div>
+  </section>
+  </div>
+
+  <!-- ═══════════════════════════ PUBLICATIONS ══════════════════════════════ -->
+  <div class="tab-page" id="publications" data-title="Publications">
+  <section class="section reveal">
+    <h2 class="section-label">Publications</h2>
+    <div class="pub-stats">
+      <div class="pstat"><b data-count="all">11</b><span>Total publications</span></div>
+      <div class="pstat"><b data-count="journal">6</b><span>Journal articles</span></div>
+      <div class="pstat"><b data-count="conf">4</b><span>Conference papers</span></div>
+      <div class="pstat"><b data-count="first">6</b><span>First-author papers</span></div>
+      <div class="pstat"><b data-count="thesis">1</b><span>Thesis</span></div>
+    </div>
+  </section>
+
+  <div class="pub-layout">
+    <aside class="section pub-side" aria-label="Publication filters">
+      <p class="side-title">Publication type</p>
+      <div class="type-list" role="group" aria-label="Filter by type">
+        <button class="chip" type="button" data-filter="all" aria-pressed="true">All<span class="count">11</span></button>
+        <button class="chip" type="button" data-filter="journal" aria-pressed="false">Journal<span class="count">6</span></button>
+        <button class="chip" type="button" data-filter="conf" aria-pressed="false">Conference<span class="count">4</span></button>
+        <button class="chip" type="button" data-filter="thesis" aria-pressed="false">Thesis<span class="count">1</span></button>
+      </div>
+      <p class="side-title">Filter</p>
+      <input class="pub-search" id="pubSearch" type="search" placeholder="Search publications" aria-label="Search publications">
+      <p class="side-sub">Authorship</p>
+      <label class="radio"><input type="radio" name="pubAuth" value="all" checked>All<span class="count" data-auth="all"></span></label>
+      <label class="radio"><input type="radio" name="pubAuth" value="first">First author<span class="count" data-auth="first"></span></label>
+      <label class="radio"><input type="radio" name="pubAuth" value="co">Co-author<span class="count" data-auth="co"></span></label>
+      <p class="side-sub">Year</p>
+      <select class="pub-year" id="pubYear" aria-label="Filter by year"><option value="">All years</option></select>
+    </aside>
+
+    <div class="pub-main">
     <article class="featured" data-kind="conf">
       <div class="featured-fig">
         <svg viewBox="0 0 420 260" role="img" aria-label="Multi-hop LEO path with hop-by-hop resource reservation">
@@ -1805,94 +2261,86 @@
       </div>
     </article>
 
-    <div class="pub-filters" role="group" aria-label="Filter publications">
-      <button class="chip" type="button" data-filter="all" aria-pressed="true">All<span class="count">11</span></button>
-      <button class="chip" type="button" data-filter="journal" aria-pressed="false">Journal<span class="count">6</span></button>
-      <button class="chip" type="button" data-filter="conf" aria-pressed="false">Conference<span class="count">4</span></button>
-      <button class="chip" type="button" data-filter="thesis" aria-pressed="false">Thesis<span class="count">1</span></button>
-      <input class="pub-search" id="pubSearch" type="search" placeholder="Search publications" aria-label="Search publications">
-    </div>
-    <p class="pub-empty" id="pubEmpty" hidden>No publication matches this search.</p>
+    <p class="pub-empty" id="pubEmpty" hidden>No publication matches these filters.</p>
 
     <!-- Journal Articles -->
     <div class="pub-group" data-kind="journal">
-      <p class="group-title">Journal Articles</p>
+      <h3 class="pub-group-title">Journal Articles <span class="g-count"></span></h3>
       <div class="pub-list">
 
         <div class="pub-row">
-          <div class="thumb"><svg viewBox="0 0 96 68"><use href="#t-beams"/></svg></div>
           <div class="pub-body">
             <p class="pub-title"><a href="https://ieeexplore.ieee.org/document/11753550" target="_blank">Spatial and Temporal Correlation of Interference in a Narrow Multibeam LEO Satellite Random Access Network</a></p>
             <p class="pub-authors">I. Angervuori, <span class="me">A. Afridi</span>, R. Wichman</p>
             <p class="pub-venue"><span class="badge badge-j">IEEE Access</span>IEEE Access, vol.&nbsp;14, pp.&nbsp;165592&ndash;165603, 2026</p>
             <div class="pub-actions">
               <a class="act" href="https://ieeexplore.ieee.org/document/11753550" target="_blank"><svg><use href="#i-link"/></svg>IEEE Xplore</a>
-              <a class="act" href="https://doi.org/10.1109/ACCESS.2026.3746718" target="_blank"><svg><use href="#i-doc"/></svg>DOI</a>
+              <a class="act doi" href="https://doi.org/10.1109/ACCESS.2026.3746718" target="_blank">DOI: 10.1109/ACCESS.2026.3746718</a>
               <button class="act" type="button" data-bib="article"><svg><use href="#i-code"/></svg>BibTeX</button>
             </div>
           </div>
         </div>
 
         <div class="pub-row">
-          <div class="thumb"><svg viewBox="0 0 96 68"><use href="#t-uav"/></svg></div>
           <div class="pub-body">
             <p class="pub-title"><a href="https://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=11457669" target="_blank">6G SDVN: UAV-Assisted VANETs for AI-Enabled Controller Selection and Heterogeneous Multi-Band Connectivity</a></p>
             <p class="pub-authors">M. Rafid, <span class="me">A. Afridi</span>, S. Sualiheen, A. Iqbal, I. Ali, A. Akhunzada</p>
             <p class="pub-venue"><span class="badge badge-j">IEEE OJ-COMS</span>IEEE Open Journal of the Communications Society, vol.&nbsp;7, pp.&nbsp;3439&ndash;3450, 2026</p>
             <div class="pub-actions">
               <a class="act" href="https://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=11457669" target="_blank"><svg><use href="#i-link"/></svg>IEEE Xplore</a>
+              <a class="act doi" href="https://doi.org/10.1109/OJCOMS.2026.3678705" target="_blank">DOI: 10.1109/OJCOMS.2026.3678705</a>
               <button class="act" type="button" data-bib="article"><svg><use href="#i-code"/></svg>BibTeX</button>
             </div>
           </div>
         </div>
 
         <div class="pub-row">
-          <div class="thumb"><svg viewBox="0 0 96 68"><use href="#t-irs"/></svg></div>
           <div class="pub-body">
             <p class="pub-title"><a href="https://ieeexplore.ieee.org/abstract/document/10820371" target="_blank">Enhancing Physical Layer Security in WPCNs With IRS and Controlled Jamming for 6G IoT Applications</a></p>
             <p class="pub-authors">I. Hameed, <span class="me">A. Afridi</span>, M.-S. Baek, H.-K. Song</p>
             <p class="pub-venue"><span class="badge badge-j">IEEE Access</span>IEEE Access, vol.&nbsp;13, pp.&nbsp;4670&ndash;4682, 2025</p>
             <div class="pub-actions">
               <a class="act" href="https://ieeexplore.ieee.org/abstract/document/10820371" target="_blank"><svg><use href="#i-link"/></svg>IEEE Xplore</a>
+              <a class="act doi" href="https://doi.org/10.1109/ACCESS.2024.3525036" target="_blank">DOI: 10.1109/ACCESS.2024.3525036</a>
               <button class="act" type="button" data-bib="article"><svg><use href="#i-code"/></svg>BibTeX</button>
             </div>
           </div>
         </div>
 
         <div class="pub-row">
-          <div class="thumb"><svg viewBox="0 0 96 68"><use href="#t-swarm"/></svg></div>
           <div class="pub-body">
             <p class="pub-title"><a href="https://www.mdpi.com/2076-3417/14/24/11677" target="_blank">Quantum PSO-Based Optimization of Secured IRS-Assisted Wireless-Powered IoT Networks</a></p>
             <p class="pub-authors"><span class="me">A. Afridi</span>, I. Hameed, I. Koo</p>
             <p class="pub-venue"><span class="badge badge-j">Appl. Sci.</span>Applied Sciences (MDPI), vol.&nbsp;14, no.&nbsp;24, p.&nbsp;11677, 2024</p>
             <div class="pub-actions">
               <a class="act" href="https://www.mdpi.com/2076-3417/14/24/11677" target="_blank"><svg><use href="#i-link"/></svg>MDPI</a>
+              <a class="act doi" href="https://doi.org/10.3390/app142411677" target="_blank">DOI: 10.3390/app142411677</a>
               <button class="act" type="button" data-bib="article"><svg><use href="#i-code"/></svg>BibTeX</button>
             </div>
           </div>
         </div>
 
         <div class="pub-row">
-          <div class="thumb"><svg viewBox="0 0 96 68"><use href="#t-slots"/></svg></div>
           <div class="pub-body">
             <p class="pub-title"><a href="https://ieeexplore.ieee.org/abstract/document/10518025" target="_blank">Throughput Maximization of Wireless Powered IoT Network With Hybrid NOMA-TDMA Scheme: A Genetic Algorithm Approach</a></p>
             <p class="pub-authors"><span class="me">A. Afridi</span>, I. Hameed, C. E. Garc&iacute;a, I. Koo</p>
             <p class="pub-venue"><span class="badge badge-j">IEEE Access</span>IEEE Access, vol.&nbsp;12, pp.&nbsp;65241&ndash;65253, 2024</p>
             <div class="pub-actions">
               <a class="act" href="https://ieeexplore.ieee.org/abstract/document/10518025" target="_blank"><svg><use href="#i-link"/></svg>IEEE Xplore</a>
+              <a class="act doi" href="https://doi.org/10.1109/ACCESS.2024.3396497" target="_blank">DOI: 10.1109/ACCESS.2024.3396497</a>
               <button class="act" type="button" data-bib="article"><svg><use href="#i-code"/></svg>BibTeX</button>
             </div>
           </div>
         </div>
 
         <div class="pub-row">
-          <div class="thumb"><svg viewBox="0 0 96 68"><use href="#t-grid"/></svg></div>
           <div class="pub-body">
             <p class="pub-title"><a href="https://beei.org/index.php/EEI/article/view/3014" target="_blank">An Efficient and Improved Model for Power Theft Detection in Pakistan</a></p>
             <p class="pub-authors"><span class="me">A. Afridi</span>, A. Wahab, S. Khan, W. Ullah, S. Khan, S. Ul Islam, K. Hussain</p>
             <p class="pub-venue"><span class="badge badge-j">BEEI</span>Bulletin of Electrical Engineering and Informatics, vol.&nbsp;10, no.&nbsp;4, pp.&nbsp;1828&ndash;1837, 2021</p>
             <div class="pub-actions">
               <a class="act" href="https://beei.org/index.php/EEI/article/view/3014" target="_blank"><svg><use href="#i-link"/></svg>BEEI</a>
+              <a class="act doi" href="https://doi.org/10.11591/eei.v10i4.3014" target="_blank">DOI: 10.11591/eei.v10i4.3014</a>
               <button class="act" type="button" data-bib="article"><svg><use href="#i-code"/></svg>BibTeX</button>
             </div>
           </div>
@@ -1903,11 +2351,10 @@
 
     <!-- Conference Papers -->
     <div class="pub-group" data-kind="conf">
-      <p class="group-title">Conference Papers</p>
+      <h3 class="pub-group-title">Conference Papers <span class="g-count"></span></h3>
       <div class="pub-list">
 
         <div class="pub-row">
-          <div class="thumb"><svg viewBox="0 0 96 68"><use href="#t-rb"/></svg></div>
           <div class="pub-body">
             <p class="pub-title"><a href="https://arxiv.org/abs/2610.31802" target="_blank">Resource Slicing for Time-Sensitive Data Traffic in Non-Terrestrial Networks with FSO ISLs</a></p>
             <p class="pub-authors"><span class="me">A. Afridi</span>, A. A. Dowhuszko, R. Wichman, J. H&auml;m&auml;l&auml;inen</p>
@@ -1921,21 +2368,19 @@
         </div>
 
         <div class="pub-row">
-          <div class="thumb"><svg viewBox="0 0 96 68"><use href="#t-fso"/></svg></div>
           <div class="pub-body">
             <p class="pub-title"><a href="https://ieeexplore.ieee.org/document/11588143" target="_blank">Load Balancing in Non-Terrestrial Networks Using Free Space Optical Inter-satellite Links</a></p>
             <p class="pub-authors"><span class="me">A. Afridi</span>, A. A. Dowhuszko, J. Krivochiza, R. Wichman, J. H&auml;m&auml;l&auml;inen</p>
             <p class="pub-venue"><span class="badge badge-c">ICC 2026</span>IEEE International Conference on Communications (ICC), Glasgow, United Kingdom, pp.&nbsp;1&ndash;6, 2026</p>
             <div class="pub-actions">
               <a class="act" href="https://ieeexplore.ieee.org/document/11588143" target="_blank"><svg><use href="#i-link"/></svg>IEEE Xplore</a>
-              <a class="act" href="https://doi.org/10.1109/ICC59461.2026.11588143" target="_blank"><svg><use href="#i-doc"/></svg>DOI</a>
+              <a class="act doi" href="https://doi.org/10.1109/ICC59461.2026.11588143" target="_blank">DOI: 10.1109/ICC59461.2026.11588143</a>
               <button class="act" type="button" data-bib="inproceedings"><svg><use href="#i-code"/></svg>BibTeX</button>
             </div>
           </div>
         </div>
 
         <div class="pub-row">
-          <div class="thumb"><svg viewBox="0 0 96 68"><use href="#t-isac"/></svg></div>
           <div class="pub-body">
             <p class="pub-title"><a href="https://www.dbpia.co.kr/Journal/articleDetail?nodeId=NODE11906326" target="_blank">Integrated Sensing and Communication (ISAC) in Secured Wireless Powered IoT Networks</a></p>
             <p class="pub-authors"><span class="me">A. Afridi</span>, I. Hameed, I. Koo</p>
@@ -1948,13 +2393,13 @@
         </div>
 
         <div class="pub-row">
-          <div class="thumb"><svg viewBox="0 0 96 68"><use href="#t-slots"/></svg></div>
           <div class="pub-body">
             <p class="pub-title"><a href="https://ieeexplore.ieee.org/abstract/document/10373620" target="_blank">Enhancing Sum Throughput in Wireless Powered IoT Networks Using TDMA-Based Resource Allocation</a></p>
             <p class="pub-authors"><span class="me">A. Afridi</span>, I. Hameed, I. Koo</p>
             <p class="pub-venue"><span class="badge badge-c">ICMT 2023</span>26th International Conference on Mechatronics Technology (ICMT), Busan, South Korea, pp.&nbsp;1&ndash;5, 2023</p>
             <div class="pub-actions">
               <a class="act" href="https://ieeexplore.ieee.org/abstract/document/10373620" target="_blank"><svg><use href="#i-link"/></svg>IEEE Xplore</a>
+              <a class="act doi" href="https://doi.org/10.1109/ICMT59920.2023.10373620" target="_blank">DOI: 10.1109/ICMT59920.2023.10373620</a>
               <button class="act" type="button" data-bib="inproceedings"><svg><use href="#i-code"/></svg>BibTeX</button>
             </div>
           </div>
@@ -1965,10 +2410,9 @@
 
     <!-- Thesis -->
     <div class="pub-group" data-kind="thesis">
-      <p class="group-title">Thesis</p>
+      <h3 class="pub-group-title">Thesis <span class="g-count"></span></h3>
       <div class="pub-list">
         <div class="pub-row">
-          <div class="thumb"><svg viewBox="0 0 96 68"><use href="#t-book"/></svg></div>
           <div class="pub-body">
             <p class="pub-title"><a href="https://oak.ulsan.ac.kr/handle/2021.oak/20147" target="_blank">Optimization of Resources Allocation and Security in Wireless Powered IoT Networks</a></p>
             <p class="pub-authors"><span class="me">A. Afridi</span></p>
@@ -1981,172 +2425,13 @@
         </div>
       </div>
     </div>
-  </section>
-
-  <!-- ════════════════════════════════ CV ═══════════════════════════════════ -->
-  <section class="section reveal" id="cv">
-    <h2 class="section-label">Education &amp; Experience</h2>
-
-    <div class="cv-group">
-      <p class="group-title">Education</p>
-      <div class="tl">
-        <div class="tl-item">
-          <span class="mono logo"><img src="img/logos/aalto.png" width="96" height="96" alt="Aalto University logo"></span>
-          <div class="tl-body">
-            <p class="tl-org">Aalto University &middot; Espoo, Finland</p>
-            <p class="tl-role">D.Sc. (Tech.) in Electrical Engineering &mdash; MSCA Doctoral Fellow</p>
-            <p class="tl-desc">Focus: AI-based resource allocation and network slicing in multi-layer optical NTNs.</p>
-          </div>
-          <span class="tl-date">2025 &ndash; present</span>
-        </div>
-        <div class="tl-item">
-          <span class="mono logo"><img src="img/logos/ulsan.png" width="96" height="96" alt="University of Ulsan logo"></span>
-          <div class="tl-body">
-            <p class="tl-org">University of Ulsan &middot; Ulsan, South Korea</p>
-            <p class="tl-role">M.Sc. in Electrical Engineering &mdash; BK21+ Scholarship</p>
-            <p class="tl-desc">Focus: <em>Optimization of Resources Allocation and Security in Wireless Powered IoT Networks</em>.</p>
-          </div>
-          <span class="tl-date">2022 &ndash; 2025</span>
-        </div>
-        <div class="tl-item">
-          <span class="mono logo"><img src="img/logos/ust-bannu.png" width="96" height="96" alt="University of Science and Technology Bannu logo"></span>
-          <div class="tl-body">
-            <p class="tl-org">University of Science &amp; Technology Bannu &middot; Bannu, Pakistan</p>
-            <p class="tl-role">B.E. in Electrical Engineering (Telecom) &mdash; HEC Fully Funded Scholarship</p>
-            <p class="tl-desc">Final Year Project: intelligent IoT-based power theft detection system.</p>
-          </div>
-          <span class="tl-date">2016 &ndash; 2020</span>
-        </div>
-      </div>
     </div>
-
-    <div class="cv-group">
-      <p class="group-title">Experience</p>
-      <div class="tl">
-        <div class="tl-item">
-          <span class="mono logo"><img src="img/logos/aalto.png" width="96" height="96" alt="Aalto University logo"></span>
-          <div class="tl-body">
-            <p class="tl-org">Aalto University &middot; Wireless Signal Processing Group</p>
-            <p class="tl-role">MSCA Doctoral Fellow, FOCAL Doctoral Network</p>
-            <p class="tl-desc">Research on NTN load balancing via FSO inter-satellite links, network slicing, and interference analysis in narrow-beam LEO satellite constellations.</p>
-          </div>
-          <span class="tl-date">2025 &ndash; present</span>
-        </div>
-        <div class="tl-item">
-          <span class="mono logo"><img src="img/logos/ulsan.png" width="96" height="96" alt="University of Ulsan logo"></span>
-          <div class="tl-body">
-            <p class="tl-org">Multimedia Communication and Systems Lab (MCSL), University of Ulsan</p>
-            <p class="tl-role">Graduate Research Assistant</p>
-            <p class="tl-desc">Developed metaheuristic optimization frameworks (Quantum PSO, genetic algorithms) for throughput maximization and joint resource allocation in IRS-assisted, secured wireless-powered IoT networks, with a focus on physical layer security.</p>
-          </div>
-          <span class="tl-date">2022 &ndash; 2025</span>
-        </div>
-        <div class="tl-item">
-          <span class="mono" style="background:linear-gradient(135deg,#475569,#94a3b8)">BS</span>
-          <div class="tl-body">
-            <p class="tl-org">BioSafe Diagnostics &middot; Peshawar, Pakistan</p>
-            <p class="tl-role">Sales and Service Engineer</p>
-            <p class="tl-desc">Troubleshooting and installation of medical machines and equipment; preventive maintenance and field modifications.</p>
-          </div>
-          <span class="tl-date">Jan &ndash; Dec 2021</span>
-        </div>
-        <div class="tl-item">
-          <span class="mono logo"><img src="img/logos/ptcl.png" width="96" height="96" alt="PTCL logo"></span>
-          <div class="tl-body">
-            <p class="tl-org">Pakistan Telecommunication Limited (PTCL) &middot; Peshawar, Pakistan</p>
-            <p class="tl-role">Trainee Engineer</p>
-            <p class="tl-desc">Optical fiber-based systems and their operation; switching systems.</p>
-          </div>
-          <span class="tl-date">Jul &ndash; Aug 2019</span>
-        </div>
-        <div class="tl-item">
-          <span class="mono logo"><img src="img/logos/ptv.png" width="96" height="96" alt="Pakistan Television logo"></span>
-          <div class="tl-body">
-            <p class="tl-org">Pakistan Television (PTV) &middot; Peshawar, Pakistan</p>
-            <p class="tl-role">Trainee Engineer</p>
-            <p class="tl-desc">Video distribution amplifiers (VDAs); satellite signal downlinking and integrated receiver decoders (IRDs).</p>
-          </div>
-          <span class="tl-date">Aug &ndash; Sep 2018</span>
-        </div>
-        <div class="tl-item">
-          <span class="mono logo"><img src="img/logos/tesco.png" width="96" height="96" alt="TESCO logo"></span>
-          <div class="tl-body">
-            <p class="tl-org">Tribal Areas Electricity Supply Company (TESCO) &middot; Peshawar, Pakistan</p>
-            <p class="tl-role">Trainee Engineer</p>
-            <p class="tl-desc">Protection of power transformers and other grid equipment; electrical acceptance testing, including continuity and high-potential isolation tests.</p>
-          </div>
-          <span class="tl-date">May &ndash; Jul 2018</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="cv-group">
-      <p class="group-title">Training &amp; Mobility</p>
-      <div class="tl">
-        <div class="tl-item">
-          <span class="mono logo"><img src="img/logos/focal-icon.png" width="128" height="128" alt="FOCAL Doctoral Network logo"></span>
-          <div class="tl-body">
-            <p class="tl-org">1st FOCAL Workshop</p>
-            <p class="tl-role">Aalto University &middot; Espoo, Finland</p>
-            <p class="tl-desc">Two-day workshop of the FOCAL Doctoral Network, hosted by Aalto University on 15&ndash;16 October 2026. I presented a poster on resource slicing for time-sensitive traffic in NTNs with FSO inter-satellite links. The programme combined poster sessions with peer review among the doctoral candidates, invited talks from McMaster University (Canada) and NICT (Japan), and group activities across work packages.</p>
-            <div class="tl-photos">
-              <figure style="--ar:1.78">
-                <a href="img/focal-ws1-aalto-poster.jpg" target="_blank"><img src="img/focal-ws1-aalto-poster.jpg" width="1100" height="619" loading="lazy" decoding="async" alt="Abid Afridi presenting a poster on resource slicing for time-sensitive traffic at the 1st FOCAL Workshop, Aalto University"></a>
-                <figcaption>Poster session</figcaption>
-              </figure>
-              <figure style="--ar:1.78">
-                <a href="img/focal-ws1-aalto-group.jpg" target="_blank"><img src="img/focal-ws1-aalto-group.jpg" width="1100" height="618" loading="lazy" decoding="async" alt="Doctoral candidates, supervisors and invited guests of the FOCAL Doctoral Network at the 1st FOCAL Workshop, Aalto University"></a>
-                <figcaption>Workshop participants at Aalto University</figcaption>
-              </figure>
-            </div>
-          </div>
-          <span class="tl-date">Oct 2026</span>
-        </div>
-        <div class="tl-item">
-          <span class="mono logo"><img src="img/logos/focal-icon.png" width="128" height="128" alt="FOCAL Doctoral Network logo"></span>
-          <div class="tl-body">
-            <p class="tl-org">2nd FOCAL Training School &amp; Midterm Check Meeting</p>
-            <p class="tl-role">TNO, Delft &amp; Airbus, Leiden &middot; The Netherlands</p>
-            <p class="tl-desc">Presented my doctoral research at the network mid-term review. Technical sessions covered optical pointing, acquisition &amp; tracking, coherent long-range optical communication, spatial-mode-multiplexed FSO, QKD space links, and AI/ML for satellite communication networks, with hands-on visits to the optical-communications labs at TNO and Airbus.</p>
-            <div class="tl-photos">
-              <figure style="--ar:0.94">
-                <a href="img/focal-ts2-midterm-talk.jpg" target="_blank"><img src="img/focal-ts2-midterm-talk.jpg" width="1035" height="1100" loading="lazy" decoding="async" alt="Abid Afridi presenting doctoral research on network slicing and AI-based resource allocation for optical multi-layered NTNs at the FOCAL mid-term meeting"></a>
-                <figcaption>Mid-term research presentation</figcaption>
-              </figure>
-              <figure style="--ar:1.12">
-                <a href="img/focal-ts2-airbus-visit.jpg" target="_blank"><img src="img/focal-ts2-airbus-visit.jpg" width="1100" height="980" loading="lazy" decoding="async" alt="FOCAL training school participants in front of a telescope dome during the Airbus site visit"></a>
-                <figcaption>Airbus site visit, Leiden</figcaption>
-              </figure>
-            </div>
-          </div>
-          <span class="tl-date">Apr 2026</span>
-        </div>
-        <div class="tl-item">
-          <span class="mono logo"><img src="img/logos/focal-icon.png" width="128" height="128" alt="FOCAL Doctoral Network logo"></span>
-          <div class="tl-body">
-            <p class="tl-org">1st FOCAL Training School</p>
-            <p class="tl-role">Fraunhofer HHI &middot; Berlin, Germany</p>
-            <p class="tl-desc">Three-day MSCA training school on free-space optical (FSO) communication, satellite-based quantum key distribution (QKD), satellite constellation design, and NTN standardization in 3GPP, including visits to HHI's QKD and optical-communications laboratories.</p>
-            <div class="tl-photos">
-              <figure style="--ar:1.44">
-                <a href="img/focal-ts1-hhi-group.jpg" target="_blank"><img src="img/focal-ts1-hhi-group.jpg" width="1100" height="764" loading="lazy" decoding="async" alt="Doctoral candidates and lecturers of the 1st FOCAL Training School at Fraunhofer HHI, Berlin"></a>
-                <figcaption>Participants at Fraunhofer HHI</figcaption>
-              </figure>
-              <figure style="--ar:0.91">
-                <a href="img/focal-ts1-hhi-qkd-lecture.jpg" target="_blank"><img src="img/focal-ts1-hhi-qkd-lecture.jpg" width="999" height="1100" loading="lazy" decoding="async" alt="Lecture on quantum key distribution by DLR at the 1st FOCAL Training School"></a>
-                <figcaption>QKD lecture by DLR</figcaption>
-              </figure>
-            </div>
-            <p class="tl-credit">Photos: FOCAL Project</p>
-          </div>
-          <span class="tl-date">Oct 2025</span>
-        </div>
-      </div>
-    </div>
-  </section>
+  </div>
+  </div>
 
   <!-- ═══════════════════════════ TRAVEL & TALKS ════════════════════════════ -->
-  <section class="section reveal" id="travel">
+  <div class="tab-page" id="travel" data-title="Travel &amp; Talks">
+  <section class="section reveal">
     <h2 class="section-label">Travel &amp; Talks</h2>
     <div class="map-card">
       <svg id="travel-map" viewBox="0 0 880 400" role="img" aria-label="Map of research travel and study locations"></svg>
@@ -2170,9 +2455,11 @@
     </ul>
 
   </section>
+  </div>
 
   <!-- ══════════════════════════ AWARDS & HONORS ════════════════════════════ -->
-  <section class="section reveal" id="awards">
+  <div class="tab-page" id="awards" data-title="Awards">
+  <section class="section reveal">
     <h2 class="section-label">Awards &amp; Achievements</h2>
     <div class="award-list">
       <div class="award-row">
@@ -2209,9 +2496,11 @@
       </ul>
     </div>
   </section>
+  </div>
 
-  <!-- ════════════════════ SKILLS, TOOLS & CERTIFICATIONS ════════════════════ -->
-  <section class="section reveal" id="skills">
+  <!-- ════════════════════ SKILLS, TOOLS & INTERESTS ════════════════════════ -->
+  <div class="tab-page" id="skills" data-title="Skills">
+  <section class="section reveal">
     <h2 class="section-label">Skills, Tools &amp; Certifications</h2>
     <div class="skill-group">
       <p class="group-title">Technical Skills</p>
@@ -2245,7 +2534,6 @@
     </div>
   </section>
 
-  <!-- ═════════════════════════════ HOBBIES ════════════════════════════════ -->
   <section class="section reveal" id="hobbies">
     <h2 class="section-label">Hobbies &amp; Interests</h2>
     <div class="hobby-list">
@@ -2255,9 +2543,11 @@
       <span class="hobby"><span class="h-icon h-community"><svg><use href="#i-community"/></svg></span>Community work</span>
     </div>
   </section>
+  </div>
 
   <!-- ═════════════════════════════ CONTACT ════════════════════════════════ -->
-  <section class="section reveal" id="contact">
+  <div class="tab-page" id="contact" data-title="Contact">
+  <section class="section reveal">
     <h2 class="section-label">Contact</h2>
     <div class="contact-card">
       <div>
@@ -2269,6 +2559,7 @@
         <div class="pills">
           <a class="pill p-mail" href="mailto:abid.afridi@aalto.fi"><svg><use href="#i-mail"/></svg>abid.afridi@aalto.fi</a>
           <a class="pill p-scholar" href="https://scholar.google.com/citations?user=SswFXHwAAAAJ&hl=en" target="_blank"><svg><use href="#i-scholar"/></svg>Google Scholar</a>
+          <a class="pill p-rg" href="https://www.researchgate.net/profile/Abid-Afridi" target="_blank"><svg><use href="#i-rg"/></svg>ResearchGate</a>
           <a class="pill p-orcid" href="https://orcid.org/0009-0003-0329-4630" target="_blank"><svg><use href="#i-orcid"/></svg>ORCID</a>
           <a class="pill p-linkedin" href="https://linkedin.com/in/abid-afridi" target="_blank"><svg><use href="#i-linkedin"/></svg>LinkedIn</a>
           <a class="pill p-wos" href="https://www.webofscience.com/wos/author/record/NWH-7426-2025" target="_blank"><svg><use href="#i-wos"/></svg>Web of Science</a>
@@ -2332,11 +2623,29 @@
       </div>
     </div>
   </section>
+  </div>
 
   </main>
-  </div><!-- /.layout -->
 
 </div><!-- /.page -->
+
+<aside class="social-bar" aria-label="Profiles">
+  <a class="sb-link p-scholar" href="https://scholar.google.com/citations?user=SswFXHwAAAAJ&hl=en" target="_blank" title="Google Scholar" aria-label="Google Scholar"><svg><use href="#i-scholar"/></svg></a>
+  <a class="sb-link p-rg" href="https://www.researchgate.net/profile/Abid-Afridi" target="_blank" title="ResearchGate" aria-label="ResearchGate"><svg><use href="#i-rg"/></svg></a>
+  <a class="sb-link p-orcid" href="https://orcid.org/0009-0003-0329-4630" target="_blank" title="ORCID" aria-label="ORCID"><svg><use href="#i-orcid"/></svg></a>
+  <a class="sb-link p-linkedin" href="https://linkedin.com/in/abid-afridi" target="_blank" title="LinkedIn" aria-label="LinkedIn"><svg><use href="#i-linkedin"/></svg></a>
+  <a class="sb-link p-wos" href="https://www.webofscience.com/wos/author/record/NWH-7426-2025" target="_blank" title="Web of Science" aria-label="Web of Science"><svg><use href="#i-wos"/></svg></a>
+  <a class="sb-link p-mail" href="mailto:abid.afridi@aalto.fi" title="Email" aria-label="Email"><svg><use href="#i-mail"/></svg></a>
+  <div class="sb-flag" id="flagWrap" hidden>
+    <button class="sb-link p-flag" type="button" id="flagBtn" aria-expanded="false" aria-controls="flagPop" title="Visitors" aria-label="Visitors by country"><svg><use href="#i-flag"/></svg></button>
+    <div class="flag-pop" id="flagPop" role="dialog" aria-label="Visitors by country" hidden>
+      <button class="flag-close" type="button" id="flagClose" aria-label="Close">&times;</button>
+      <p class="flag-title">Visitors</p>
+      <img id="flagImg" alt="Flag Counter: visitors by country">
+      <a id="flagMore" target="_blank" rel="noopener">View full statistics &rarr;</a>
+    </div>
+  </div>
+</aside>
 
 <a class="to-top" id="toTop" href="#top" aria-label="Back to top"><svg><use href="#i-chev"/></svg></a>
 
@@ -2386,17 +2695,45 @@
     a.addEventListener('click', function () { navList.classList.remove('open'); menuBtn.setAttribute('aria-expanded', 'false'); });
   });
 
-  /* ── Menu: mark the section in view ────────────────────────── */
-  var navLinks = Array.prototype.slice.call(navList.querySelectorAll('a[href^="#"]'));
-  var navTargets = navLinks.map(function (a) { return document.querySelector(a.getAttribute('href')); });
-  function markSection() {
-    var cur = -1, line = 90;                         // just below the sticky header
-    navTargets.forEach(function (sec, i) { if (sec && sec.getBoundingClientRect().top <= line) cur = i; });
-    if (innerHeight + scrollY >= document.documentElement.scrollHeight - 4) cur = navLinks.length - 1;   // page end: Contact
-    navLinks.forEach(function (a, i) { if (i === cur) a.setAttribute('aria-current', 'true'); else a.removeAttribute('aria-current'); });
+  /* ── Tabs: the URL hash picks the page; other anchors keep the current tab ── */
+  var pages = [].slice.call(document.querySelectorAll('.tab-page'));
+  var navLinks = [].slice.call(navList.querySelectorAll('a[href^="#"]'));
+  var ALIAS = { about: 'home', research: 'home', highlights: 'home', news: 'home', profile: 'home', cv: 'education', training: 'experience', hobbies: 'skills' };
+  var mainEl = document.getElementById('main'), baseTitle = document.title;
+  function route(scroll) {
+    var id = location.hash.slice(1) || 'home';
+    var el = document.getElementById(id);
+    var page = (el && el.closest('.tab-page')) || document.getElementById(ALIAS[id] || '');
+    if (!page) { if (el) return; page = pages[0]; }
+    var changed = root.getAttribute('data-tab') !== page.id;
+    root.setAttribute('data-tab', page.id);
+    navLinks.forEach(function (a) {
+      if (a.getAttribute('href') === '#' + page.id) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current');
+    });
+    document.title = page.id === 'home' ? baseTitle : page.dataset.title.replace('&amp;', '&') + ' | Abid Afridi';
+    if (!scroll) return;
+    var how = changed ? 'instant' : 'smooth';          // a new tab jumps; within a tab the scroll is smooth
+    if (el && el !== page) { el.scrollIntoView({ behavior: how }); return; }   // an anchor inside the page, such as #news or #training
+    var top = page.id === 'home' ? 0 : mainEl.getBoundingClientRect().top + scrollY - 64;
+    if (changed || scrollY > top) scrollTo({ top: Math.min(scrollY, top), behavior: how });
   }
-  addEventListener('scroll', markSection, { passive: true });
-  markSection();
+  addEventListener('hashchange', function () { route(true); });
+  route(false);
+
+  /* ── Visitor flag counter (flagcounter.com) ─────────────────── */
+  // Paste the image address of the counter, for example 'https://s05.flagcounter.com/count2/XXXX/bg_FFFFFF/...'.
+  // While it is empty the flag button stays hidden.
+  var FLAG_COUNTER = '';
+  if (FLAG_COUNTER) {
+    var flagWrap = document.getElementById('flagWrap'), flagBtn = document.getElementById('flagBtn'), flagPop = document.getElementById('flagPop');
+    document.getElementById('flagImg').src = FLAG_COUNTER;          // loads with the page, so every visit is counted
+    document.getElementById('flagMore').href = FLAG_COUNTER.replace(/\/count2\/([^/]+).*/, '/more/$1');
+    flagWrap.hidden = false;
+    function setFlag(open) { flagPop.hidden = !open; flagBtn.setAttribute('aria-expanded', String(open)); }
+    flagBtn.addEventListener('click', function () { setFlag(flagPop.hidden); });
+    document.getElementById('flagClose').addEventListener('click', function () { setFlag(false); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') setFlag(false); });
+  }
 
   /* ── Back-to-top button ───────────────────────────────────── */
   var toTop = document.getElementById('toTop');
@@ -2435,35 +2772,56 @@
     newsMore.querySelector('span').textContent = open ? 'Show all news (' + total + ')' : 'Show fewer';
   });
 
-  /* ── Publication filter ───────────────────────────────────── */
+  /* ── Publication filters: type, text, authorship, year ───── */
   var chips = document.querySelectorAll('.chip');
   var groups = document.querySelectorAll('.pub-group');
   var featured = document.querySelector('.featured');
-  chips.forEach(function (chip) {
-    chip.addEventListener('click', function () {
-      var f = chip.dataset.filter;
-      chips.forEach(function (c) { c.setAttribute('aria-pressed', String(c === chip)); });
-      pubFilter = f;
-      applyPubFilter();
-    });
+  var pubSearch = document.getElementById('pubSearch'), pubEmpty = document.getElementById('pubEmpty'), pubYear = document.getElementById('pubYear');
+  var pubFilter = 'all', pubAuth = 'all';
+  var pubItems = [].slice.call(document.querySelectorAll('.pub-row')).concat(featured ? [featured] : []);
+  pubItems.forEach(function (el) {
+    var venue = (el.querySelector('.pub-venue') || el.querySelector('.feat-meta')).textContent.match(/\b(19|20)\d{2}\b/g);
+    var authors = el.querySelector('.pub-authors') || el.querySelector('.feat-meta');
+    el.dataset.year = venue ? venue[venue.length - 1] : '';
+    el.dataset.first = /^\s*<span class="me">/.test(authors.innerHTML) ? '1' : '0';
   });
-  // chip filter and text search together; groups without a visible row are hidden
-  var pubFilter = 'all', pubSearch = document.getElementById('pubSearch'), pubEmpty = document.getElementById('pubEmpty');
+  var rows = [].slice.call(document.querySelectorAll('.pub-row'));
+  rows.map(function (r) { return r.dataset.year; }).filter(function (y, k, a) { return y && a.indexOf(y) === k; })
+    .sort().reverse().forEach(function (y) { pubYear.insertAdjacentHTML('beforeend', '<option value="' + y + '">' + y + '</option>'); });
+  document.querySelectorAll('[data-auth]').forEach(function (el) {
+    var a = el.dataset.auth;
+    el.textContent = rows.filter(function (r) { return a === 'all' || (a === 'first') === (r.dataset.first === '1'); }).length;
+  });
+  function pubMatch(el, q) {
+    return (q === '' || el.textContent.toLowerCase().indexOf(q) >= 0)
+      && (pubAuth === 'all' || (pubAuth === 'first') === (el.dataset.first === '1'))
+      && (pubYear.value === '' || el.dataset.year === pubYear.value);
+  }
   function applyPubFilter() {
     var q = pubSearch.value.trim().toLowerCase(), shown = 0;
     groups.forEach(function (g) {
       var visible = 0;
-      g.querySelectorAll('.pub-row').forEach(function (row) {
-        row.hidden = q !== '' && row.textContent.toLowerCase().indexOf(q) < 0;
-        if (!row.hidden) visible++;
-      });
+      g.querySelectorAll('.pub-row').forEach(function (row) { row.hidden = !pubMatch(row, q); if (!row.hidden) visible++; });
+      g.querySelector('.g-count').textContent = visible;
       g.hidden = !(pubFilter === 'all' || g.dataset.kind === pubFilter) || visible === 0;
       if (!g.hidden) shown += visible;
     });
-    featured.hidden = !(pubFilter === 'all' || pubFilter === 'conf') || (q !== '' && featured.textContent.toLowerCase().indexOf(q) < 0);
+    featured.hidden = !(pubFilter === 'all' || pubFilter === 'conf') || !pubMatch(featured, q);
     pubEmpty.hidden = shown > 0 || !featured.hidden;
   }
+  chips.forEach(function (chip) {
+    chip.addEventListener('click', function () {
+      chips.forEach(function (c) { c.setAttribute('aria-pressed', String(c === chip)); });
+      pubFilter = chip.dataset.filter;
+      applyPubFilter();
+    });
+  });
+  document.querySelectorAll('input[name="pubAuth"]').forEach(function (r) {
+    r.addEventListener('change', function () { pubAuth = r.value; applyPubFilter(); });
+  });
   pubSearch.addEventListener('input', applyPubFilter);
+  pubYear.addEventListener('change', applyPubFilter);
+  applyPubFilter();
 
   /* ── BibTeX copy ──────────────────────────────────────────── */
   var toastEl = document.getElementById('toast');
@@ -2501,7 +2859,10 @@
   /* ── Counts taken from the publication list ───────────────── */
   function countOf(kind) { return document.querySelectorAll('.pub-group[data-kind="' + kind + '"] .pub-row').length; }
   document.querySelectorAll('[data-count]').forEach(function (el) {
-    el.textContent = el.dataset.count === 'all' ? document.querySelectorAll('.pub-group .pub-row').length : countOf(el.dataset.count);
+    var k = el.dataset.count;
+    el.textContent = k === 'all' ? document.querySelectorAll('.pub-group .pub-row').length
+      : k === 'first' ? document.querySelectorAll('.pub-group:not([data-kind="thesis"]) .pub-row[data-first="1"]').length
+      : countOf(k);
   });
   chips.forEach(function (chip) {
     var f = chip.dataset.filter;
