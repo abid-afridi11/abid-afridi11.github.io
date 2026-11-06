@@ -1290,21 +1290,6 @@
     .intro-card .about-text p:last-child { margin-bottom: 0; }
 
     /* profile card extras */
-    .p-cta {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-      margin-bottom: 0.9rem;
-      padding: 0.45rem 1.1rem;
-      border-radius: 999px;
-      background: linear-gradient(135deg, var(--aalto) 0%, #1e4ed8 70%);
-      color: #fff;
-      font-size: 0.8rem;
-      font-weight: 600;
-      box-shadow: 0 4px 14px rgba(30,78,216,0.28);
-    }
-    .p-cta svg { width: 14px; height: 14px; }
-    .p-cta:hover { text-decoration: none; filter: brightness(1.08); }
     .p-rg { --pc: var(--rg); --pt: var(--rg-fg); }
 
     /* social bar on the right */
@@ -1540,13 +1525,17 @@
       .page-banner { margin: 0 calc(50% - 50vw); border-radius: 0; height: clamp(190px, 15vw, 290px); }
       .banner-credit { right: calc(1.75rem + 2vw + var(--sb, 0px) / 2); }
     }
-    @media (min-width: 1100px) {
-      /* Home: the cover runs on under both cards, so no blank band sits beside the name */
-      :root { --home-cut: 92px; }
+    @media (min-width: 621px) {
+      /* Home: the cover runs on under the cards, so no blank band sits beside the name and the tagline stays clear */
+      :root { --home-cut: 72px; }
       .hero-banner { height: calc(clamp(320px, 22vw, 440px) + var(--home-cut)); }
       .hero-tag { bottom: calc(var(--home-cut) + 1.2rem); }
       #home { padding-top: 0; }
       #home .layout { position: relative; z-index: 3; margin-top: calc(-1 * var(--home-cut)); }
+      .profile { margin-top: 0; }
+    }
+    @media (min-width: 1100px) {
+      :root { --home-cut: 92px; }
       .profile { margin-top: -64px; }
     }
     @media (max-width: 760px) {
@@ -1622,6 +1611,114 @@
     .lang::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 4px; background: var(--lc); }
     .lang-name { font-family: var(--serif); font-size: 1.15rem; font-weight: 600; margin-bottom: 0.35rem; }
     .lang-level { display: inline-block; font-size: 0.72rem; font-weight: 600; color: var(--lc); background: color-mix(in srgb, var(--lc) 12%, transparent); border-radius: 999px; padding: 0.12rem 0.6rem; }
+
+    /* profile card: larger name and affiliation badges */
+    .profile h1 { font-size: 2.15rem; margin-bottom: 0.45rem; }
+    .profile .role { font-size: 0.95rem; }
+    .profile .dept { font-size: 0.86rem; }
+    .profile .loc { font-size: 0.84rem; }
+    .p-affils { flex-direction: column; align-items: stretch; gap: 0.45rem; margin: 1.1rem 0 0.4rem; }
+    .p-affil { gap: 0.6rem; padding: 0.45rem 0.7rem 0.45rem 0.45rem; border-radius: 10px; font-size: 0.82rem; text-align: left; white-space: normal; }
+    .p-affil img { width: 32px; height: 32px; border-radius: 6px; }
+    .p-affil img.flag { width: 36px; height: 24px; border-radius: 3px; }
+    @media (min-width: 621px) and (max-width: 1099px) {
+      .p-affils { max-width: 360px; }
+    }
+
+    /* awards */
+    .award-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; }
+    .award-card {
+      --awc: var(--accent);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      padding: 1.2rem 1.2rem 1.15rem;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      background: linear-gradient(165deg, color-mix(in srgb, var(--awc) 9%, var(--surface)) 0%, var(--surface) 45%);
+      box-shadow: var(--shadow-sm);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .award-card::before { content: ""; position: absolute; inset: 0 0 auto 0; height: 4px; background: var(--awc); }
+    .award-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); }
+    .award-card.a-gold { --awc: var(--amber-fg); }
+    .award-card.a-blue { --awc: var(--accent); }
+    .award-card.a-green { --awc: var(--green-fg); }
+    .ac-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.9rem; }
+    .ac-icon { width: 46px; height: 46px; border-radius: 13px; display: flex; align-items: center; justify-content: center; color: var(--awc); background: color-mix(in srgb, var(--awc) 14%, transparent); }
+    .ac-icon svg { width: 24px; height: 24px; }
+    .ac-year { font-family: var(--mono-font); font-size: 0.74rem; color: var(--awc); background: color-mix(in srgb, var(--awc) 10%, transparent); border: 1px solid color-mix(in srgb, var(--awc) 30%, transparent); border-radius: 999px; padding: 0.12rem 0.6rem; }
+    .ac-title { font-family: var(--serif); font-size: 1.08rem; font-weight: 600; line-height: 1.35; margin-bottom: 0.25rem; }
+    .ac-org { font-size: 0.8rem; font-weight: 600; color: var(--awc); margin-bottom: 0.6rem; }
+    .ac-desc { font-size: 0.8rem; line-height: 1.6; color: var(--text-muted); text-align: justify; hyphens: auto; }
+    .ach-block { padding: 1.1rem 1.25rem 1.15rem; border: 1px solid var(--border); border-radius: 14px; background: var(--bg-subtle); }
+    .ach-block .group-title { border-bottom: none; padding-bottom: 0; margin-bottom: 0.75rem; }
+    .ach-checks { gap: 0.6rem; }
+    .ach-checks li { padding-left: 1.75rem; }
+    .ach-checks li::before {
+      content: "";
+      top: 0.12rem;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: var(--accent-soft) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231e4ed8' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12.5l4.5 4.5L19 7.5'/%3E%3C/svg%3E") center / 11px no-repeat;
+    }
+
+    /* contact */
+    .contact-hero { background: radial-gradient(ellipse at 85% 30%, color-mix(in srgb, var(--accent) 12%, transparent) 0%, transparent 60%), var(--surface); }
+    .ch-eyebrow { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.4rem; }
+    .contact-hero .contact-title { font-family: var(--serif); font-size: 1.6rem; font-weight: 600; margin-bottom: 0.6rem; }
+    .contact-cta { display: flex; flex-wrap: wrap; align-items: center; gap: 0.6rem 1rem; }
+    .cta-main {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.65rem 1.4rem;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--aalto) 0%, #1e4ed8 70%);
+      color: #fff;
+      font-size: 0.92rem;
+      font-weight: 600;
+      box-shadow: 0 6px 18px rgba(30,78,216,0.3);
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+    .cta-main svg { width: 17px; height: 17px; }
+    .cta-main:hover { text-decoration: none; transform: translateY(-1px); box-shadow: 0 8px 22px rgba(30,78,216,0.4); }
+    .cta-mail { font-family: var(--mono-font); font-size: 0.82rem; color: var(--text-muted); }
+    .contact-hero .contact-art { width: 190px; height: 190px; }
+    .ci-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.8rem; }
+    .ci { display: flex; align-items: flex-start; gap: 0.8rem; padding: 0.95rem 1rem; border: 1px solid var(--border); border-radius: 14px; background: var(--bg-subtle); }
+    .ci-icon { flex-shrink: 0; width: 40px; height: 40px; border-radius: 11px; display: flex; align-items: center; justify-content: center; color: var(--accent); background: var(--accent-soft); }
+    .ci-icon svg { width: 20px; height: 20px; }
+    .ci-label { font-size: 0.66rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-light); margin-bottom: 0.15rem; }
+    .ci-value { font-size: 0.86rem; font-weight: 600; line-height: 1.45; color: var(--text); }
+    a.ci-value { color: var(--accent); }
+    .prof-tiles { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.75rem; }
+    .prof-tile {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.8rem 0.95rem;
+      border: 1px solid color-mix(in srgb, var(--pc) 30%, var(--border));
+      border-radius: 14px;
+      background: color-mix(in srgb, var(--pc) 6%, var(--surface));
+      color: var(--text);
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+    .prof-tile:hover { text-decoration: none; transform: translateY(-2px); box-shadow: 0 8px 20px color-mix(in srgb, var(--pc) 25%, transparent); }
+    .pt-icon { flex-shrink: 0; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; background: var(--pc); }
+    .pt-icon svg { width: 19px; height: 19px; }
+    .pt-name { display: block; font-size: 0.9rem; font-weight: 700; }
+    .pt-sub { display: block; font-size: 0.74rem; color: var(--text-muted); }
+    @media (min-width: 1250px) {
+      .prof-tiles { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+      .ci-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    }
+    @media (max-width: 620px) {
+      .contact-hero .contact-title { font-size: 1.35rem; }
+      .prof-tiles, .ci-grid { grid-template-columns: minmax(0, 1fr); }
+    }
   </style>
 </head>
 <body id="top">
@@ -1678,6 +1775,9 @@
   <symbol id="i-book" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4.5A1.5 1.5 0 0 1 5.5 3H20v15H5.5A1.5 1.5 0 0 0 4 19.5z"/><path d="M4 19.5A1.5 1.5 0 0 0 5.5 21H20v-3M8 7h8"/></symbol>
   <symbol id="i-pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.3"/></symbol>
   <symbol id="i-mic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21M8.5 21h7"/></symbol>
+  <symbol id="i-building" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 21V5a1 1 0 0 1 1-1h9a1 1 0 0 1 1 1v16M15 9h4a1 1 0 0 1 1 1v11M2 21h20"/><path d="M8 8h3M8 12h3M8 16h3"/></symbol>
+  <symbol id="i-globe" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.7 3.8 5.7 3.8 9s-1.3 6.3-3.8 9c-2.5-2.7-3.8-5.7-3.8-9S9.5 5.7 12 3z"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
   <symbol id="i-home" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/><path d="M10 20v-5h4v5"/></symbol>
   <symbol id="i-brief" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M3 12.5h18"/></symbol>
   <symbol id="i-flag" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 21V4"/><path d="M5 4h11l-1.8 4L16 12H5"/></symbol>
@@ -1879,11 +1979,10 @@
       <p class="dept">Wireless Signal Processing Group<br>Aalto University</p>
       <p class="loc"><svg aria-hidden="true"><use href="#i-pin"/></svg>Espoo, Finland</p>
       <div class="p-affils">
-        <span class="p-affil"><img src="img/logos/aalto.png" width="96" height="96" alt="">Aalto</span>
-        <span class="p-affil"><img class="flag" src="img/logos/eu-flag.png" width="96" height="64" alt="">MSCA</span>
-        <span class="p-affil"><img src="img/logos/focal-icon.png" width="128" height="128" alt="">FOCAL</span>
+        <span class="p-affil"><img src="img/logos/aalto.png" width="96" height="96" alt="">Aalto University</span>
+        <span class="p-affil"><img class="flag" src="img/logos/eu-flag.png" width="96" height="64" alt="">Marie Sk&#322;odowska-Curie Actions</span>
+        <span class="p-affil"><img src="img/logos/focal-icon.png" width="128" height="128" alt="">FOCAL Doctoral Network</span>
       </div>
-      <a class="p-cta" href="#contact"><svg aria-hidden="true"><use href="#i-mail"/></svg>Get in touch</a>
       <div class="p-links">
         <a class="p-link p-mail" href="mailto:abid.afridi@aalto.fi" title="Email" aria-label="Email"><svg><use href="#i-mail"/></svg></a>
         <a class="p-link p-scholar" href="https://scholar.google.com/citations?user=SswFXHwAAAAJ&hl=en" target="_blank" title="Google Scholar" aria-label="Google Scholar"><svg><use href="#i-scholar"/></svg></a>
@@ -2643,33 +2742,30 @@
   <div class="tab-page" id="awards" data-title="Awards">
   <section class="section reveal">
     <h2 class="section-label">Fellowships &amp; Scholarships</h2>
-    <div class="award-list">
-      <div class="award-row">
-        <span class="award-icon gold"><svg><use href="#i-medal"/></svg></span>
-        <div>
-          <p class="award-title">Marie Skłodowska-Curie Fellowship (MSCA-DN) &mdash; European Commission, 2025</p>
-          <p class="award-desc">Competitive EU doctoral fellowship for early-stage researchers, awarded for excellence in research and training. Part of the FOCAL Doctoral Network on future open communication architectures for 6G.</p>
-        </div>
-      </div>
-      <div class="award-row">
-        <span class="award-icon"><svg><use href="#i-cap"/></svg></span>
-        <div>
-          <p class="award-title">BK21+ (Brain Korea 21+) Scholarship &mdash; National Research Foundation of Korea, 2022&ndash;2025</p>
-          <p class="award-desc">Prestigious government-funded fellowship supporting outstanding graduate students in Korean universities, awarded for M.Sc. research at the University of Ulsan.</p>
-        </div>
-      </div>
-      <div class="award-row">
-        <span class="award-icon"><svg><use href="#i-book"/></svg></span>
-        <div>
-          <p class="award-title">HEC Indigenous Scholarship (Balochistan &amp; FATA) &mdash; Higher Education Commission of Pakistan, 2016&ndash;2020</p>
-          <p class="award-desc">Merit-based undergraduate scholarship awarded under the HEC project <em>"Provision of Higher Education Opportunities for Students of Balochistan &amp; FATA,"</em> a flagship national programme supporting talented students from underprivileged regions throughout the B.E. (Telecommunication) degree.</p>
-        </div>
-      </div>
+    <div class="award-grid">
+      <article class="award-card a-gold">
+        <div class="ac-top"><span class="ac-icon"><svg><use href="#i-medal"/></svg></span><span class="ac-year">2025</span></div>
+        <h3 class="ac-title">Marie Sk&#322;odowska-Curie Fellowship (MSCA-DN)</h3>
+        <p class="ac-org">European Commission</p>
+        <p class="ac-desc">Competitive EU doctoral fellowship for early-stage researchers, awarded for excellence in research and training. Part of the FOCAL Doctoral Network on future open communication architectures for 6G.</p>
+      </article>
+      <article class="award-card a-blue">
+        <div class="ac-top"><span class="ac-icon"><svg><use href="#i-cap"/></svg></span><span class="ac-year">2022&ndash;2025</span></div>
+        <h3 class="ac-title">BK21+ (Brain Korea 21+) Scholarship</h3>
+        <p class="ac-org">National Research Foundation of Korea</p>
+        <p class="ac-desc">Prestigious government-funded fellowship supporting outstanding graduate students in Korean universities, awarded for M.Sc. research at the University of Ulsan.</p>
+      </article>
+      <article class="award-card a-green">
+        <div class="ac-top"><span class="ac-icon"><svg><use href="#i-book"/></svg></span><span class="ac-year">2016&ndash;2020</span></div>
+        <h3 class="ac-title">HEC Indigenous Scholarship (Balochistan &amp; FATA)</h3>
+        <p class="ac-org">Higher Education Commission of Pakistan</p>
+        <p class="ac-desc">Merit-based undergraduate scholarship awarded under the HEC project <em>"Provision of Higher Education Opportunities for Students of Balochistan &amp; FATA,"</em> a flagship national programme supporting talented students from underprivileged regions throughout the B.E. (Telecommunication) degree.</p>
+      </article>
     </div>
 
     <div class="ach-block">
       <p class="group-title">Additional Achievements</p>
-      <ul class="ach-list">
+      <ul class="ach-list ach-checks">
         <li><strong>Final-year project funded by the National Grassroots ICT Research Initiative (NGIRI)</strong>, for the intelligent IoT-based power theft detection system at UST Bannu</li>
         <li><strong>Prime Minister merit-based laptop award</strong>, received during the B.E. at UST Bannu</li>
         <li><strong>Certificate of Appreciation, Embassy of Pakistan, Seoul</strong>, for distinguished service to the Pakistani students &amp; scholars community in the Republic of Korea (June 2026)</li>
@@ -2732,21 +2828,18 @@
 
   <!-- ═════════════════════════════ CONTACT ════════════════════════════════ -->
   <div class="tab-page" id="contact" data-title="Contact">
-  <section class="section reveal">
+  <section class="section reveal contact-hero">
     <div class="contact-card">
       <div>
+        <p class="ch-eyebrow">Get in touch</p>
         <h3 class="contact-title">Research collaborations and opportunities</h3>
         <p class="contact-intro">
           I am always happy to discuss research collaborations, questions about 6G NTN or
           wireless communications, or potential opportunities. Feel free to reach out by email.
         </p>
-        <div class="pills">
-          <a class="pill p-mail" href="mailto:abid.afridi@aalto.fi"><svg><use href="#i-mail"/></svg>abid.afridi@aalto.fi</a>
-          <a class="pill p-scholar" href="https://scholar.google.com/citations?user=SswFXHwAAAAJ&hl=en" target="_blank"><svg><use href="#i-scholar"/></svg>Google Scholar</a>
-          <a class="pill p-rg" href="https://www.researchgate.net/profile/Abid-Afridi" target="_blank"><svg><use href="#i-rg"/></svg>ResearchGate</a>
-          <a class="pill p-orcid" href="https://orcid.org/0009-0003-0329-4630" target="_blank"><svg><use href="#i-orcid"/></svg>ORCID</a>
-          <a class="pill p-linkedin" href="https://linkedin.com/in/abid-afridi" target="_blank"><svg><use href="#i-linkedin"/></svg>LinkedIn</a>
-          <a class="pill p-wos" href="https://www.webofscience.com/wos/author/record/NWH-7426-2025" target="_blank"><svg><use href="#i-wos"/></svg>Web of Science</a>
+        <div class="contact-cta">
+          <a class="cta-main" href="mailto:abid.afridi@aalto.fi"><svg aria-hidden="true"><use href="#i-mail"/></svg>Get in touch</a>
+          <span class="cta-mail">abid.afridi@aalto.fi</span>
         </div>
       </div>
       <div class="contact-art" aria-hidden="true">
@@ -2805,6 +2898,24 @@
           </g>
         </svg>
       </div>
+    </div>
+  </section>
+
+  <section class="section reveal">
+    <h2 class="section-label">Contact Information</h2>
+    <div class="ci-grid">
+      <div class="ci"><span class="ci-icon"><svg><use href="#i-mail"/></svg></span><div><p class="ci-label">Email</p><a class="ci-value" href="mailto:abid.afridi@aalto.fi">abid.afridi@aalto.fi</a></div></div>
+      <div class="ci"><span class="ci-icon"><svg><use href="#i-building"/></svg></span><div><p class="ci-label">Affiliation</p><p class="ci-value">Department of Information and Communications Engineering, Aalto University</p></div></div>
+      <div class="ci"><span class="ci-icon"><svg><use href="#i-pin"/></svg></span><div><p class="ci-label">Location</p><p class="ci-value">Otaniemi campus, Espoo, Finland</p></div></div>
+      <div class="ci"><span class="ci-icon"><svg><use href="#i-globe"/></svg></span><div><p class="ci-label">Doctoral network</p><a class="ci-value" href="https://focal-dn.eu/" target="_blank">FOCAL Doctoral Network (MSCA)</a></div></div>
+    </div>
+    <h3 class="sub-head">Research profiles</h3>
+    <div class="prof-tiles">
+      <a class="prof-tile p-scholar" href="https://scholar.google.com/citations?user=SswFXHwAAAAJ&hl=en" target="_blank"><span class="pt-icon"><svg><use href="#i-scholar"/></svg></span><span><span class="pt-name">Google Scholar</span><span class="pt-sub">Publications and citations</span></span></a>
+      <a class="prof-tile p-rg" href="https://www.researchgate.net/profile/Abid-Afridi" target="_blank"><span class="pt-icon"><svg><use href="#i-rg"/></svg></span><span><span class="pt-name">ResearchGate</span><span class="pt-sub">Papers and updates</span></span></a>
+      <a class="prof-tile p-orcid" href="https://orcid.org/0009-0003-0329-4630" target="_blank"><span class="pt-icon"><svg><use href="#i-orcid"/></svg></span><span><span class="pt-name">ORCID</span><span class="pt-sub">0009-0003-0329-4630</span></span></a>
+      <a class="prof-tile p-linkedin" href="https://linkedin.com/in/abid-afridi" target="_blank"><span class="pt-icon"><svg><use href="#i-linkedin"/></svg></span><span><span class="pt-name">LinkedIn</span><span class="pt-sub">in/abid-afridi</span></span></a>
+      <a class="prof-tile p-wos" href="https://www.webofscience.com/wos/author/record/NWH-7426-2025" target="_blank"><span class="pt-icon"><svg><use href="#i-wos"/></svg></span><span><span class="pt-name">Web of Science</span><span class="pt-sub">NWH-7426-2025</span></span></a>
     </div>
   </section>
   </div>
@@ -3420,7 +3531,7 @@
       dpr = Math.min(window.devicePixelRatio || 1, 2);
       cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr);
       var narrow = W < 720;
-      S = narrow ? Math.min(Hv * 0.27, W * 0.2) : Math.min(Hv * 0.34, W * 0.075);   // width cap keeps laptops and tablets uncluttered
+      S = narrow ? Math.min(Hv * 0.27, W * 0.2) : Math.min(Hv * 0.4, W * 0.092);   // width cap keeps laptops and tablets uncluttered
       Z = narrow ? 1 : Math.max(1, Math.min(1.7, S / 78));
       // On phones the profile photo overlaps the bottom centre, so the globe moves right.
       // On wide screens the cover spans the window, so the globe is placed relative to the content column.
