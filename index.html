@@ -32,9 +32,7 @@
   <meta name="twitter:image" content="https://abid-afridi11.github.io/og-card.jpg">
   <meta name="twitter:image:alt" content="Abid Afridi, MSCA Doctoral Fellow at Aalto University, next to a globe with satellite orbits and optical inter-satellite links">
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+  <link rel="preload" href="fonts/inter-normal-latin.woff2" as="font" type="font/woff2" crossorigin>
   <script>
     (function () {
       var r = document.documentElement;
@@ -1860,6 +1858,22 @@
       body::before, .page-banner, .banner-title, .tab-page.entering, .js .reveal.in .stagger > * { animation: none; }
       .js .reveal .section-label::after { width: 42px; transition: none; }
     }
+    /* self-hosted web fonts (latin subset, Nov 2026) */
+    @font-face { font-family: 'Inter'; font-style: italic; font-weight: 400; font-display: swap; src: url('fonts/inter-italic-latin.woff2') format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+    @font-face { font-family: 'Inter'; font-style: normal; font-weight: 300 800; font-display: swap; src: url('fonts/inter-normal-latin.woff2') format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+    @font-face { font-family: 'JetBrains Mono'; font-style: normal; font-weight: 500; font-display: swap; src: url('fonts/jetbrains-mono-normal-latin.woff2') format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+    @font-face { font-family: 'Source Serif 4'; font-style: normal; font-weight: 600 700; font-display: swap; src: url('fonts/source-serif-4-normal-latin.woff2') format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+
+    /* abstracts, publication flags, service, privacy (Nov 2026) */
+    .pub-abstract { margin-top: 0.6rem; padding: 0.75rem 0.9rem; font-size: 0.85rem; line-height: 1.6; color: var(--text-2); background: var(--bg-subtle); border-left: 3px solid var(--accent); border-radius: 0 8px 8px 0; text-align: justify; hyphens: auto; }
+    .pub-abstract:not([hidden]) { animation: rise 0.3s ease both; }
+    .abs-btn[aria-expanded="true"] { color: var(--accent); border-color: var(--accent); background: var(--accent-soft); }
+    .pub-flag { display: inline-block; font-size: 0.75rem; font-weight: 600; font-style: normal; padding: 0.05rem 0.5rem; margin-left: 0.5rem; border-radius: 999px; vertical-align: 1px; white-space: nowrap; }
+    .flag-first { color: var(--accent); background: var(--accent-soft); }
+    .flag-acc { color: var(--green-fg); background: color-mix(in srgb, var(--green-fg) 13%, transparent); }
+    .service-block { margin-top: 1.25rem; }
+    .privacy-note { max-width: 62ch; margin: 0.35rem auto 0; line-height: 1.5; }
+    @media (max-width: 620px) { .pub-abstract { text-align: left; } }
   </style>
 </head>
 <body id="top">
@@ -2604,7 +2618,9 @@
         <div class="pub-actions">
           <a class="act" href="https://arxiv.org/abs/2610.31802" target="_blank"><svg><use href="#i-link"/></svg>arXiv</a>
           <a class="act" href="https://arxiv.org/pdf/2610.31802" target="_blank"><svg><use href="#i-doc"/></svg>PDF</a>
+          <button class="act abs-btn" type="button" aria-expanded="false" aria-controls="abs10"><svg><use href="#i-doc"/></svg>Abstract</button>
         </div>
+        <p class="pub-abstract" id="abs10" hidden>In multi-hop Low Earth Orbit (LEO) satellite networks, time-sensitive packets experience queueing across multiple satellite hops, causing per-hop waiting times that accumulate and make the maximum end-to-end (E2E) delay difficult to guarantee. This paper presents a novel multi-hop slicing framework that reserves time-frequency resources for each time-sensitive flow of data originating at each satellite, aiming to maintain the reservation of communication resources along every inter-satellite link (ISL) on its route to the ground station (GS). The number of time-frequency resource blocks (RBs) reserved per-hop is determined from the data packet arrival statistics, E2E delay budget, and target level of reliability. Reservations on consecutive links are temporally aligned to enable pipelined forwarding of the time-sensitive data flows aggregated from terrestrial user terminals on the different LEO satellites. We evaluate the proposed framework against conventional scheduling and resource-allocation baselines, including pure time-division multiple access (Pure-TDMA), first-in-first-out (FIFO), and farthest-satellite-first (FSF), over the same multi-hop LEO satellite path. Under light traffic conditions, the baseline schemes provide comparable delay performance; however, their high-percentile delays increase sharply as data traffic load grows, whereas the proposed framework exhibits substantially slower delay growth. At the high arrival rate and high reliability target considered, the proposed scheme requires about 31 ms, a factor of 2.5-6.8 lower than the 76, 180, and 210 ms required by FIFO, FSF, and Pure-TDMA.</p>
       </div>
     </article>
 
@@ -2624,7 +2640,9 @@
               <a class="act" href="https://ieeexplore.ieee.org/document/11753550" target="_blank"><svg><use href="#i-link"/></svg>IEEE Xplore</a>
               <a class="act doi" href="https://doi.org/10.1109/ACCESS.2026.3746718" target="_blank">DOI: 10.1109/ACCESS.2026.3746718</a>
               <button class="act" type="button" data-bib="article"><svg><use href="#i-code"/></svg>BibTeX</button>
+              <button class="act abs-btn" type="button" aria-expanded="false" aria-controls="abs1"><svg><use href="#i-doc"/></svg>Abstract</button>
             </div>
+            <p class="pub-abstract" id="abs1" hidden>Interference is a limiting factor in the emerging dense low Earth orbit (LEO) networks. In the LEO network, the interference is spatially and temporally correlated. At narrow-beam LEO base stations (BSs), spatial interference can vary significantly, and multipath fading introduces temporal variation. While developing novel stochastic geometry analysis in a multibeam scenario, we explore spatio-temporal interference correlation in the LEO uplink. We derive a closed-form expression for the spatio-temporal interference correlation coefficient. As an application of the analysis, we show that the signal-to-interference ratio (SIR) entails significant spatial clustering. In this regard, we demonstrate that an appropriately designed grant-free random access scheme, particularly slotted ALOHA, can mitigate spatial SIR clustering over the beams while preserving average throughput. Furthermore, we propose a novel gamma distribution model for the interference power distribution and a Lomax distribution model for the SIR.</p>
           </div>
         </div>
 
@@ -2637,7 +2655,9 @@
               <a class="act" href="https://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=11457669" target="_blank"><svg><use href="#i-link"/></svg>IEEE Xplore</a>
               <a class="act doi" href="https://doi.org/10.1109/OJCOMS.2026.3678705" target="_blank">DOI: 10.1109/OJCOMS.2026.3678705</a>
               <button class="act" type="button" data-bib="article"><svg><use href="#i-code"/></svg>BibTeX</button>
+              <button class="act abs-btn" type="button" aria-expanded="false" aria-controls="abs2"><svg><use href="#i-doc"/></svg>Abstract</button>
             </div>
+            <p class="pub-abstract" id="abs2" hidden>Road sparsity is a major cause of routing instability, leading to intermittent connectivity and increased packet loss. To enhance stability in 6G software-defined vehicular networks (SDVNs), we integrate unmanned aerial vehicles (UAVs) into a dynamic vehicular environment. We propose a novel ground-to-air communication protocol that integrates Dedicated Short Range Communication (DSRC), millimeter-wave (mmWave), and terahertz (THz) bands to address path stability, load balancing among controllers, and technology switching to accommodate diverse vehicular demands. Roadside Units (RSUs) and UAVs act as local controllers (LCs), with RSUs communicating via LTE and UAVs via DSRC. The optimal controller (OC) is selected using supervised learning algorithms, Support Vector Machine (SVM), and Random Forest (RF), to ensure balanced load distribution and to manage stable routing across hybrid wireless technologies. The proposed scheme evaluates multiple UAV roles, including LC, relay, and destination, under different communication interfaces. Simulation results in a highway scenario demonstrate that the hybrid approach outperforms the reference DSRC, mmWave, and THz schemes in terms of packet delivery ratio, end-to-end delay, and routing overhead. Specifically, SVM-based OC selection achieved a maximum packet delivery ratio of 97.94%, with an end-to-end delay as low as 0.089 ms and minimal routing overhead, validating its effectiveness in mitigating road sparsity, improving connectivity, and enhancing network performance.</p>
           </div>
         </div>
 
@@ -2650,7 +2670,9 @@
               <a class="act" href="https://ieeexplore.ieee.org/abstract/document/10820371" target="_blank"><svg><use href="#i-link"/></svg>IEEE Xplore</a>
               <a class="act doi" href="https://doi.org/10.1109/ACCESS.2024.3525036" target="_blank">DOI: 10.1109/ACCESS.2024.3525036</a>
               <button class="act" type="button" data-bib="article"><svg><use href="#i-code"/></svg>BibTeX</button>
+              <button class="act abs-btn" type="button" aria-expanded="false" aria-controls="abs3"><svg><use href="#i-doc"/></svg>Abstract</button>
             </div>
+            <p class="pub-abstract" id="abs3" hidden>This paper investigates the integration of an intelligent reflecting surface (IRS) and a jammer controlled interference to enhance the physical layer security (PLS) of wireless powered communication networks (WPCNs). In 6G networks, where low-power Internet of Things (IoT) devices are prevalent, security and energy efficiency are critical. While existing studies primarily focus on IRS-assisted methods to improve PLS by manipulating signal reflections, such approaches may not fully degrade the reception of eavesdroppers. We address this limitation by proposing an approach that combines IRS-assisted signal reflection with controlled jamming to further degrade the reception of eavesdroppers. Specifically, we jointly optimize the downlink/uplink time allocation, IRS phase shift matrices, and jamming interference to maximize the sum secrecy throughput. To address the non-convex nature of the problem, we develop an alternating optimization algorithm that decouples the problem into subproblems, ensuring efficient convergence to a locally optimal solution. Through detailed performance analysis, we demonstrate the superiority of our proposed scheme in terms of secrecy throughput and energy efficiency. Numerical results reveal that, compared to traditional IRS-assisted or non-jamming schemes, our approach yields substantial performance gains. This highlights the potential of integrating IRS and jamming to provide more secure and energy-efficient communication solutions for WPCNs, particularly in the context of 6G IoT applications.</p>
           </div>
         </div>
 
@@ -2658,12 +2680,14 @@
           <div class="pub-body">
             <p class="pub-title"><a href="https://www.mdpi.com/2076-3417/14/24/11677" target="_blank">Quantum PSO-Based Optimization of Secured IRS-Assisted Wireless-Powered IoT Networks</a></p>
             <p class="pub-authors"><span class="me">A. Afridi</span>, I. Hameed, I. Koo</p>
-            <p class="pub-venue"><span class="badge badge-j">Appl. Sci.</span>Applied Sciences (MDPI), vol.&nbsp;14, no.&nbsp;24, p.&nbsp;11677, 2024</p>
+            <p class="pub-venue"><span class="badge badge-j">Appl. Sci.</span>Applied Sciences (MDPI), vol.&nbsp;14, no.&nbsp;24, p.&nbsp;11677, 2024<span class="pub-flag flag-first">First author</span></p>
             <div class="pub-actions">
               <a class="act" href="https://www.mdpi.com/2076-3417/14/24/11677" target="_blank"><svg><use href="#i-link"/></svg>MDPI</a>
               <a class="act doi" href="https://doi.org/10.3390/app142411677" target="_blank">DOI: 10.3390/app142411677</a>
               <button class="act" type="button" data-bib="article"><svg><use href="#i-code"/></svg>BibTeX</button>
+              <button class="act abs-btn" type="button" aria-expanded="false" aria-controls="abs4"><svg><use href="#i-doc"/></svg>Abstract</button>
             </div>
+            <p class="pub-abstract" id="abs4" hidden>In this paper, we explore intelligent reflecting surface (IRS)-assisted physical layer security (PLS) in a wireless-powered Internet of Things (IoT) network (WPIN) by combining an IRS, a friendly jammer, and energy harvesting (EH) to maximize sum secrecy throughput in the WPIN. Specifically, we propose a non-line-of-sight system where a hybrid access point (H-AP) has no direct link with the users, and a secure uplink transmission scheme utilizes the jammer to combat malicious eavesdroppers. The proposed scheme consists of two stages: wireless energy transfer (WET) on the downlink (DL) and wireless information transmission (WIT) on the uplink (UL). In the first phase, the H-AP sends energy to users and the jammer, and they then harvest energy with the help of the IRS. Consequently, during WIT, the user transmits information to the H-AP while the jammer emits signals to confuse the eavesdropper without interfering with the legitimate transmission. The phase-shift matrix of the IRS and the time allocation for DL and UL are jointly optimized to maximize the sum secrecy throughput of the network. To tackle the non-convex problem, an alternating optimization method is employed, and the problem is reformulated into two sub-problems. First, the IRS phase shift is solved using quantum particle swarm optimization (QPSO). Then, the time allocation for DL and UL are optimized using the bisection method. Simulation results demonstrate that the proposed method achieves significant performance improvements as compared to other baseline schemes. Specifically, for IRS elements N = 35, the proposed scheme achieves a throughput of 19.4 bps/Hz, which is 85% higher than the standard PSO approach and 143% higher than the fixed time, random phase (8 bps/Hz) approach. These results validate the proposed approach’s effectiveness in improving network security and overall performance.</p>
           </div>
         </div>
 
@@ -2671,12 +2695,14 @@
           <div class="pub-body">
             <p class="pub-title"><a href="https://ieeexplore.ieee.org/abstract/document/10518025" target="_blank">Throughput Maximization of Wireless Powered IoT Network With Hybrid NOMA-TDMA Scheme: A Genetic Algorithm Approach</a></p>
             <p class="pub-authors"><span class="me">A. Afridi</span>, I. Hameed, C. E. Garc&iacute;a, I. Koo</p>
-            <p class="pub-venue"><span class="badge badge-j">IEEE Access</span>IEEE Access, vol.&nbsp;12, pp.&nbsp;65241&ndash;65253, 2024</p>
+            <p class="pub-venue"><span class="badge badge-j">IEEE Access</span>IEEE Access, vol.&nbsp;12, pp.&nbsp;65241&ndash;65253, 2024<span class="pub-flag flag-first">First author</span></p>
             <div class="pub-actions">
               <a class="act" href="https://ieeexplore.ieee.org/abstract/document/10518025" target="_blank"><svg><use href="#i-link"/></svg>IEEE Xplore</a>
               <a class="act doi" href="https://doi.org/10.1109/ACCESS.2024.3396497" target="_blank">DOI: 10.1109/ACCESS.2024.3396497</a>
               <button class="act" type="button" data-bib="article"><svg><use href="#i-code"/></svg>BibTeX</button>
+              <button class="act abs-btn" type="button" aria-expanded="false" aria-controls="abs5"><svg><use href="#i-doc"/></svg>Abstract</button>
             </div>
+            <p class="pub-abstract" id="abs5" hidden>In this study, we explore a hybrid non-orthogonal multiple access and time division multiple access (NOMA-TDMA) approach designed to maximize sum throughput in a wireless powered Internet of Things (IoT) network (WPIN). Hybrid access points send energy signals to users on downlink, and users in various groups utilize that harvested energy to transmit information on uplink. This process is facilitated by the NOMA-TDMA scheme wherein users of the same group use NOMA for simultaneous transmissions, and separate time slots are assigned to each group through TDMA. Under this hybrid NOMA-TDMA scheme, the main objective is to enhance the network’s sum throughput by jointly optimizing both the allocation of time for downlink and uplink and the downlink beamforming vectors. Given the complex interdependence of variables, the problem is inherently non-convex, making it difficult to solve numerically. Therefore, we reformulate the problem as a bi-level programming problem—the outer-level sub-problem addresses beamforming vectors using a genetic algorithm while the inner-level sub-problem deals with the allocation of downlink and uplink time through the Lagrange multiplier method. Numerical results show that the proposed hybrid NOMA-TDMA scheme outperforms baseline schemes like orthogonal multiple access and equal time allocation, in terms of the sum throughput of the WPIN.</p>
           </div>
         </div>
 
@@ -2684,12 +2710,14 @@
           <div class="pub-body">
             <p class="pub-title"><a href="https://beei.org/index.php/EEI/article/view/3014" target="_blank">An Efficient and Improved Model for Power Theft Detection in Pakistan</a></p>
             <p class="pub-authors"><span class="me">A. Afridi</span>, A. Wahab, S. Khan, W. Ullah, S. Khan, S. Ul Islam, K. Hussain</p>
-            <p class="pub-venue"><span class="badge badge-j">BEEI</span>Bulletin of Electrical Engineering and Informatics, vol.&nbsp;10, no.&nbsp;4, pp.&nbsp;1828&ndash;1837, 2021</p>
+            <p class="pub-venue"><span class="badge badge-j">BEEI</span>Bulletin of Electrical Engineering and Informatics, vol.&nbsp;10, no.&nbsp;4, pp.&nbsp;1828&ndash;1837, 2021<span class="pub-flag flag-first">First author</span></p>
             <div class="pub-actions">
               <a class="act" href="https://beei.org/index.php/EEI/article/view/3014" target="_blank"><svg><use href="#i-link"/></svg>BEEI</a>
               <a class="act doi" href="https://doi.org/10.11591/eei.v10i4.3014" target="_blank">DOI: 10.11591/eei.v10i4.3014</a>
               <button class="act" type="button" data-bib="article"><svg><use href="#i-code"/></svg>BibTeX</button>
+              <button class="act abs-btn" type="button" aria-expanded="false" aria-controls="abs6"><svg><use href="#i-doc"/></svg>Abstract</button>
             </div>
+            <p class="pub-abstract" id="abs6" hidden>This paper describes an improved model for the monitoring of power used by a party such as household users and different industries in Pakistan. The power theft detection was done using the intelligent internet of things (IoT) service system for calculating the user's power simultaneously. The power meter catches a theft detection device that is instantly transmitted to the central system which compares both the data by means of microcontroller and if there is any difference found, it informs the power utility about the hooking, meter relief or theft activities happen. Information of the theft detection through the global mobile communications system is transmitted and notified theft is displayed on the terminal monitor or won. As a result, although consumers continue to use excess fuel, the customer's power supply is cut in the electricity boards segment. The general radio package module system sends central circuit and meter data via an internet protocol address to a web server. GSM's IoT based perception is used to monitor the power supply and billing information calculated with a microcontroller continuously with the determination of the electricity table area. With this unit, the duplicate user can be located at the rear of the electricity office with the power meter status.</p>
           </div>
         </div>
 
@@ -2705,12 +2733,14 @@
           <div class="pub-body">
             <p class="pub-title"><a href="https://arxiv.org/abs/2610.31802" target="_blank">Resource Slicing for Time-Sensitive Data Traffic in Non-Terrestrial Networks with FSO ISLs</a></p>
             <p class="pub-authors"><span class="me">A. Afridi</span>, A. A. Dowhuszko, R. Wichman, J. H&auml;m&auml;l&auml;inen</p>
-            <p class="pub-venue"><span class="badge badge-c">GC 2026 WS</span>IEEE Global Communications Conference (GLOBECOM) Workshops, Macau, China, 2026 (accepted)</p>
+            <p class="pub-venue"><span class="badge badge-c">GC 2026 WS</span>IEEE Global Communications Conference (GLOBECOM) Workshops, Macau, China, 2026<span class="pub-flag flag-acc">Accepted</span><span class="pub-flag flag-first">First author</span></p>
             <div class="pub-actions">
               <a class="act" href="https://arxiv.org/abs/2610.31802" target="_blank"><svg><use href="#i-link"/></svg>arXiv</a>
               <a class="act" href="https://arxiv.org/pdf/2610.31802" target="_blank"><svg><use href="#i-doc"/></svg>PDF</a>
               <button class="act" type="button" data-bib="inproceedings"><svg><use href="#i-code"/></svg>BibTeX</button>
+              <button class="act abs-btn" type="button" aria-expanded="false" aria-controls="abs7"><svg><use href="#i-doc"/></svg>Abstract</button>
             </div>
+            <p class="pub-abstract" id="abs7" hidden>In multi-hop Low Earth Orbit (LEO) satellite networks, time-sensitive packets experience queueing across multiple satellite hops, causing per-hop waiting times that accumulate and make the maximum end-to-end (E2E) delay difficult to guarantee. This paper presents a novel multi-hop slicing framework that reserves time-frequency resources for each time-sensitive flow of data originating at each satellite, aiming to maintain the reservation of communication resources along every inter-satellite link (ISL) on its route to the ground station (GS). The number of time-frequency resource blocks (RBs) reserved per-hop is determined from the data packet arrival statistics, E2E delay budget, and target level of reliability. Reservations on consecutive links are temporally aligned to enable pipelined forwarding of the time-sensitive data flows aggregated from terrestrial user terminals on the different LEO satellites. We evaluate the proposed framework against conventional scheduling and resource-allocation baselines, including pure time-division multiple access (Pure-TDMA), first-in-first-out (FIFO), and farthest-satellite-first (FSF), over the same multi-hop LEO satellite path. Under light traffic conditions, the baseline schemes provide comparable delay performance; however, their high-percentile delays increase sharply as data traffic load grows, whereas the proposed framework exhibits substantially slower delay growth. At the high arrival rate and high reliability target considered, the proposed scheme requires about 31 ms, a factor of 2.5-6.8 lower than the 76, 180, and 210 ms required by FIFO, FSF, and Pure-TDMA.</p>
           </div>
         </div>
 
@@ -2718,12 +2748,14 @@
           <div class="pub-body">
             <p class="pub-title"><a href="https://ieeexplore.ieee.org/document/11588143" target="_blank">Load Balancing in Non-Terrestrial Networks Using Free Space Optical Inter-satellite Links</a></p>
             <p class="pub-authors"><span class="me">A. Afridi</span>, A. A. Dowhuszko, J. Krivochiza, R. Wichman, J. H&auml;m&auml;l&auml;inen</p>
-            <p class="pub-venue"><span class="badge badge-c">ICC 2026</span>IEEE International Conference on Communications (ICC), Glasgow, United Kingdom, pp.&nbsp;1&ndash;6, 2026</p>
+            <p class="pub-venue"><span class="badge badge-c">ICC 2026</span>IEEE International Conference on Communications (ICC), Glasgow, United Kingdom, pp.&nbsp;1&ndash;6, 2026<span class="pub-flag flag-first">First author</span></p>
             <div class="pub-actions">
               <a class="act" href="https://ieeexplore.ieee.org/document/11588143" target="_blank"><svg><use href="#i-link"/></svg>IEEE Xplore</a>
               <a class="act doi" href="https://doi.org/10.1109/ICC59461.2026.11588143" target="_blank">DOI: 10.1109/ICC59461.2026.11588143</a>
               <button class="act" type="button" data-bib="inproceedings"><svg><use href="#i-code"/></svg>BibTeX</button>
+              <button class="act abs-btn" type="button" aria-expanded="false" aria-controls="abs8"><svg><use href="#i-doc"/></svg>Abstract</button>
             </div>
+            <p class="pub-abstract" id="abs8" hidden>Non-terrestrial networks (NTNs) increasingly rely on non-geostationary (NGSO) constellations that combine radio frequency (RF) feeder links (FLs) with free space optical (FSO) inter-satellite links (ISLs). Downlink performance in such systems is often constrained by uneven satellite-gateway visibility, data traffic congestion, and rain-induced FL attenuation, leaving the downlink capacity of some satellites underutilized while others become bottlenecks. To prevent such non-uniform load distribution, this paper presents a fairness-driven load balancing strategy that treats the satellite constellation in space as an anycast multi-commodity flow problem. Then, by solving an equivalent linear programming optimization problem, the proposed algorithm dynamically selects the most convenient ground station (GS) to serve each satellite and, when needed, offloads data traffic to adjacent satellites through FSO ISLs. Using a realistic MEO satellite constellation with 1550 nm FSO ISLs and Ka-band feeder links, the method stabilizes the reverse link data service, maintaining the average data rate but notably improving the worst-case throughput. Our proposed algorithm enhances the minimum downlink data rate by more than 25% in the presence of rain and by over 10% under no-rain conditions. These results demonstrate that the use of an ISL-assisted load-balancing scheme mitigates FL bottlenecks and enhances fairness across the satellite constellation, offering a scalable basis for resource allocation in future NTN systems.</p>
           </div>
         </div>
 
@@ -2731,7 +2763,7 @@
           <div class="pub-body">
             <p class="pub-title"><a href="https://www.dbpia.co.kr/Journal/articleDetail?nodeId=NODE11906326" target="_blank">Integrated Sensing and Communication (ISAC) in Secured Wireless Powered IoT Networks</a></p>
             <p class="pub-authors"><span class="me">A. Afridi</span>, I. Hameed, I. Koo</p>
-            <p class="pub-venue"><span class="badge badge-c">KICS 2024</span>Symposium of the Korean Institute of Communications and Information Sciences (KICS), Jeju, Korea, 2024</p>
+            <p class="pub-venue"><span class="badge badge-c">KICS 2024</span>Symposium of the Korean Institute of Communications and Information Sciences (KICS), Jeju, Korea, 2024<span class="pub-flag flag-first">First author</span></p>
             <div class="pub-actions">
               <a class="act" href="https://www.dbpia.co.kr/Journal/articleDetail?nodeId=NODE11906326" target="_blank"><svg><use href="#i-link"/></svg>DBpia</a>
               <button class="act" type="button" data-bib="inproceedings"><svg><use href="#i-code"/></svg>BibTeX</button>
@@ -2743,12 +2775,14 @@
           <div class="pub-body">
             <p class="pub-title"><a href="https://ieeexplore.ieee.org/abstract/document/10373620" target="_blank">Enhancing Sum Throughput in Wireless Powered IoT Networks Using TDMA-Based Resource Allocation</a></p>
             <p class="pub-authors"><span class="me">A. Afridi</span>, I. Hameed, I. Koo</p>
-            <p class="pub-venue"><span class="badge badge-c">ICMT 2023</span>26th International Conference on Mechatronics Technology (ICMT), Busan, South Korea, pp.&nbsp;1&ndash;5, 2023</p>
+            <p class="pub-venue"><span class="badge badge-c">ICMT 2023</span>26th International Conference on Mechatronics Technology (ICMT), Busan, South Korea, pp.&nbsp;1&ndash;5, 2023<span class="pub-flag flag-first">First author</span></p>
             <div class="pub-actions">
               <a class="act" href="https://ieeexplore.ieee.org/abstract/document/10373620" target="_blank"><svg><use href="#i-link"/></svg>IEEE Xplore</a>
               <a class="act doi" href="https://doi.org/10.1109/ICMT59920.2023.10373620" target="_blank">DOI: 10.1109/ICMT59920.2023.10373620</a>
               <button class="act" type="button" data-bib="inproceedings"><svg><use href="#i-code"/></svg>BibTeX</button>
+              <button class="act abs-btn" type="button" aria-expanded="false" aria-controls="abs9"><svg><use href="#i-doc"/></svg>Abstract</button>
             </div>
+            <p class="pub-abstract" id="abs9" hidden>This paper focuses on investigating the optimal allocation of resources for the downlink energy transfer and uplink information transmission of wireless powered IoT (WPIOT) networks. This study adopts time division multiple access (TDMA) technology and explores some key aspects: channel assignment, power and time allocation. For channel assignment, we propose a methodology that utilizes channel gain information to assign channels to users. Furthermore, we propose Particle Swarm Optimization (PSO) for the optimization of power and time allocation. The objective of the paper is to maximize the network throughput by jointly optimizing channel assignment, power allocation and time resources. Through simulations, the findings demonstrate the precision and feasibility of the proposed scheme for maximization of sum throughput. The results highlight the significance of comprehensive resource allocation strategies for wireless powered IoT networks.</p>
           </div>
         </div>
 
@@ -2921,6 +2955,13 @@
         <li><strong>Certificate of Appreciation, Embassy of Pakistan, Seoul</strong>, for distinguished service to the Pakistani students &amp; scholars community in the Republic of Korea (June 2026)</li>
         <li>Best Event Management &amp; Organizing &mdash; UST Bannu</li>
         <li>Best Attendance certificate (HSSC)</li>
+      </ul>
+    </div>
+
+    <div class="ach-block service-block">
+      <p class="group-title">Professional Service</p>
+      <ul class="ach-list ach-checks">
+        <li><strong>Reviewer, <em>Computer Networks</em> (Elsevier)</strong>, two manuscripts reviewed in 2026 (<a href="https://orcid.org/0009-0003-0329-4630" target="_blank" rel="noopener">verified on ORCID</a>)</li>
       </ul>
     </div>
   </section>
@@ -3098,6 +3139,7 @@
 <footer>
   <span>&copy; 2026 Abid Afridi &middot; Aalto University, Finland</span>
   <span>Last updated <span id="lastUpdated">November 2026</span> &middot; <a href="#top">Back to top</a></span>
+  <span class="privacy-note">Privacy: Flag Counter records the country of each visit, and the Contact tab embeds Google Maps. The site sets no cookies of its own and uses no other tracking.</span>
 </footer>
 
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
@@ -3296,6 +3338,14 @@
     clearTimeout(toastTimer);
     toastTimer = setTimeout(function () { toastEl.classList.remove('show'); }, 1800);
   }
+  document.querySelectorAll('.abs-btn').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var box = document.getElementById(btn.getAttribute('aria-controls'));
+      var open = btn.getAttribute('aria-expanded') !== 'true';
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      box.hidden = !open;
+    });
+  });
   function clean(s) { return s.replace(/\s+/g, ' ').trim(); }
   document.querySelectorAll('[data-bib]').forEach(function (btn) {
     btn.addEventListener('click', function () {
@@ -3304,7 +3354,7 @@
       var title = clean(row.querySelector('.pub-title').textContent);
       var authors = clean(row.querySelector('.pub-authors').textContent).split(', ').join(' and ');
       var venueEl = row.querySelector('.pub-venue').cloneNode(true);
-      var badge = venueEl.querySelector('.badge'); if (badge) badge.remove();
+      venueEl.querySelectorAll('.badge, .pub-flag').forEach(function (b) { b.remove(); });
       var venue = clean(venueEl.textContent);
       var years = venue.match(/\b(19|20)\d{2}\b/g) || [''];
       var year = years[years.length - 1];
