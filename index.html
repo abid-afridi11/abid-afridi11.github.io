@@ -1864,16 +1864,51 @@
     @font-face { font-family: 'JetBrains Mono'; font-style: normal; font-weight: 500; font-display: swap; src: url('fonts/jetbrains-mono-normal-latin.woff2') format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
     @font-face { font-family: 'Source Serif 4'; font-style: normal; font-weight: 600 700; font-display: swap; src: url('fonts/source-serif-4-normal-latin.woff2') format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
 
-    /* abstracts, publication flags, service, privacy (Nov 2026) */
+    /* publication abstracts (Nov 2026) */
     .pub-abstract { margin-top: 0.6rem; padding: 0.75rem 0.9rem; font-size: 0.85rem; line-height: 1.6; color: var(--text-2); background: var(--bg-subtle); border-left: 3px solid var(--accent); border-radius: 0 8px 8px 0; text-align: justify; hyphens: auto; }
     .pub-abstract:not([hidden]) { animation: rise 0.3s ease both; }
     .abs-btn[aria-expanded="true"] { color: var(--accent); border-color: var(--accent); background: var(--accent-soft); }
-    .pub-flag { display: inline-block; font-size: 0.75rem; font-weight: 600; font-style: normal; padding: 0.05rem 0.5rem; margin-left: 0.5rem; border-radius: 999px; vertical-align: 1px; white-space: nowrap; }
-    .flag-first { color: var(--accent); background: var(--accent-soft); }
-    .flag-acc { color: var(--green-fg); background: color-mix(in srgb, var(--green-fg) 13%, transparent); }
-    .service-block { margin-top: 1.25rem; }
-    .privacy-note { max-width: 62ch; margin: 0.35rem auto 0; line-height: 1.5; }
     @media (max-width: 620px) { .pub-abstract { text-align: left; } }
+
+    /* social bar: icons pop out and show their name on hover (Nov 2026) */
+    .sb-link { position: relative; transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.25s; }
+    .sb-link:hover, .sb-link:focus-visible { transform: translateX(-6px) scale(1.18); box-shadow: 0 8px 22px color-mix(in srgb, var(--pc) 55%, transparent); z-index: 2; }
+    .sb-link::after {
+      content: attr(aria-label);
+      position: absolute;
+      right: calc(100% + 12px);
+      top: 50%;
+      transform: translate(8px, -50%) scale(0.85);
+      transform-origin: right center;
+      padding: 0.3rem 0.7rem;
+      border-radius: 8px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      white-space: nowrap;
+      color: #fff;
+      background: var(--pc);
+      box-shadow: 0 6px 16px color-mix(in srgb, var(--pc) 35%, transparent);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.18s, transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .sb-link:hover::after, .sb-link:focus-visible::after { opacity: 1; transform: translate(0, -50%) scale(0.85); }
+    .p-flag[aria-expanded="true"]::after { opacity: 0 !important; }
+
+    /* Additional Achievements: lighter than the fellowship cards, but set apart */
+    .ach-block {
+      position: relative;
+      overflow: hidden;
+      padding: 1.2rem 1.4rem 1.25rem 1.6rem;
+      border: 1px solid color-mix(in srgb, var(--accent) 22%, var(--border));
+      background: linear-gradient(135deg, color-mix(in srgb, var(--accent) 7%, var(--surface)) 0%, var(--surface) 60%);
+      box-shadow: var(--shadow-sm);
+    }
+    .ach-block::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 4px; background: linear-gradient(180deg, #1e4ed8, #0ea5e9, #8b5cf6); }
+    .ach-block .group-title { color: var(--accent); font-size: 0.8rem; }
+    .ach-checks li { padding: 0.35rem 0.6rem 0.35rem 2.1rem; border-radius: 8px; color: var(--text-2); transition: background 0.15s; }
+    .ach-checks li:hover { background: color-mix(in srgb, var(--accent) 7%, transparent); }
+    .ach-checks li::before { left: 0.5rem; top: 0.5rem; }
   </style>
 </head>
 <body id="top">
@@ -2680,7 +2715,7 @@
           <div class="pub-body">
             <p class="pub-title"><a href="https://www.mdpi.com/2076-3417/14/24/11677" target="_blank">Quantum PSO-Based Optimization of Secured IRS-Assisted Wireless-Powered IoT Networks</a></p>
             <p class="pub-authors"><span class="me">A. Afridi</span>, I. Hameed, I. Koo</p>
-            <p class="pub-venue"><span class="badge badge-j">Appl. Sci.</span>Applied Sciences (MDPI), vol.&nbsp;14, no.&nbsp;24, p.&nbsp;11677, 2024<span class="pub-flag flag-first">First author</span></p>
+            <p class="pub-venue"><span class="badge badge-j">Appl. Sci.</span>Applied Sciences (MDPI), vol.&nbsp;14, no.&nbsp;24, p.&nbsp;11677, 2024</p>
             <div class="pub-actions">
               <a class="act" href="https://www.mdpi.com/2076-3417/14/24/11677" target="_blank"><svg><use href="#i-link"/></svg>MDPI</a>
               <a class="act doi" href="https://doi.org/10.3390/app142411677" target="_blank">DOI: 10.3390/app142411677</a>
@@ -2695,7 +2730,7 @@
           <div class="pub-body">
             <p class="pub-title"><a href="https://ieeexplore.ieee.org/abstract/document/10518025" target="_blank">Throughput Maximization of Wireless Powered IoT Network With Hybrid NOMA-TDMA Scheme: A Genetic Algorithm Approach</a></p>
             <p class="pub-authors"><span class="me">A. Afridi</span>, I. Hameed, C. E. Garc&iacute;a, I. Koo</p>
-            <p class="pub-venue"><span class="badge badge-j">IEEE Access</span>IEEE Access, vol.&nbsp;12, pp.&nbsp;65241&ndash;65253, 2024<span class="pub-flag flag-first">First author</span></p>
+            <p class="pub-venue"><span class="badge badge-j">IEEE Access</span>IEEE Access, vol.&nbsp;12, pp.&nbsp;65241&ndash;65253, 2024</p>
             <div class="pub-actions">
               <a class="act" href="https://ieeexplore.ieee.org/abstract/document/10518025" target="_blank"><svg><use href="#i-link"/></svg>IEEE Xplore</a>
               <a class="act doi" href="https://doi.org/10.1109/ACCESS.2024.3396497" target="_blank">DOI: 10.1109/ACCESS.2024.3396497</a>
@@ -2710,7 +2745,7 @@
           <div class="pub-body">
             <p class="pub-title"><a href="https://beei.org/index.php/EEI/article/view/3014" target="_blank">An Efficient and Improved Model for Power Theft Detection in Pakistan</a></p>
             <p class="pub-authors"><span class="me">A. Afridi</span>, A. Wahab, S. Khan, W. Ullah, S. Khan, S. Ul Islam, K. Hussain</p>
-            <p class="pub-venue"><span class="badge badge-j">BEEI</span>Bulletin of Electrical Engineering and Informatics, vol.&nbsp;10, no.&nbsp;4, pp.&nbsp;1828&ndash;1837, 2021<span class="pub-flag flag-first">First author</span></p>
+            <p class="pub-venue"><span class="badge badge-j">BEEI</span>Bulletin of Electrical Engineering and Informatics, vol.&nbsp;10, no.&nbsp;4, pp.&nbsp;1828&ndash;1837, 2021</p>
             <div class="pub-actions">
               <a class="act" href="https://beei.org/index.php/EEI/article/view/3014" target="_blank"><svg><use href="#i-link"/></svg>BEEI</a>
               <a class="act doi" href="https://doi.org/10.11591/eei.v10i4.3014" target="_blank">DOI: 10.11591/eei.v10i4.3014</a>
@@ -2733,7 +2768,7 @@
           <div class="pub-body">
             <p class="pub-title"><a href="https://arxiv.org/abs/2610.31802" target="_blank">Resource Slicing for Time-Sensitive Data Traffic in Non-Terrestrial Networks with FSO ISLs</a></p>
             <p class="pub-authors"><span class="me">A. Afridi</span>, A. A. Dowhuszko, R. Wichman, J. H&auml;m&auml;l&auml;inen</p>
-            <p class="pub-venue"><span class="badge badge-c">GC 2026 WS</span>IEEE Global Communications Conference (GLOBECOM) Workshops, Macau, China, 2026<span class="pub-flag flag-acc">Accepted</span><span class="pub-flag flag-first">First author</span></p>
+            <p class="pub-venue"><span class="badge badge-c">GC 2026 WS</span>IEEE Global Communications Conference (GLOBECOM) Workshops, Macau, China, 2026 (accepted)</p>
             <div class="pub-actions">
               <a class="act" href="https://arxiv.org/abs/2610.31802" target="_blank"><svg><use href="#i-link"/></svg>arXiv</a>
               <a class="act" href="https://arxiv.org/pdf/2610.31802" target="_blank"><svg><use href="#i-doc"/></svg>PDF</a>
@@ -2748,7 +2783,7 @@
           <div class="pub-body">
             <p class="pub-title"><a href="https://ieeexplore.ieee.org/document/11588143" target="_blank">Load Balancing in Non-Terrestrial Networks Using Free Space Optical Inter-satellite Links</a></p>
             <p class="pub-authors"><span class="me">A. Afridi</span>, A. A. Dowhuszko, J. Krivochiza, R. Wichman, J. H&auml;m&auml;l&auml;inen</p>
-            <p class="pub-venue"><span class="badge badge-c">ICC 2026</span>IEEE International Conference on Communications (ICC), Glasgow, United Kingdom, pp.&nbsp;1&ndash;6, 2026<span class="pub-flag flag-first">First author</span></p>
+            <p class="pub-venue"><span class="badge badge-c">ICC 2026</span>IEEE International Conference on Communications (ICC), Glasgow, United Kingdom, pp.&nbsp;1&ndash;6, 2026</p>
             <div class="pub-actions">
               <a class="act" href="https://ieeexplore.ieee.org/document/11588143" target="_blank"><svg><use href="#i-link"/></svg>IEEE Xplore</a>
               <a class="act doi" href="https://doi.org/10.1109/ICC59461.2026.11588143" target="_blank">DOI: 10.1109/ICC59461.2026.11588143</a>
@@ -2763,7 +2798,7 @@
           <div class="pub-body">
             <p class="pub-title"><a href="https://www.dbpia.co.kr/Journal/articleDetail?nodeId=NODE11906326" target="_blank">Integrated Sensing and Communication (ISAC) in Secured Wireless Powered IoT Networks</a></p>
             <p class="pub-authors"><span class="me">A. Afridi</span>, I. Hameed, I. Koo</p>
-            <p class="pub-venue"><span class="badge badge-c">KICS 2024</span>Symposium of the Korean Institute of Communications and Information Sciences (KICS), Jeju, Korea, 2024<span class="pub-flag flag-first">First author</span></p>
+            <p class="pub-venue"><span class="badge badge-c">KICS 2024</span>Symposium of the Korean Institute of Communications and Information Sciences (KICS), Jeju, Korea, 2024</p>
             <div class="pub-actions">
               <a class="act" href="https://www.dbpia.co.kr/Journal/articleDetail?nodeId=NODE11906326" target="_blank"><svg><use href="#i-link"/></svg>DBpia</a>
               <button class="act" type="button" data-bib="inproceedings"><svg><use href="#i-code"/></svg>BibTeX</button>
@@ -2775,7 +2810,7 @@
           <div class="pub-body">
             <p class="pub-title"><a href="https://ieeexplore.ieee.org/abstract/document/10373620" target="_blank">Enhancing Sum Throughput in Wireless Powered IoT Networks Using TDMA-Based Resource Allocation</a></p>
             <p class="pub-authors"><span class="me">A. Afridi</span>, I. Hameed, I. Koo</p>
-            <p class="pub-venue"><span class="badge badge-c">ICMT 2023</span>26th International Conference on Mechatronics Technology (ICMT), Busan, South Korea, pp.&nbsp;1&ndash;5, 2023<span class="pub-flag flag-first">First author</span></p>
+            <p class="pub-venue"><span class="badge badge-c">ICMT 2023</span>26th International Conference on Mechatronics Technology (ICMT), Busan, South Korea, pp.&nbsp;1&ndash;5, 2023</p>
             <div class="pub-actions">
               <a class="act" href="https://ieeexplore.ieee.org/abstract/document/10373620" target="_blank"><svg><use href="#i-link"/></svg>IEEE Xplore</a>
               <a class="act doi" href="https://doi.org/10.1109/ICMT59920.2023.10373620" target="_blank">DOI: 10.1109/ICMT59920.2023.10373620</a>
@@ -2957,13 +2992,6 @@
         <li>Best Attendance certificate (HSSC)</li>
       </ul>
     </div>
-
-    <div class="ach-block service-block">
-      <p class="group-title">Professional Service</p>
-      <ul class="ach-list ach-checks">
-        <li><strong>Reviewer, <em>Computer Networks</em> (Elsevier)</strong>, two manuscripts reviewed in 2026 (<a href="https://orcid.org/0009-0003-0329-4630" target="_blank" rel="noopener">verified on ORCID</a>)</li>
-      </ul>
-    </div>
   </section>
   </div>
 
@@ -3117,14 +3145,14 @@
 </div><!-- /.page -->
 
 <aside class="social-bar" aria-label="Profiles">
-  <a class="sb-link p-scholar" href="https://scholar.google.com/citations?user=SswFXHwAAAAJ&hl=en" target="_blank" title="Google Scholar" aria-label="Google Scholar"><svg><use href="#i-scholar"/></svg></a>
-  <a class="sb-link p-rg" href="https://www.researchgate.net/profile/Abid-Afridi" target="_blank" title="ResearchGate" aria-label="ResearchGate"><svg><use href="#i-rg"/></svg></a>
-  <a class="sb-link p-orcid" href="https://orcid.org/0009-0003-0329-4630" target="_blank" title="ORCID" aria-label="ORCID"><svg><use href="#i-orcid"/></svg></a>
-  <a class="sb-link p-linkedin" href="https://linkedin.com/in/abid-afridi" target="_blank" title="LinkedIn" aria-label="LinkedIn"><svg><use href="#i-linkedin"/></svg></a>
-  <a class="sb-link p-wos" href="https://www.webofscience.com/wos/author/record/NWH-7426-2025" target="_blank" title="Web of Science" aria-label="Web of Science"><svg><use href="#i-wos"/></svg></a>
-  <a class="sb-link p-mail" href="mailto:abid.afridi@aalto.fi" title="Email" aria-label="Email"><svg><use href="#i-mail"/></svg></a>
+  <a class="sb-link p-scholar" href="https://scholar.google.com/citations?user=SswFXHwAAAAJ&hl=en" target="_blank" aria-label="Google Scholar"><svg><use href="#i-scholar"/></svg></a>
+  <a class="sb-link p-rg" href="https://www.researchgate.net/profile/Abid-Afridi" target="_blank" aria-label="ResearchGate"><svg><use href="#i-rg"/></svg></a>
+  <a class="sb-link p-orcid" href="https://orcid.org/0009-0003-0329-4630" target="_blank" aria-label="ORCID"><svg><use href="#i-orcid"/></svg></a>
+  <a class="sb-link p-linkedin" href="https://linkedin.com/in/abid-afridi" target="_blank" aria-label="LinkedIn"><svg><use href="#i-linkedin"/></svg></a>
+  <a class="sb-link p-wos" href="https://www.webofscience.com/wos/author/record/NWH-7426-2025" target="_blank" aria-label="Web of Science"><svg><use href="#i-wos"/></svg></a>
+  <a class="sb-link p-mail" href="mailto:abid.afridi@aalto.fi" aria-label="Email"><svg><use href="#i-mail"/></svg></a>
   <div class="sb-flag" id="flagWrap" hidden>
-    <button class="sb-link p-flag" type="button" id="flagBtn" aria-expanded="false" aria-controls="flagPop" title="Visitors" aria-label="Visitors by country"><svg><use href="#i-flag"/></svg></button>
+    <button class="sb-link p-flag" type="button" id="flagBtn" aria-expanded="false" aria-controls="flagPop" aria-label="Visitors" data-label="Visitors by country"><svg><use href="#i-flag"/></svg></button>
     <div class="flag-pop" id="flagPop" role="dialog" aria-label="Visitors by country" hidden>
       <button class="flag-close" type="button" id="flagClose" aria-label="Close">&times;</button>
       <p class="flag-title">Visitors</p>
@@ -3139,7 +3167,6 @@
 <footer>
   <span>&copy; 2026 Abid Afridi &middot; Aalto University, Finland</span>
   <span>Last updated <span id="lastUpdated">November 2026</span> &middot; <a href="#top">Back to top</a></span>
-  <span class="privacy-note">Privacy: Flag Counter records the country of each visit, and the Contact tab embeds Google Maps. The site sets no cookies of its own and uses no other tracking.</span>
 </footer>
 
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
@@ -3354,7 +3381,7 @@
       var title = clean(row.querySelector('.pub-title').textContent);
       var authors = clean(row.querySelector('.pub-authors').textContent).split(', ').join(' and ');
       var venueEl = row.querySelector('.pub-venue').cloneNode(true);
-      venueEl.querySelectorAll('.badge, .pub-flag').forEach(function (b) { b.remove(); });
+      var badge = venueEl.querySelector('.badge'); if (badge) badge.remove();
       var venue = clean(venueEl.textContent);
       var years = venue.match(/\b(19|20)\d{2}\b/g) || [''];
       var year = years[years.length - 1];
