@@ -1772,6 +1772,94 @@
       .hud-chip, .chip, .act, .oc-btn { min-height: 44px; }
       .act { display: inline-flex; align-items: center; }
     }
+
+    /* ── Visual layer (Nov 2026): soft gradient backdrop, glass cards, motion ── */
+    :root { --glass: rgba(255,255,255,0.74); --glass-border: rgba(255,255,255,0.75); --glass-shadow: 0 1px 1px rgba(15,23,42,0.04), 0 12px 32px rgba(30,64,175,0.08); }
+    :root[data-theme="dark"] { --glass: rgba(17,27,46,0.72); --glass-border: rgba(148,163,184,0.16); --glass-shadow: 0 12px 32px rgba(0,0,0,0.35); }
+    @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --glass: rgba(17,27,46,0.72); --glass-border: rgba(148,163,184,0.16); --glass-shadow: 0 12px 32px rgba(0,0,0,0.35); } }
+    /* aurora gradient behind the grid */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: -20vmax;
+      z-index: -1;
+      pointer-events: none;
+      background:
+        radial-gradient(38vmax 30vmax at 12% 18%, rgba(59,130,246,0.16), transparent 70%),
+        radial-gradient(34vmax 28vmax at 88% 28%, rgba(14,165,233,0.13), transparent 70%),
+        radial-gradient(40vmax 32vmax at 50% 92%, rgba(139,92,246,0.10), transparent 70%);
+      animation: aurora 26s ease-in-out infinite alternate;
+    }
+    @keyframes aurora { to { transform: translate3d(3vmax, -2vmax, 0) scale(1.06); } }
+    /* glass cards */
+    .section, .profile, .pub-side.section {
+      background: var(--glass);
+      -webkit-backdrop-filter: blur(16px) saturate(150%);
+      backdrop-filter: blur(16px) saturate(150%);
+      border-color: var(--glass-border);
+      box-shadow: var(--glass-shadow);
+    }
+    /* gradient ring around the profile card */
+    .profile { isolation: isolate; }
+    .profile::after {
+      content: "";
+      position: absolute;
+      inset: -1px;
+      z-index: -1;
+      border-radius: inherit;
+      padding: 1.5px;
+      background: linear-gradient(135deg, #1e4ed8, #0ea5e9 45%, #8b5cf6);
+      -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+      -webkit-mask-composite: xor;
+      mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+      opacity: 0.55;
+    }
+    .profile h1 { background: linear-gradient(120deg, var(--text) 30%, #1e4ed8 120%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    :root[data-theme="dark"] .profile h1 { background-image: linear-gradient(120deg, #ffffff 30%, #7aa2ff 120%); }
+    /* stat tiles and highlights with a soft gradient wash */
+    .stat { background: linear-gradient(140deg, rgba(30,78,216,0.08), rgba(14,165,233,0.04) 60%, transparent), var(--surface); }
+    .hl { background: linear-gradient(160deg, color-mix(in srgb, var(--hc) 9%, transparent), transparent 55%), var(--surface); }
+    /* hover: lift and a gradient edge on the main card types */
+    .r-card, .hl, .cv-card, .award-card, .pub-row, .skill-tile, .cert, .lang, .stat {
+      position: relative;
+      transition: transform 0.25s cubic-bezier(.2,.7,.2,1), box-shadow 0.25s, border-color 0.25s;
+    }
+    .r-card:hover, .cv-card:hover, .pub-row:hover, .cert:hover, .lang:hover, .stat:hover { transform: translateY(-3px); box-shadow: 0 14px 34px rgba(30,64,175,0.14); }
+    .cv-card::after, .pub-row::after, .stat::after {
+      content: "";
+      position: absolute;
+      inset: -1px;
+      border-radius: inherit;
+      padding: 1px;
+      background: linear-gradient(135deg, #1e4ed8, #0ea5e9, #8b5cf6);
+      -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+      -webkit-mask-composite: xor;
+      mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+      opacity: 0;
+      transition: opacity 0.25s;
+      pointer-events: none;
+    }
+    .cv-card:hover::after, .pub-row:hover::after, .stat:hover::after { opacity: 1; }
+    /* section headings: the underline grows in when the card appears */
+    .js .reveal .section-label::after { width: 0; transition: width 0.7s cubic-bezier(.2,.7,.2,1) 0.15s; }
+    .js .reveal.in .section-label::after { width: 42px; }
+    /* staggered entrance for the cards inside a section */
+    @keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+    .js .reveal.in .stagger > * { animation: rise 0.55s cubic-bezier(.2,.7,.2,1) both; animation-delay: calc(var(--i, 0) * 70ms + 80ms); }
+    /* page change: the new tab and its banner fade up */
+    @keyframes tabIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+    .tab-page.entering { animation: tabIn 0.45s cubic-bezier(.2,.7,.2,1) both; }
+    .page-banner { background-size: 112% auto; animation: kenburns 18s ease-out both; }
+    @keyframes kenburns { from { background-size: 118% auto; } to { background-size: 108% auto; } }
+    .banner-title { animation: tabIn 0.6s cubic-bezier(.2,.7,.2,1) 0.1s both; }
+    @media (max-width: 900px) { .page-banner { background-size: cover; animation: none; } }
+    /* buttons: gradient sheen on hover */
+    .cta-main, .oc-btn.primary { background-size: 200% 100%; background-image: linear-gradient(100deg, #00214d 0%, #1e4ed8 50%, #00214d 100%); transition: background-position 0.5s, transform 0.15s, box-shadow 0.15s; }
+    .cta-main:hover, .oc-btn.primary:hover { background-position: 100% 0; filter: none; }
+    @media (prefers-reduced-motion: reduce) {
+      body::before, .page-banner, .banner-title, .tab-page.entering, .js .reveal.in .stagger > * { animation: none; }
+      .js .reveal .section-label::after { width: 42px; transition: none; }
+    }
   </style>
 </head>
 <body id="top">
@@ -3095,6 +3183,20 @@
     var text = document.getElementById('officeAddr').innerText.split(String.fromCharCode(10)).join(', ');
     if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(function () { toast('Address copied'); }, function () { toast('Copy blocked by the browser'); });
     else toast('Copy not supported here');
+  });
+
+  /* ── Motion helpers: stagger index for card grids; fade-up when a tab opens ── */
+  ['.research-grid', '.hl-grid', '.stats', '.cv-cards', '.pub-list', '.award-grid', '.skill-grid', '.cert-grid', '.lang-grid', '.hobby-list', '.pub-stats', '.news-list']
+    .forEach(function (sel) {
+      document.querySelectorAll(sel).forEach(function (g) {
+        g.classList.add('stagger');
+        [].forEach.call(g.children, function (c, k) { c.style.setProperty('--i', Math.min(k, 10)); });
+      });
+    });
+  addEventListener('hashchange', function () {
+    var p = document.getElementById(root.getAttribute('data-tab'));
+    if (!p) return;
+    p.classList.remove('entering'); void p.offsetWidth; p.classList.add('entering');
   });
 
   /* ── Back-to-top button ───────────────────────────────────── */
