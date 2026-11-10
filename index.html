@@ -59,7 +59,7 @@
       --text:         #0f172a;
       --text-2:       #374151;
       --text-muted:   #64748b;
-      --text-light:   #94a3b8;
+      --text-light:   #64748b;
       --accent:       #1e4ed8;
       --accent-hover: #1733a8;
       --accent-soft:  #eff4ff;
@@ -89,7 +89,7 @@
     /* ── Theme tokens (dark), explicit choice ──────────────────── */
     :root[data-theme="dark"] {
       --bg: #0b1220; --bg-subtle: #0f1a2d; --surface: #111b2e;
-      --text: #e6ebf2; --text-2: #c4cdda; --text-muted: #93a1b5; --text-light: #66758c;
+      --text: #e6ebf2; --text-2: #c4cdda; --text-muted: #93a1b5; --text-light: #8b9bb0;
       --accent: #7aa2ff; --accent-hover: #a3bfff; --accent-soft: rgba(122,162,255,0.13);
       --border: #1e2b44;
       --shadow-sm: 0 1px 2px rgba(0,0,0,0.3); --shadow-md: 0 8px 28px rgba(0,0,0,0.45);
@@ -107,7 +107,7 @@
     @media (prefers-color-scheme: dark) {
       :root:not([data-theme="light"]) {
         --bg: #0b1220; --bg-subtle: #0f1a2d; --surface: #111b2e;
-        --text: #e6ebf2; --text-2: #c4cdda; --text-muted: #93a1b5; --text-light: #66758c;
+        --text: #e6ebf2; --text-2: #c4cdda; --text-muted: #93a1b5; --text-light: #8b9bb0;
         --accent: #7aa2ff; --accent-hover: #a3bfff; --accent-soft: rgba(122,162,255,0.13);
         --border: #1e2b44;
         --shadow-sm: 0 1px 2px rgba(0,0,0,0.3); --shadow-md: 0 8px 28px rgba(0,0,0,0.45);
@@ -1749,9 +1749,33 @@
     @media (min-width: 621px) and (max-width: 1379px) {
       #main { padding-right: 68px; }
     }
+
+    /* ── Quality pass (ui-ux-pro-max checklist, Nov 2026) ─────────── */
+    body { font-size: 1rem; }                        /* 16 px base text */
+    .skip-link { position: absolute; left: 1rem; top: -60px; z-index: 200; padding: 0.6rem 1rem; border-radius: 8px; background: #00214d; color: #fff; font-weight: 600; transition: top 0.15s; }
+    .skip-link:focus { top: 0.75rem; text-decoration: none; }
+    :focus-visible { outline: 2.5px solid var(--accent); outline-offset: 2px; border-radius: 6px; }
+    header :focus-visible, .hero-banner :focus-visible, .sb-link:focus-visible { outline-color: #ffffff; }
+    /* no label below 12 px */
+    .badge, .new-tag, .bar-caption, .hl-kind, .side-sub, .feat-label { font-size: 0.75rem; }
+    .hl-date, .act, .side-title, .type-list .chip .count, .tl-credit, .oc-eyebrow, .g-count, .pstat span, .ci-label, .cv-photo figcaption { font-size: 0.75rem; }
+    .news-date, .tl-photos figcaption { font-size: 0.8rem; }
+    .act { padding: 0.25rem 0.65rem; color: var(--text-2); }
+    .r-tags span, .pub-main .bar-caption { font-size: 0.75rem; }
+    .pub-main .bar-row { font-size: 0.75rem; grid-template-columns: 70px 1fr 30px; }
+    .act.doi { color: var(--c-fg); }                 /* darker amber keeps 4.5:1 on the tinted badge */
+    button, [role="button"], .chip, .act, .hud-chip, .sb-link, .oc-btn { cursor: pointer; }
+    /* touch screens: 44 px targets */
+    @media (pointer: coarse) {
+      nav ul a { min-height: 44px; display: inline-flex; align-items: center; }
+      .icon-btn { width: 44px; height: 44px; }
+      .hud-chip, .chip, .act, .oc-btn { min-height: 44px; }
+      .act { display: inline-flex; align-items: center; }
+    }
   </style>
 </head>
 <body id="top">
+<a class="skip-link" href="#main">Skip to content</a>
 
 <!-- ═══════════════════════════ ICON & ILLUSTRATION SPRITE ═══════════════════ -->
 <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
@@ -1965,31 +1989,31 @@
 
 
   <!-- Page banners for the tabs other than Home (photos from Wikimedia Commons) -->
-  <div class="page-banner" data-for="education" style="--banner:url('img/banners/education.jpg')">
+  <div class="page-banner" data-for="education" style="--banner:url('img/banners/education.webp')">
     <p class="banner-title" role="heading" aria-level="1">Education</p>
     <a class="banner-credit" href="https://commons.wikimedia.org/wiki/File:Helsinki_University_of_Technology_Main_Building,_Otaniemi,_Espoo_(October_2018).jpg" target="_blank" title="Photo: Markus S&auml;ynevirta, CC BY-SA 4.0, via Wikimedia Commons">Aalto University, Otaniemi</a>
   </div>
-  <div class="page-banner" data-for="experience" style="--banner:url('img/banners/experience.jpg')">
+  <div class="page-banner" data-for="experience" style="--banner:url('img/banners/experience.webp')">
     <p class="banner-title" role="heading" aria-level="1">Experience</p>
     <a class="banner-credit" href="https://commons.wikimedia.org/wiki/File:Aalto_yliopisto_Otaniemi_2018.jpg" target="_blank" title="Photo: Aatu Dorochenko, CC BY-SA 4.0, via Wikimedia Commons">Otaniemi, Espoo</a>
   </div>
-  <div class="page-banner" data-for="publications" style="--banner:url('img/banners/publications.jpg')">
+  <div class="page-banner" data-for="publications" style="--banner:url('img/banners/publications.webp')">
     <p class="banner-title" role="heading" aria-level="1">Publications</p>
     <a class="banner-credit" href="https://commons.wikimedia.org/wiki/File:Mets%C3%A4hovi_buildings.jpg" target="_blank" title="Photo: Taavi V&auml;&auml;n&auml;nen, CC BY-SA 4.0, via Wikimedia Commons">Mets&auml;hovi Radio Observatory</a>
   </div>
-  <div class="page-banner" data-for="training" style="--banner:url('img/banners/training.jpg')">
+  <div class="page-banner" data-for="training" style="--banner:url('img/banners/training.webp')">
     <p class="banner-title" role="heading" aria-level="1">Training &amp; Mobility</p>
     <a class="banner-credit" href="https://commons.wikimedia.org/wiki/File:Dipoli_September_2025.jpg" target="_blank" title="Photo: Ypsilon from Finland, CC0, via Wikimedia Commons">Dipoli, Otaniemi</a>
   </div>
-  <div class="page-banner" data-for="awards" style="--banner:url('img/banners/awards.jpg')">
+  <div class="page-banner" data-for="awards" style="--banner:url('img/banners/awards.webp')">
     <p class="banner-title" role="heading" aria-level="1">Awards &amp; Achievements</p>
     <a class="banner-credit" href="https://commons.wikimedia.org/wiki/File:Aalto_University_undergraduate_centre_on_a_sunny_afternoon_in_June_2023.jpg" target="_blank" title="Photo: JIP, CC BY-SA 4.0, via Wikimedia Commons">Aalto University, Otaniemi</a>
   </div>
-  <div class="page-banner" data-for="skills" style="--banner:url('img/banners/skills.jpg')">
+  <div class="page-banner" data-for="skills" style="--banner:url('img/banners/skills.webp')">
     <p class="banner-title" role="heading" aria-level="1">Skills &amp; Interests</p>
     <a class="banner-credit" href="https://commons.wikimedia.org/wiki/File:Mets%C3%A4hovi_14-metre_telescope_close-up.jpg" target="_blank" title="Photo: Taavi V&auml;&auml;n&auml;nen, CC BY-SA 4.0, via Wikimedia Commons">Mets&auml;hovi Radio Observatory</a>
   </div>
-  <div class="page-banner" data-for="contact" style="--banner:url('img/banners/contact.jpg')">
+  <div class="page-banner" data-for="contact" style="--banner:url('img/banners/contact.webp')">
     <p class="banner-title" role="heading" aria-level="1">Contact</p>
     <a class="banner-credit" href="https://commons.wikimedia.org/wiki/File:Otaniemi,Espoo,_Aalto_University.jpg" target="_blank" title="Photo: Ranerana, CC BY-SA 4.0, via Wikimedia Commons">Otaniemi, Espoo</a>
   </div>
@@ -2001,7 +2025,7 @@
   <div class="layout">
 
   <aside class="profile" id="profile" aria-label="Profile">
-    <div class="photo"><img src="profile.jpg" width="1102" height="976" alt="Abid Afridi"></div>
+    <div class="photo"><img src="profile.webp" width="1102" height="976" alt="Abid Afridi"></div>
     <div class="p-info">
       <h1>Abid Afridi</h1>
       <p class="role">Marie Skłodowska-Curie Doctoral Fellow</p>
@@ -2678,11 +2702,11 @@
           <p class="role-desc">Two-day workshop of the FOCAL Doctoral Network, hosted by Aalto University on 15&ndash;16 October 2026. I presented a poster on resource slicing for time-sensitive traffic in NTNs with FSO inter-satellite links. The programme combined poster sessions with peer review among the doctoral candidates, invited talks from McMaster University (Canada) and NICT (Japan), and group activities across work packages.</p>
           <div class="tl-photos">
             <figure style="--ar:1.78">
-              <a href="img/focal-ws1-aalto-poster.jpg" target="_blank"><img src="img/focal-ws1-aalto-poster.jpg" width="1100" height="619" loading="lazy" decoding="async" alt="Abid Afridi presenting a poster on resource slicing for time-sensitive traffic at the 1st FOCAL Workshop, Aalto University"></a>
+              <a href="img/focal-ws1-aalto-poster.jpg" target="_blank"><img src="img/focal-ws1-aalto-poster.webp" width="1100" height="619" loading="lazy" decoding="async" alt="Abid Afridi presenting a poster on resource slicing for time-sensitive traffic at the 1st FOCAL Workshop, Aalto University"></a>
               <figcaption>Poster session</figcaption>
             </figure>
             <figure style="--ar:1.78">
-              <a href="img/focal-ws1-aalto-group.jpg" target="_blank"><img src="img/focal-ws1-aalto-group.jpg" width="1100" height="618" loading="lazy" decoding="async" alt="Doctoral candidates, supervisors and invited guests of the FOCAL Doctoral Network at the 1st FOCAL Workshop, Aalto University"></a>
+              <a href="img/focal-ws1-aalto-group.jpg" target="_blank"><img src="img/focal-ws1-aalto-group.webp" width="1100" height="618" loading="lazy" decoding="async" alt="Doctoral candidates, supervisors and invited guests of the FOCAL Doctoral Network at the 1st FOCAL Workshop, Aalto University"></a>
               <figcaption>Workshop participants at Aalto University</figcaption>
             </figure>
           </div>
@@ -2697,11 +2721,11 @@
           <p class="role-desc">Presented our paper <em>"Load Balancing in Non-Terrestrial Networks Using Free Space Optical Inter-satellite Links"</em> with A. A. Dowhuszko, J. Krivochiza, R. Wichman and J. H&auml;m&auml;l&auml;inen. The paper treats load balancing across the satellite constellation as an anycast multi-commodity flow problem and is published in <a href="https://ieeexplore.ieee.org/document/11588143" target="_blank">IEEE Xplore</a>.</p>
           <div class="tl-photos tl-photos-2p">
             <figure style="--ar:0.56">
-              <a href="img/icc2026-presentation.jpg" target="_blank"><img src="img/icc2026-presentation.jpg" width="619" height="1100" loading="lazy" decoding="async" alt="Abid Afridi presenting the paper on load balancing in non-terrestrial networks with free-space optical inter-satellite links at IEEE ICC 2026"></a>
+              <a href="img/icc2026-presentation.jpg" target="_blank"><img src="img/icc2026-presentation.webp" width="619" height="1100" loading="lazy" decoding="async" alt="Abid Afridi presenting the paper on load balancing in non-terrestrial networks with free-space optical inter-satellite links at IEEE ICC 2026"></a>
               <figcaption>Paper presentation</figcaption>
             </figure>
             <figure style="--ar:0.56">
-              <a href="img/icc2026-banner.jpg" target="_blank"><img src="img/icc2026-banner.jpg" width="619" height="1100" loading="lazy" decoding="async" alt="Abid Afridi in front of the IEEE ICC 2026 conference banner"></a>
+              <a href="img/icc2026-banner.jpg" target="_blank"><img src="img/icc2026-banner.webp" width="619" height="1100" loading="lazy" decoding="async" alt="Abid Afridi in front of the IEEE ICC 2026 conference banner"></a>
               <figcaption>IEEE ICC 2026</figcaption>
             </figure>
           </div>
@@ -2716,11 +2740,11 @@
           <p class="role-desc">Presented my doctoral research at the network mid-term review. Technical sessions covered optical pointing, acquisition &amp; tracking, coherent long-range optical communication, spatial-mode-multiplexed FSO, QKD space links, and AI/ML for satellite communication networks, with hands-on visits to the optical-communications labs at TNO and Airbus.</p>
           <div class="tl-photos">
             <figure style="--ar:0.94">
-              <a href="img/focal-ts2-midterm-talk.jpg" target="_blank"><img src="img/focal-ts2-midterm-talk.jpg" width="1035" height="1100" loading="lazy" decoding="async" alt="Abid Afridi presenting doctoral research on network slicing and AI-based resource allocation for optical multi-layered NTNs at the FOCAL mid-term meeting"></a>
+              <a href="img/focal-ts2-midterm-talk.jpg" target="_blank"><img src="img/focal-ts2-midterm-talk.webp" width="1035" height="1100" loading="lazy" decoding="async" alt="Abid Afridi presenting doctoral research on network slicing and AI-based resource allocation for optical multi-layered NTNs at the FOCAL mid-term meeting"></a>
               <figcaption>Mid-term research presentation</figcaption>
             </figure>
             <figure style="--ar:1.12">
-              <a href="img/focal-ts2-airbus-visit.jpg" target="_blank"><img src="img/focal-ts2-airbus-visit.jpg" width="1100" height="980" loading="lazy" decoding="async" alt="FOCAL training school participants in front of a telescope dome during the Airbus site visit"></a>
+              <a href="img/focal-ts2-airbus-visit.jpg" target="_blank"><img src="img/focal-ts2-airbus-visit.webp" width="1100" height="980" loading="lazy" decoding="async" alt="FOCAL training school participants in front of a telescope dome during the Airbus site visit"></a>
               <figcaption>Airbus site visit, Leiden</figcaption>
             </figure>
           </div>
@@ -2735,11 +2759,11 @@
           <p class="role-desc">Three-day MSCA training school on free-space optical (FSO) communication, satellite-based quantum key distribution (QKD), satellite constellation design, and NTN standardization in 3GPP, including visits to HHI's QKD and optical-communications laboratories.</p>
           <div class="tl-photos">
             <figure style="--ar:1.44">
-              <a href="img/focal-ts1-hhi-group.jpg" target="_blank"><img src="img/focal-ts1-hhi-group.jpg" width="1100" height="764" loading="lazy" decoding="async" alt="Doctoral candidates and lecturers of the 1st FOCAL Training School at Fraunhofer HHI, Berlin"></a>
+              <a href="img/focal-ts1-hhi-group.jpg" target="_blank"><img src="img/focal-ts1-hhi-group.webp" width="1100" height="764" loading="lazy" decoding="async" alt="Doctoral candidates and lecturers of the 1st FOCAL Training School at Fraunhofer HHI, Berlin"></a>
               <figcaption>Participants at Fraunhofer HHI</figcaption>
             </figure>
             <figure style="--ar:0.91">
-              <a href="img/focal-ts1-hhi-qkd-lecture.jpg" target="_blank"><img src="img/focal-ts1-hhi-qkd-lecture.jpg" width="999" height="1100" loading="lazy" decoding="async" alt="Lecture on quantum key distribution by DLR at the 1st FOCAL Training School"></a>
+              <a href="img/focal-ts1-hhi-qkd-lecture.jpg" target="_blank"><img src="img/focal-ts1-hhi-qkd-lecture.webp" width="999" height="1100" loading="lazy" decoding="async" alt="Lecture on quantum key distribution by DLR at the 1st FOCAL Training School"></a>
               <figcaption>QKD lecture by DLR</figcaption>
             </figure>
           </div>
