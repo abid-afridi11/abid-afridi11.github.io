@@ -938,12 +938,6 @@
     .js .reveal { opacity: 0; transform: translateY(16px); transition: opacity 0.6s ease, transform 0.6s ease; }
     .js .reveal.in { opacity: 1; transform: none; }
 
-    @media (prefers-reduced-motion: reduce) {
-      .isl, .twinkle, #travel-map .arc, #travel-map .halo { animation: none; }
-      .js .reveal { opacity: 1; transform: none; transition: none; }
-      .bar-fill { transition: none; }
-      .js .reveal:not(.in) .bar-fill { width: calc(var(--v) * 100% / 210); }
-    }
 
     /* ── Wide screens: edge-to-edge cover, wider grids ────────────── */
     @media (min-width: 621px) {
@@ -1854,10 +1848,6 @@
     /* buttons: gradient sheen on hover */
     .cta-main, .oc-btn.primary { background-size: 200% 100%; background-image: linear-gradient(100deg, #00214d 0%, #1e4ed8 50%, #00214d 100%); transition: background-position 0.5s, transform 0.15s, box-shadow 0.15s; }
     .cta-main:hover, .oc-btn.primary:hover { background-position: 100% 0; filter: none; }
-    @media (prefers-reduced-motion: reduce) {
-      body::before, .page-banner, .banner-title, .tab-page.entering, .js .reveal.in .stagger > * { animation: none; }
-      .js .reveal .section-label::after { width: 42px; transition: none; }
-    }
     /* self-hosted web fonts (latin subset, Nov 2026) */
     @font-face { font-family: 'Inter'; font-style: italic; font-weight: 400; font-display: swap; src: url('fonts/inter-italic-latin.woff2') format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
     @font-face { font-family: 'Inter'; font-style: normal; font-weight: 300 800; font-display: swap; src: url('fonts/inter-normal-latin.woff2') format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
